@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /admin
+Disallow: /config
+Disallow: /includes
+Disallow: /storage
+
+Sitemap: https://web-service.studio/sitemap.xml

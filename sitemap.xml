@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Статичный плейсхолдер. Автогенерация из БД (блог/портфолио) добавляется на этапе 6 (SEO и тестирование) согласно плану работ в ТЗ. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://web-service.studio/</loc></url>
+  <url><loc>https://web-service.studio/poslugy</loc></url>
+  <url><loc>https://web-service.studio/tsiny</loc></url>
+  <url><loc>https://web-service.studio/portfolio</loc></url>
+  <url><loc>https://web-service.studio/blog</loc></url>
+  <url><loc>https://web-service.studio/kontakty</loc></url>
+</urlset>

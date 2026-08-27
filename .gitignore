@@ -1,0 +1,20 @@
+# Окружение и секреты
+.env
+.env.*
+config/local.php
+config/*.local.php
+
+# Зависимости
+/vendor/
+/node_modules/
+
+# Логи и кэш
+*.log
+/cache/
+/tmp/
+
+# ОС / редакторы
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
