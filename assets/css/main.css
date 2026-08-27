@@ -1,0 +1,56 @@
+/* Базовые токены фирменного стиля (см. прототипы дизайна) */
+:root {
+  --color-brand: #00A7C7;
+  --color-ink: #0B1F26;
+  --color-ink-soft: #34474E;
+  --color-muted: #4B6570;
+  --color-faint: #7C99A1;
+  --color-border: #E4EEF0;
+  --color-tint: #F1FBFC;
+  --color-tint-2: #CDEEF3;
+  --font-heading: 'Manrope', system-ui, sans-serif;
+  --font-body: 'Work Sans', system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: #FFFFFF;
+  color: var(--color-ink);
+  line-height: 1.5;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  margin: 0 0 0.5em 0;
+  letter-spacing: -0.01em;
+}
+
+a { color: var(--color-brand); text-decoration: none; }
+
+.container {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-ink);
+  color: #FFFFFF;
+  padding: 14px 26px;
+  border-radius: 999px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+}
+
+.section { padding: 64px 0; }
+
+@media (max-width: 640px) {
+  .section { padding: 40px 0; }
+}
