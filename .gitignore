@@ -4,6 +4,12 @@
 config/local.php
 config/*.local.php
 
+# Загруженные пользователем файлы (изображения блога/портфолио) —
+# серверные данные, не версионируются вместе с кодом
+/assets/uploads/*
+!/assets/uploads/.gitkeep
+!/assets/uploads/*/.gitkeep
+
 # Зависимости
 /vendor/
 /node_modules/

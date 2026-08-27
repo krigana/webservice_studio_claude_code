@@ -1,7 +1,8 @@
 <?php
 /**
  * Front controller. Все запросы (кроме реальных файлов) проходят через
- * этот файл — см. .htaccess.
+ * этот файл — см. .htaccess. Админ-панель (/admin) — отдельные файлы,
+ * в этот роутинг не входит (см. README).
  */
 
 declare(strict_types=1);
@@ -11,22 +12,18 @@ declare(strict_types=1);
 if (PHP_SAPI === 'cli-server') {
     $reqPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) ?? '/';
     $file = __DIR__ . $reqPath;
+    // директории вроде /admin/ — отдаём их index.php (как это по умолчанию делает Apache)
+    if ($reqPath !== '/' && is_dir($file) && is_file(rtrim($file, '/') . '/index.php')) {
+        require rtrim($file, '/') . '/index.php';
+        exit;
+    }
     if ($reqPath !== '/' && is_file($file)) {
         return false;
     }
 }
 
+require __DIR__ . '/includes/bootstrap.php';
 require __DIR__ . '/includes/Router.php';
-require __DIR__ . '/includes/Database.php';
-
-$config = require __DIR__ . '/config/config.php';
-
-if ($config['app']['debug']) {
-    ini_set('display_errors', '1');
-    error_reporting(E_ALL);
-} else {
-    ini_set('display_errors', '0');
-}
 
 $router = new Router();
 
