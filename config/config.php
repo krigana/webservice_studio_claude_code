@@ -39,7 +39,11 @@ function wsstudio_load_env(string $path): array
     return $env;
 }
 
-$envPath = dirname(__DIR__) . '/.env';
+// .env ищем СНАЧАЛА на уровень выше корня сайта (public_html), а не внутри
+// него — так файл переживает автозалив с Git.
+$envPathOutside = dirname(__DIR__, 2) . '/.env';
+$envPathInside = dirname(__DIR__) . '/.env';
+$envPath = is_file($envPathOutside) ? $envPathOutside : $envPathInside;
 $env = wsstudio_load_env($envPath);
 
 function wsstudio_env(array $env, string $key, $default = null)
