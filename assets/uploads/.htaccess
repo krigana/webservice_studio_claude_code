@@ -1,0 +1,13 @@
+# Загруженные файлы никогда не выполняются как PHP — защита от загрузки шелла
+<FilesMatch "\.(php|php\d|phtml|phar)$">
+    Require all denied
+</FilesMatch>
+<IfModule !mod_authz_core.c>
+    <FilesMatch "\.(php|php\d|phtml|phar)$">
+        Order deny,allow
+        Deny from all
+    </FilesMatch>
+</IfModule>
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>

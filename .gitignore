@@ -5,10 +5,20 @@ config/local.php
 config/*.local.php
 
 # Загруженные пользователем файлы (изображения блога/портфолио) —
-# серверные данные, не версионируются вместе с кодом
+# серверные данные, не версионируются вместе с кодом.
+# Сами подпапки blog/portfolio НЕ игнорируются (иначе git не даст
+# исключить .gitkeep внутри них) — игнорируется только их содержимое.
 /assets/uploads/*
 !/assets/uploads/.gitkeep
-!/assets/uploads/*/.gitkeep
+!/assets/uploads/.htaccess
+!/assets/uploads/blog
+!/assets/uploads/portfolio
+
+/assets/uploads/blog/*
+!/assets/uploads/blog/.gitkeep
+
+/assets/uploads/portfolio/*
+!/assets/uploads/portfolio/.gitkeep
 
 # Зависимости
 /vendor/
