@@ -87,6 +87,16 @@ function flash_get(string $key): ?string
     return $msg;
 }
 
+/**
+ * Оцінка часу читання статті (~180 слів/хв, округлення до хвилини, мінімум 1).
+ */
+function reading_time(string $html): int
+{
+    $text = strip_tags($html);
+    $words = preg_match_all('/\p{L}+/u', $text);
+    return max(1, (int) ceil(($words ?: 0) / 180));
+}
+
 function format_price(?string $from, ?string $to, ?string $note, string $currency = 'UAH'): string
 {
     $symbol = $currency === 'UAH' ? 'грн' : $currency;

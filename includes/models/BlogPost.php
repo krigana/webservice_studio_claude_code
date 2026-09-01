@@ -5,22 +5,33 @@ class BlogPost extends Model
 {
     protected static string $table = 'blog_posts';
 
-    public static function publishedList(int $limit = 9, int $offset = 0): array
+    public static function publishedList(int $limit = 9, int $offset = 0, ?int $categoryId = null): array
     {
+        $categorySql = $categoryId !== null ? ' AND p.category_id = :category_id' : '';
         $stmt = static::db()->prepare(
             "SELECT p.*, c.name AS category_name, c.slug AS category_slug
              FROM blog_posts p LEFT JOIN blog_categories c ON c.id = p.category_id
-             WHERE p.status = 'published' AND p.published_at <= NOW()
-             ORDER BY p.published_at DESC LIMIT ? OFFSET ?"
+             WHERE p.status = 'published' AND p.published_at <= NOW() $categorySql
+             ORDER BY p.published_at DESC LIMIT :limit OFFSET :offset"
         );
-        $stmt->bindValue(1, $limit, PDO::PARAM_INT);
-        $stmt->bindValue(2, $offset, PDO::PARAM_INT);
+        if ($categoryId !== null) {
+            $stmt->bindValue(':category_id', $categoryId, PDO::PARAM_INT);
+        }
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll();
     }
 
-    public static function publishedCount(): int
+    public static function publishedCount(?int $categoryId = null): int
     {
+        if ($categoryId !== null) {
+            $stmt = static::db()->prepare(
+                "SELECT COUNT(*) FROM blog_posts WHERE status = 'published' AND published_at <= NOW() AND category_id = ?"
+            );
+            $stmt->execute([$categoryId]);
+            return (int) $stmt->fetchColumn();
+        }
         return (int) static::db()->query(
             "SELECT COUNT(*) FROM blog_posts WHERE status = 'published' AND published_at <= NOW()"
         )->fetchColumn();
@@ -71,10 +82,13 @@ class BlogPost extends Model
 
     public static function related(int $postId, ?int $categoryId, int $limit = 3): array
     {
+        $join = "LEFT JOIN blog_categories c ON c.id = p.category_id";
+        $select = "p.*, c.name AS category_name, c.slug AS category_slug";
         if ($categoryId !== null) {
             $stmt = static::db()->prepare(
-                "SELECT * FROM blog_posts WHERE id != ? AND category_id = ? AND status = 'published' AND published_at <= NOW()
-                 ORDER BY published_at DESC LIMIT ?"
+                "SELECT $select FROM blog_posts p $join
+                 WHERE p.id != ? AND p.category_id = ? AND p.status = 'published' AND p.published_at <= NOW()
+                 ORDER BY p.published_at DESC LIMIT ?"
             );
             $stmt->bindValue(1, $postId, PDO::PARAM_INT);
             $stmt->bindValue(2, $categoryId, PDO::PARAM_INT);
@@ -92,8 +106,9 @@ class BlogPost extends Model
         $placeholders = implode(',', array_fill(0, count($excludeIds), '?'));
         $need = $limit - count($rows);
         $stmt = static::db()->prepare(
-            "SELECT * FROM blog_posts WHERE id NOT IN ($placeholders) AND status = 'published' AND published_at <= NOW()
-             ORDER BY published_at DESC LIMIT " . (int) $need
+            "SELECT $select FROM blog_posts p $join
+             WHERE p.id NOT IN ($placeholders) AND p.status = 'published' AND p.published_at <= NOW()
+             ORDER BY p.published_at DESC LIMIT " . (int) $need
         );
         $stmt->execute($excludeIds);
         return array_merge($rows, $stmt->fetchAll());

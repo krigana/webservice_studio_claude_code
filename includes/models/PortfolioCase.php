@@ -9,13 +9,17 @@ class PortfolioCase extends Model
     {
         if ($categoryId !== null) {
             $stmt = static::db()->prepare(
-                "SELECT * FROM portfolio_cases WHERE status = 'published' AND category_id = ? ORDER BY sort_order, id DESC"
+                "SELECT pc.*, sc.name AS category_name, sc.slug AS category_slug
+                 FROM portfolio_cases pc LEFT JOIN service_categories sc ON sc.id = pc.category_id
+                 WHERE pc.status = 'published' AND pc.category_id = ? ORDER BY pc.sort_order, pc.id DESC"
             );
             $stmt->execute([$categoryId]);
             return $stmt->fetchAll();
         }
         $stmt = static::db()->query(
-            "SELECT * FROM portfolio_cases WHERE status = 'published' ORDER BY sort_order, id DESC"
+            "SELECT pc.*, sc.name AS category_name, sc.slug AS category_slug
+             FROM portfolio_cases pc LEFT JOIN service_categories sc ON sc.id = pc.category_id
+             WHERE pc.status = 'published' ORDER BY pc.sort_order, pc.id DESC"
         );
         return $stmt->fetchAll();
     }
@@ -33,7 +37,9 @@ class PortfolioCase extends Model
     public static function bySlugPublished(string $slug): ?array
     {
         $stmt = static::db()->prepare(
-            "SELECT * FROM portfolio_cases WHERE slug = ? AND status = 'published' LIMIT 1"
+            "SELECT pc.*, sc.name AS category_name, sc.slug AS category_slug
+             FROM portfolio_cases pc LEFT JOIN service_categories sc ON sc.id = pc.category_id
+             WHERE pc.slug = ? AND pc.status = 'published' LIMIT 1"
         );
         $stmt->execute([$slug]);
         $row = $stmt->fetch();

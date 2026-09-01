@@ -85,17 +85,53 @@ if (!function_exists('jsonld')) {
   <?php endif; ?>
 </head>
 <body>
-<header class="container" style="display:flex; align-items:center; justify-content:space-between; padding-top:20px; padding-bottom:20px;">
-  <a href="/" style="font-family:var(--font-heading); font-weight:800; color:var(--color-ink);">Webservice Studio</a>
-  <nav style="display:flex; gap:20px; font-size:14px; font-weight:600;">
-    <a href="/poslugy">Послуги</a>
-    <a href="/tsiny">Ціни</a>
-    <a href="/portfolio">Роботи</a>
-    <a href="/blog">Блог</a>
-    <a href="/kontakty">Контакти</a>
-  </nav>
-</header>
+<?php
+$navItems = [
+    'home' => ['/', 'Головна'],
+    'services' => ['/poslugy', 'Послуги'],
+    'pricing' => ['/tsiny', 'Ціни'],
+    'portfolio' => ['/portfolio', 'Роботи'],
+    'blog' => ['/blog', 'Блог'],
+    'contacts' => ['/kontakty', 'Контакти'],
+];
+$active = $activeNav ?? '';
+?>
+<div class="site-header">
+  <div class="container site-header__row">
+    <a href="/" class="site-logo">
+      <span class="site-logo__badge"><img src="/assets/icons/logo-mark.png" alt=""></span>
+      <span class="site-logo__word">
+        <span class="site-logo__main">Webservice</span>
+        <span class="site-logo__sub">Studio</span>
+      </span>
+    </a>
+
+    <nav class="site-nav" id="site-nav">
+      <?php foreach ($navItems as $key => [$url, $label]): ?>
+        <a href="<?= h($url) ?>" class="<?= $active === $key ? 'is-active' : '' ?>"><?= h($label) ?></a>
+      <?php endforeach; ?>
+    </nav>
+
+    <a href="/kontakty" class="btn-primary site-header__cta">
+      Замовити проєкт
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+
+    <button type="button" class="site-nav-toggle" id="site-nav-toggle" aria-label="Меню" aria-expanded="false" aria-controls="site-nav">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+  </div>
+</div>
 <script>
+(function () {
+  var toggle = document.getElementById('site-nav-toggle');
+  var nav = document.getElementById('site-nav');
+  if (!toggle || !nav) return;
+  toggle.addEventListener('click', function () {
+    var open = nav.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+})();
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js'));
 }

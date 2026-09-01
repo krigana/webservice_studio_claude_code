@@ -1,6 +1,7 @@
 <?php
 $pageTitle = 'Портфоліо — Webservice Studio';
 $pageDescription = "Приклади робіт студії: сайти, лендинги, застосунки, рішення для арбітражу трафіку.";
+$activeNav = 'portfolio';
 $breadcrumbs = [
     ['name' => 'Головна', 'url' => '/'],
     ['name' => 'Портфоліо', 'url' => '/portfolio'],
@@ -21,27 +22,36 @@ $cases = PortfolioCase::publishedList($activeCategory ? (int) $activeCategory['i
 
 require __DIR__ . '/partials/header.php';
 ?>
-<main class="container section">
-  <h1>Портфоліо</h1>
-
-  <div style="display:flex; flex-wrap:wrap; gap:10px; margin:20px 0;">
-    <a href="/portfolio" style="padding:9px 16px; border-radius:999px; font-size:13.5px; font-weight:600; border:1.5px solid var(--color-border); color:<?= $activeCategory ? 'var(--color-muted)' : '#fff' ?>; background:<?= $activeCategory ? 'transparent' : 'var(--color-ink)' ?>;">Усі</a>
-    <?php foreach ($categories as $cat): ?>
-      <a href="/portfolio?category=<?= urlencode($cat['slug']) ?>" style="padding:9px 16px; border-radius:999px; font-size:13.5px; font-weight:600; border:1.5px solid var(--color-border); color:<?= ($activeCategory && $activeCategory['slug'] === $cat['slug']) ? '#fff' : 'var(--color-muted)' ?>; background:<?= ($activeCategory && $activeCategory['slug'] === $cat['slug']) ? 'var(--color-ink)' : 'transparent' ?>;"><?= h($cat['name']) ?></a>
-    <?php endforeach; ?>
+<main>
+  <div class="hero" style="padding-bottom:40px;">
+    <div class="container">
+      <span class="eyebrow">Наші роботи</span>
+      <h1>Приклади проєктів студії</h1>
+      <p class="lead">Сайти, застосунки та інструменти для трафіку, які ми зробили для клієнтів.</p>
+    </div>
   </div>
 
-  <?php if (empty($cases)): ?>
-    <p style="color:var(--color-muted);">У цій категорії поки немає кейсів.</p>
-  <?php else: ?>
-    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:20px;">
-      <?php foreach ($cases as $case): ?>
-        <a href="/portfolio/<?= h($case['slug']) ?>" style="display:block; border:1px solid var(--color-border); border-radius:16px; overflow:hidden; color:var(--color-ink);">
-          <img src="<?= h($case['cover_image']) ?>" alt="<?= h($case['title']) ?>" style="width:100%; height:170px; object-fit:cover; display:block; background:var(--color-tint-2);">
-          <div style="padding:18px;"><strong><?= h($case['title']) ?></strong></div>
-        </a>
+  <div class="container">
+    <div class="chip-row" style="padding:24px 0 40px;">
+      <a href="/portfolio" class="chip <?= $activeCategory ? '' : 'active' ?>">Усі</a>
+      <?php foreach ($categories as $cat): ?>
+        <a href="/portfolio?category=<?= urlencode($cat['slug']) ?>" class="chip <?= ($activeCategory && $activeCategory['slug'] === $cat['slug']) ? 'active' : '' ?>"><?= h($cat['name']) ?></a>
       <?php endforeach; ?>
     </div>
-  <?php endif; ?>
+
+    <?php if (empty($cases)): ?>
+      <p style="color:var(--color-muted); padding-bottom:96px;">У цій категорії поки немає кейсів.</p>
+    <?php else: ?>
+      <div class="grid-3" style="padding-bottom:96px;">
+        <?php foreach ($cases as $case): ?>
+          <a href="/portfolio/<?= h($case['slug']) ?>">
+            <img src="<?= h($case['cover_image']) ?>" alt="<?= h($case['title']) ?>" class="thumb" style="width:100%; aspect-ratio:4/3; margin-bottom:16px;">
+            <span style="font-size:12px; font-weight:700; color:var(--color-brand); text-transform:uppercase; letter-spacing:0.06em;"><?= h($case['category_name'] ?? '') ?></span>
+            <h3 style="font-size:17px; font-weight:700; margin-top:6px; color:var(--color-ink);"><?= h($case['title']) ?></h3>
+          </a>
+        <?php endforeach; ?>
+      </div>
+    <?php endif; ?>
+  </div>
 </main>
 <?php require __DIR__ . '/partials/footer.php'; ?>
