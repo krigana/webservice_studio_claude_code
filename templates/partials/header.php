@@ -75,7 +75,13 @@ if (!function_exists('jsonld')) {
   <meta name="theme-color" content="#00A7C7">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/main.css">
+  <?php
+  // Версія у query-параметрі — щоб серверний/браузерний кеш (напр. LiteSpeed на
+  // Hostinger) не віддавав стару версію файлу після деплою нових правок.
+  $mainCssPath = __DIR__ . '/../../assets/css/main.css';
+  $mainCssVer = is_file($mainCssPath) ? filemtime($mainCssPath) : time();
+  ?>
+  <link rel="stylesheet" href="/assets/css/main.css?v=<?= (int) $mainCssVer ?>">
   <script type="application/ld+json"><?= jsonld($organizationSchema) ?></script>
   <?php if ($breadcrumbSchema !== null): ?>
   <script type="application/ld+json"><?= jsonld($breadcrumbSchema) ?></script>
