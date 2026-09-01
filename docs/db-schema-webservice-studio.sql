@@ -220,7 +220,7 @@ SELECT id, 'Клоакінг', 'kloaking', 30 FROM service_categories WHERE slug
 
 -- Контакты и соцсети — из ТЗ п.1.5, уже подтверждены заказчиком
 INSERT INTO settings (`key`, `value`) VALUES
-    ('contact_email',    'support@webservice.studio'),
+    ('contact_email',    'support@web-service.studio'),
     ('contact_facebook', 'https://www.facebook.com/webservicestudio/'),
     ('contact_instagram','https://www.instagram.com/webservicestudio/'),
     ('contact_telegram', 'https://t.me/webservices_studio'),

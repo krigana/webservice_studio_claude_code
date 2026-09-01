@@ -31,7 +31,7 @@
 
       <div>
         <p class="footer-col-title">Контакти</p>
-        <a class="footer-col-link" href="mailto:support@webservice.studio">support@webservice.studio</a>
+        <a class="footer-col-link" href="mailto:support@web-service.studio">support@web-service.studio</a>
         <a class="footer-col-link" href="https://api.whatsapp.com/send/?phone=380959212203" target="_blank" rel="noopener">+380 95 921 22 03</a>
         <div class="site-footer__social">
           <a href="https://www.facebook.com/webservicestudio/" target="_blank" rel="noopener" aria-label="Facebook">

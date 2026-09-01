@@ -73,7 +73,7 @@ require __DIR__ . '/partials/header.php';
         <span class="icon-badge"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3 7l9 6 9-6"/></svg></span>
         <div>
           <p style="font-size:12px; font-weight:700; color:var(--color-faint); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:4px;">Email</p>
-          <a href="mailto:support@webservice.studio" style="font-size:16px; font-weight:600; color:var(--color-ink);">support@webservice.studio</a>
+          <a href="mailto:support@web-service.studio" style="font-size:16px; font-weight:600; color:var(--color-ink);">support@web-service.studio</a>
         </div>
       </div>
       <div style="display:flex; align-items:center; gap:14px;">

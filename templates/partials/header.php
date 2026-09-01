@@ -13,7 +13,7 @@ $organizationSchema = [
     'name' => 'Webservice Studio',
     'url' => $siteUrl . '/',
     'logo' => $siteUrl . '/assets/icons/icon-512.png',
-    'email' => 'support@webservice.studio',
+    'email' => 'support@web-service.studio',
     'sameAs' => [
         'https://www.facebook.com/webservicestudio/',
         'https://www.instagram.com/webservicestudio/',
