@@ -256,9 +256,8 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--c
 .site-header__row { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-top: 16px; padding-bottom: 16px; }
 .site-logo { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
 .site-logo__image { height: 52px; width: auto; display: block; }
-.site-logo__word { display: flex; flex-direction: column; line-height: 1.05; }
-.site-logo__main { font-family: var(--font-logo); font-weight: 700; font-size: 18px; color: var(--color-brand); letter-spacing: 0.02em; text-transform: uppercase; }
-.site-logo__sub { font-family: var(--font-logo); font-weight: 600; font-size: 13px; color: var(--color-brand); letter-spacing: 0.12em; text-transform: uppercase; }
+.site-logo__word { display: flex; flex-direction: column; }
+.site-logo__main, .site-logo__sub { font-family: var(--font-logo); font-weight: 700; font-size: 21px; line-height: 1.15; color: var(--color-brand); letter-spacing: 0.03em; text-transform: uppercase; }
 
 .site-nav { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
 .site-nav a { padding: 10px 14px; border-radius: 8px; font-size: 15px; font-weight: 500; color: var(--color-muted); }
@@ -288,8 +287,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--c
 .site-footer__brand { display: flex; align-items: center; gap: 12px; }
 .site-footer__brand-image { height: 46px; width: auto; display: block; }
 .site-footer__brand-word { display: flex; flex-direction: column; line-height: 1.05; }
-.site-footer__brand-main { font-family: var(--font-logo); font-weight: 700; font-size: 18px; color: #FFFFFF; letter-spacing: 0.02em; text-transform: uppercase; }
-.site-footer__brand-sub { font-family: var(--font-logo); font-weight: 600; font-size: 13px; color: #FFFFFF; letter-spacing: 0.12em; text-transform: uppercase; }
+.site-footer__brand-main, .site-footer__brand-sub { font-family: var(--font-logo); font-weight: 700; font-size: 19px; line-height: 1.15; color: #FFFFFF; letter-spacing: 0.03em; text-transform: uppercase; }
 .site-footer__social { display: flex; align-items: center; gap: 10px; margin-top: 14px; }
 .site-footer__social a { width: 34px; height: 34px; border-radius: 9px; background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; }
 .site-footer__bottom { padding: 24px 0; border-top: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 13px; color: var(--color-faint); }
