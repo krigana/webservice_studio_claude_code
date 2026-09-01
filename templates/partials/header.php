@@ -74,7 +74,7 @@ if (!function_exists('jsonld')) {
   <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
   <meta name="theme-color" content="#00A7C7">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Work+Sans:wght@400;500;600&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
   <?php
   // Версія у query-параметрі — щоб серверний/браузерний кеш (напр. LiteSpeed на
   // Hostinger) не віддавав стару версію файлу після деплою нових правок.
@@ -105,7 +105,11 @@ $active = $activeNav ?? '';
 <div class="site-header">
   <div class="container site-header__row">
     <a href="/" class="site-logo">
-      <img src="/assets/icons/logo-full-teal.png" alt="Webservice Studio" class="site-logo__image">
+      <img src="/assets/icons/logo-full-teal.png" alt="" class="site-logo__image">
+      <span class="site-logo__word">
+        <span class="site-logo__main">Webservice</span>
+        <span class="site-logo__sub">Studio</span>
+      </span>
     </a>
 
     <nav class="site-nav" id="site-nav">
