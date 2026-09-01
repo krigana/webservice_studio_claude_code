@@ -68,4 +68,11 @@ $router->post('/kontakty', function () {
     require __DIR__ . '/templates/contacts-submit.php';
 });
 
+// Статичні сторінки з таблиці pages (Політика конфіденційності тощо) —
+// загальний маршрут, тому реєструється останнім, щоб не перехоплювати
+// адреси вище (/poslugy, /blog і т.д.)
+$router->get('/{slug}', function (array $params) {
+    require __DIR__ . '/templates/page.php';
+});
+
 $router->dispatch($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);

@@ -49,7 +49,7 @@
 
     <div class="site-footer__bottom">
       <span>© <?= date('Y') ?> Webservice Studio. Всі права захищені.</span>
-      <a href="/kontakty">Політика конфіденційності</a>
+      <a href="/polityka-konfidentsiynosti">Політика конфіденційності</a>
     </div>
   </div>
 </footer>

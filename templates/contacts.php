@@ -64,7 +64,7 @@ require __DIR__ . '/partials/header.php';
         <button type="submit" class="btn-primary block">Надіслати заявку
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </button>
-        <p style="font-size:12.5px; color:var(--color-faint); margin-top:14px; text-align:center;">Заявка одразу потрапляє нашій команді в Telegram.</p>
+        <p style="font-size:12.5px; color:var(--color-faint); margin-top:14px; text-align:center;">Заявка одразу потрапляє нашій команді в Telegram. Надсилаючи форму, ви погоджуєтесь із <a href="/polityka-konfidentsiynosti">політикою конфіденційності</a>.</p>
       </form>
     </div>
 

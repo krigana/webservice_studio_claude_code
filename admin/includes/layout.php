@@ -49,6 +49,7 @@ function admin_header(string $title, string $active = ''): void
     <a href="/admin/blog/" class="<?= $active === 'blog' ? 'active' : '' ?>">Блог</a>
     <a href="/admin/portfolio/" class="<?= $active === 'portfolio' ? 'active' : '' ?>">Портфоліо</a>
     <a href="/admin/services/" class="<?= $active === 'services' ? 'active' : '' ?>">Послуги</a>
+    <a href="/admin/pages/" class="<?= $active === 'pages' ? 'active' : '' ?>">Сторінки</a>
     <div style="margin-top:24px; padding-top:16px; border-top:1px solid #14313B;">
       <a href="/" target="_blank">↗ Переглянути сайт</a>
       <a href="/admin/logout.php">Вийти<?= $user ? ' (' . h($user['username']) . ')' : '' ?></a>
