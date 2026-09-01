@@ -105,11 +105,7 @@ $active = $activeNav ?? '';
 <div class="site-header">
   <div class="container site-header__row">
     <a href="/" class="site-logo">
-      <span class="site-logo__badge"><img src="/assets/icons/logo-mark.png" alt=""></span>
-      <span class="site-logo__word">
-        <span class="site-logo__main">Webservice</span>
-        <span class="site-logo__sub">Studio</span>
-      </span>
+      <img src="/assets/icons/logo-full-teal.png" alt="Webservice Studio" class="site-logo__image">
     </a>
 
     <nav class="site-nav" id="site-nav">

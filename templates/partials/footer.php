@@ -3,11 +3,7 @@
     <div class="site-footer__grid">
       <div style="display:flex; flex-direction:column; gap:16px;">
         <div class="site-footer__brand">
-          <span class="site-footer__brand-badge"><img src="/assets/icons/logo-mark.png" alt=""></span>
-          <span class="site-footer__brand-word">
-            <span class="site-footer__brand-main">Webservice</span>
-            <span class="site-footer__brand-sub">Studio</span>
-          </span>
+          <img src="/assets/icons/logo-full-white.png" alt="Webservice Studio" class="site-footer__brand-image">
         </div>
         <p style="font-size:14px; line-height:1.6; color:#9FBCC4; max-width:260px;">Розробляємо сайти й застосунки, налаштовуємо інструменти для трафіку та адмініструємо домени — під ключ.</p>
       </div>
