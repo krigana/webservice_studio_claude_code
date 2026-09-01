@@ -38,6 +38,16 @@ class BlogPost extends Model
         return $row === false ? null : $row;
     }
 
+    /**
+     * Все опубликованные статьи (без пагинации) — для sitemap.xml.
+     */
+    public static function sitemapEntries(): array
+    {
+        return static::db()->query(
+            "SELECT slug, updated_at FROM blog_posts WHERE status = 'published' AND published_at <= NOW()"
+        )->fetchAll();
+    }
+
     public static function tagsFor(int $postId): array
     {
         $stmt = static::db()->prepare(

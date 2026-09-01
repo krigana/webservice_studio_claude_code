@@ -11,6 +11,11 @@ if ($case === null) {
 $pageTitle = ($case['seo_title'] ?: $case['title']) . ' — Webservice Studio';
 $pageDescription = $case['seo_description'] ?: mb_substr(strip_tags((string) $case['description']), 0, 300);
 $pageImage = $case['cover_image'];
+$breadcrumbs = [
+    ['name' => 'Головна', 'url' => '/'],
+    ['name' => 'Портфоліо', 'url' => '/portfolio'],
+    ['name' => $case['title']],
+];
 
 $images = PortfolioCase::images((int) $case['id']);
 $next = PortfolioCase::nextCase((int) $case['id']);

@@ -1,6 +1,10 @@
 <?php
 $pageTitle = 'Портфоліо — Webservice Studio';
 $pageDescription = "Приклади робіт студії: сайти, лендинги, застосунки, рішення для арбітражу трафіку.";
+$breadcrumbs = [
+    ['name' => 'Головна', 'url' => '/'],
+    ['name' => 'Портфоліо', 'url' => '/portfolio'],
+];
 
 $categories = ServiceCategory::published();
 $activeSlug = $_GET['category'] ?? null;

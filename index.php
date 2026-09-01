@@ -60,6 +60,10 @@ $router->get('/kontakty', function () {
     require __DIR__ . '/templates/contacts.php';
 });
 
+$router->get('/sitemap.xml', function () {
+    require __DIR__ . '/templates/sitemap.php';
+});
+
 $router->post('/kontakty', function () {
     require __DIR__ . '/templates/contacts-submit.php';
 });

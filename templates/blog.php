@@ -1,6 +1,10 @@
 <?php
 $pageTitle = 'Блог — Webservice Studio';
 $pageDescription = 'Статті про розробку, SEO та арбітраж трафіку від команди Webservice Studio.';
+$breadcrumbs = [
+    ['name' => 'Головна', 'url' => '/'],
+    ['name' => 'Блог', 'url' => '/blog'],
+];
 
 $perPage = 9;
 $page = max(1, (int) ($_GET['page'] ?? 1));

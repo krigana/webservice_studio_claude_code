@@ -1,6 +1,10 @@
 <?php
 $pageTitle = 'Ціни — Webservice Studio';
 $pageDescription = 'Орієнтовна вартість послуг веб-студії: розробка сайтів, Android-застосунків, арбітраж трафіку, адміністрування.';
+$breadcrumbs = [
+    ['name' => 'Головна', 'url' => '/'],
+    ['name' => 'Ціни', 'url' => '/tsiny'],
+];
 
 $services = Service::publishedAll();
 $byCategory = [];

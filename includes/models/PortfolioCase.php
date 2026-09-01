@@ -20,6 +20,16 @@ class PortfolioCase extends Model
         return $stmt->fetchAll();
     }
 
+    /**
+     * Все опубликованные кейсы (slug + updated_at) — для sitemap.xml.
+     */
+    public static function sitemapEntries(): array
+    {
+        return static::db()->query(
+            "SELECT slug, updated_at FROM portfolio_cases WHERE status = 'published'"
+        )->fetchAll();
+    }
+
     public static function bySlugPublished(string $slug): ?array
     {
         $stmt = static::db()->prepare(

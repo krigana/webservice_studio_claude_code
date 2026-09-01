@@ -11,6 +11,34 @@ if ($post === null) {
 $pageTitle = ($post['seo_title'] ?: $post['title']) . ' — Webservice Studio';
 $pageDescription = $post['seo_description'] ?: ($post['excerpt'] ?: mb_substr(strip_tags($post['content']), 0, 300));
 $pageImage = $post['og_image'] ?: $post['cover_image'];
+$breadcrumbs = [
+    ['name' => 'Головна', 'url' => '/'],
+    ['name' => 'Блог', 'url' => '/blog'],
+    ['name' => $post['title']],
+];
+
+// Article JSON-LD (ТЗ, розділ 5) — siteUrl тут обчислюємо так само, як у header.php,
+// оскільки $extraSchema потрібен ДО require header.php.
+$articleScheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+$articleSiteUrl = $articleScheme . '://' . ($_SERVER['HTTP_HOST'] ?? 'web-service.studio');
+$extraSchema = [
+    '@context' => 'https://schema.org',
+    '@type' => 'Article',
+    'headline' => $post['title'],
+    'description' => $pageDescription,
+    'datePublished' => $post['published_at'] ? date('c', strtotime($post['published_at'])) : null,
+    'dateModified' => date('c', strtotime($post['updated_at'] ?? $post['published_at'])),
+    'mainEntityOfPage' => $articleSiteUrl . '/blog/' . $post['slug'],
+    'author' => ['@type' => 'Organization', 'name' => 'Webservice Studio'],
+    'publisher' => [
+        '@type' => 'Organization',
+        'name' => 'Webservice Studio',
+        'logo' => ['@type' => 'ImageObject', 'url' => $articleSiteUrl . '/assets/icons/icon-512.png'],
+    ],
+];
+if (!empty($pageImage)) {
+    $extraSchema['image'] = str_starts_with($pageImage, 'http') ? $pageImage : $articleSiteUrl . $pageImage;
+}
 
 $tags = BlogPost::tagsFor((int) $post['id']);
 $related = BlogPost::related((int) $post['id'], $post['category_id'] ? (int) $post['category_id'] : null);

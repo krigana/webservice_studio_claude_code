@@ -1,8 +1,35 @@
 <?php
 $pageTitle = 'Послуги — Webservice Studio';
 $pageDescription = 'Розробка сайтів, застосунки під Android, арбітраж трафіку, адміністрування доменів та сайтів.';
+$breadcrumbs = [
+    ['name' => 'Головна', 'url' => '/'],
+    ['name' => 'Послуги', 'url' => '/poslugy'],
+];
 
 $categories = ServiceCategory::published();
+$categoryServices = [];
+$allServicesForSchema = [];
+foreach ($categories as $cat) {
+    $categoryServices[$cat['id']] = Service::publishedByCategory((int) $cat['id']);
+    array_push($allServicesForSchema, ...$categoryServices[$cat['id']]);
+}
+if (!empty($allServicesForSchema)) {
+    $extraSchema = [
+        '@context' => 'https://schema.org',
+        '@type' => 'ItemList',
+        'itemListElement' => array_map(static function (array $s, int $i): array {
+            $item = [
+                '@type' => 'Service',
+                'name' => $s['title'],
+                'provider' => ['@type' => 'Organization', 'name' => 'Webservice Studio'],
+            ];
+            if (!empty($s['description'])) {
+                $item['description'] = $s['description'];
+            }
+            return ['@type' => 'ListItem', 'position' => $i + 1, 'item' => $item];
+        }, $allServicesForSchema, array_keys($allServicesForSchema)),
+    ];
+}
 
 require __DIR__ . '/partials/header.php';
 ?>
@@ -14,7 +41,7 @@ require __DIR__ . '/partials/header.php';
   <?php endif; ?>
 
   <?php foreach ($categories as $cat): ?>
-    <?php $services = Service::publishedByCategory((int) $cat['id']); ?>
+    <?php $services = $categoryServices[$cat['id']]; ?>
     <section id="<?= h($cat['slug']) ?>" style="margin-top:40px;">
       <h2><?= h($cat['name']) ?></h2>
       <?php if (empty($services)): ?>

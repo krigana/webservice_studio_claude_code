@@ -1,6 +1,10 @@
 <?php
 $pageTitle = 'Контакти — Webservice Studio';
 $pageDescription = 'Зв\'яжіться з нами: залиште заявку і ми відповімо протягом дня.';
+$breadcrumbs = [
+    ['name' => 'Головна', 'url' => '/'],
+    ['name' => 'Контакти', 'url' => '/kontakty'],
+];
 
 $services = Service::publishedAll();
 $preselectSlug = $_GET['service'] ?? null;
