@@ -1,4 +1,4 @@
-const CACHE_NAME = 'wsstudio-shell-v1';
+const CACHE_NAME = 'wsstudio-shell-v2';
 const OFFLINE_URL = '/offline.html';
 const APP_SHELL = [
   '/',
@@ -8,8 +8,18 @@ const APP_SHELL = [
 ];
 
 self.addEventListener('install', (event) => {
+  // cache.addAll() падає повністю, якщо не вдалось завантажити хоча б один
+  // ресурс — через це install міг зриватися через тимчасовий збій одного
+  // файлу. Кешуємо кожен ресурс окремо, щоб один невдалий запит не ламав
+  // встановлення сервіс-воркера цілком.
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL))
+    caches.open(CACHE_NAME).then((cache) =>
+      Promise.all(
+        APP_SHELL.map((url) =>
+          cache.add(url).catch((err) => console.warn('SW: не вдалося закешувати', url, err))
+        )
+      )
+    )
   );
   self.skipWaiting();
 });
