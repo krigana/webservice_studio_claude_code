@@ -1,6 +1,6 @@
 -- Початковий контент сторінки "Політика конфіденційності".
--- Можна виконати через phpMyAdmin / Hostinger DB Manager, АБО просто
--- створити сторінку вручну через /admin/pages/ — цей файл лише пришвидшує старт.
+-- Виконується однією кнопкою в /admin/migrations/ (розділ "Оновлення БД")
+-- після того, як код цього патча накотиться на хостинг.
 
 INSERT INTO pages (slug, title, content, seo_title, seo_description, updated_at) VALUES ('polityka-konfidentsiynosti', 'Політика конфіденційності', '<p>Ця Політика конфіденційності визначає, які дані веб-студія Webservice Studio (далі — «ми», «Студія») збирає від відвідувачів сайту web-service.studio (далі — «Сайт»), як їх використовує та зберігає.</p>
 
@@ -32,4 +32,4 @@ INSERT INTO pages (slug, title, content, seo_title, seo_description, updated_at)
 
 <h2>7. Контакти</h2>
 <p>З питань щодо цієї Політики звертайтеся: <a href="mailto:support@web-service.studio">support@web-service.studio</a>.</p>
-', 'Політика конфіденційності — Webservice Studio', 'Політика конфіденційності Webservice Studio: які дані ми збираємо через форму звязку та як їх використовуємо.', NOW());
+', 'Політика конфіденційності', 'Політика конфіденційності Webservice Studio: які дані ми збираємо через форму звязку та як їх використовуємо.', NOW());

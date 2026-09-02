@@ -194,6 +194,18 @@ CREATE TABLE settings (
     `value` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- -------------------------------------------------------------------------
+-- Реєстр виконаних міграцій БД (docs/migrations/*.sql) — щоб контент/зміни
+-- структури можна було накатувати однією кнопкою в адмінці /admin/migrations/
+-- замість ручного копіювання SQL у phpMyAdmin щоразу.
+-- -------------------------------------------------------------------------
+CREATE TABLE migrations (
+    id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    filename    VARCHAR(255) NOT NULL,
+    applied_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY uq_migrations_filename (filename)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 SET FOREIGN_KEY_CHECKS = 1;
 
 -- =========================================================================
