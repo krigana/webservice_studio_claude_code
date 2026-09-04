@@ -10,6 +10,9 @@ if ($page === null) {
 
 $pageTitle = ($page['seo_title'] ?: $page['title']) . ' — Webservice Studio';
 $pageDescription = $page['seo_description'] ?: mb_substr(strip_tags($page['content']), 0, 300);
+// Підсвітити пункт меню, якщо сторінка з таблиці pages відповідає одному з
+// пунктів навігації (наразі лише «Про студію» — решта such сторінок у меню нема).
+$activeNav = $slug === 'pro-studiyu' ? 'about' : '';
 $breadcrumbs = [
     ['name' => 'Головна', 'url' => '/'],
     ['name' => $page['title']],

@@ -7,19 +7,21 @@ $description = $pageDescription ?? "Веб-студія — розробка с�
 $siteUrl = $scheme . '://' . $host;
 
 // Organization — на всіх сторінках (ТЗ, розділ 5: мікророзмітка Schema.org)
+// Контакти беремо з Setting (/admin/settings/), щоб не розходились із
+// сторінкою «Контакти» та футером.
 $organizationSchema = [
     '@context' => 'https://schema.org',
     '@type' => 'Organization',
     'name' => 'Webservice Studio',
     'url' => $siteUrl . '/',
     'logo' => $siteUrl . '/assets/icons/icon-512.png',
-    'email' => 'support@web-service.studio',
-    'sameAs' => [
-        'https://www.facebook.com/webservicestudio/',
-        'https://www.instagram.com/webservicestudio/',
-        'https://t.me/webservices_studio',
-        'https://api.whatsapp.com/send/?phone=380959212203',
-    ],
+    'email' => Setting::get('contact_email', 'support@web-service.studio'),
+    'sameAs' => array_values(array_filter([
+        Setting::get('contact_facebook', 'https://www.facebook.com/webservicestudio/'),
+        Setting::get('contact_instagram', 'https://www.instagram.com/webservicestudio/'),
+        Setting::get('contact_telegram', 'https://t.me/webservices_studio'),
+        Setting::get('contact_whatsapp', 'https://api.whatsapp.com/send/?phone=380959212203'),
+    ])),
 ];
 
 // BreadcrumbList — якщо шаблон сторінки заповнив $breadcrumbs = [['name'=>.., 'url'=>..], ...]
@@ -94,6 +96,7 @@ if (!function_exists('jsonld')) {
 <?php
 $navItems = [
     'home' => ['/', 'Головна'],
+    'about' => ['/pro-studiyu', 'Про студію'],
     'services' => ['/poslugy', 'Послуги'],
     'pricing' => ['/tsiny', 'Ціни'],
     'portfolio' => ['/portfolio', 'Роботи'],

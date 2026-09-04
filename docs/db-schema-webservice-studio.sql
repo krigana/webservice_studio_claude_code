@@ -230,13 +230,19 @@ SELECT id, 'Лендінги', 'lendingy', 20 FROM service_categories WHERE slug
 INSERT INTO services (category_id, title, slug, sort_order)
 SELECT id, 'Клоакінг', 'kloaking', 30 FROM service_categories WHERE slug = 'arbitrazh-trafiku';
 
--- Контакты и соцсети — из ТЗ п.1.5, уже подтверждены заказчиком
+-- Контакты и соцсети — из ТЗ п.1.5, уже подтверждены заказчиком. Плюс тексты
+-- заголовка/подзаголовка страницы «Контакты» и подписи телефона/Telegram —
+-- редактируются через /admin/settings/ (см. модель Setting).
 INSERT INTO settings (`key`, `value`) VALUES
     ('contact_email',    'support@web-service.studio'),
     ('contact_facebook', 'https://www.facebook.com/webservicestudio/'),
     ('contact_instagram','https://www.instagram.com/webservicestudio/'),
     ('contact_telegram', 'https://t.me/webservices_studio'),
-    ('contact_whatsapp', 'https://api.whatsapp.com/send/?phone=380959212203');
+    ('contact_whatsapp', 'https://api.whatsapp.com/send/?phone=380959212203'),
+    ('contact_phone_display', '+380 95 921 22 03'),
+    ('contact_telegram_handle', '@webservices_studio'),
+    ('contacts_hero_title', 'Розкажіть про свій проєкт'),
+    ('contacts_hero_subtitle', 'Заповніть форму або напишіть напряму — відповідаємо протягом дня.');
 
 -- Примечание: администратор (таблица admins) намеренно не сеется в этом
 -- дампе — учётку и пароль нужно создать отдельно на этапе развёртывания
