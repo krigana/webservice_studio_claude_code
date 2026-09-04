@@ -13,4 +13,16 @@ class Page extends Model
     {
         return static::findBy('slug', $slug);
     }
+
+    /**
+     * Для sitemap.xml — усі сторінки з адмінки (немає статусу published/hidden,
+     * бо таблиця pages не має такого поля: усе, що створено в /admin/pages/,
+     * вважається опублікованим).
+     *
+     * @return array<int, array{slug: string, updated_at: string}>
+     */
+    public static function sitemapEntries(): array
+    {
+        return static::db()->query('SELECT slug, updated_at FROM pages')->fetchAll();
+    }
 }

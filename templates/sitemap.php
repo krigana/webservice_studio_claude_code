@@ -31,6 +31,9 @@ foreach (BlogPost::sitemapEntries() as $post) {
 foreach (PortfolioCase::sitemapEntries() as $case) {
     $urls[] = ['loc' => $base . '/portfolio/' . $case['slug'], 'lastmod' => sitemap_date($case['updated_at'])];
 }
+foreach (Page::sitemapEntries() as $page) {
+    $urls[] = ['loc' => $base . '/' . $page['slug'], 'lastmod' => sitemap_date($page['updated_at'])];
+}
 
 header('Content-Type: application/xml; charset=UTF-8');
 echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
