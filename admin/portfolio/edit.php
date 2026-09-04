@@ -57,8 +57,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($id) {
                     PortfolioCase::update($id, $data);
                     $caseId = $id;
+
+                    // Видалення позначених зображень галереї.
+                    if (!empty($_POST['delete_images']) && is_array($_POST['delete_images'])) {
+                        foreach ($_POST['delete_images'] as $imgId) {
+                            PortfolioCaseImage::delete((int) $imgId);
+                        }
+                    }
+
+                    // Порядок сортування для зображень, що залишились у галереї
+                    // (окремо від "Порядок сортування" самого кейса нижче у формі).
+                    if (!empty($_POST['image_sort_order']) && is_array($_POST['image_sort_order'])) {
+                        foreach ($_POST['image_sort_order'] as $imgId => $order) {
+                            PortfolioCaseImage::update((int) $imgId, ['sort_order' => (int) $order]);
+                        }
+                    }
                 } else {
                     $caseId = PortfolioCase::create($data);
+                }
+
+                // Нові файли галереї додаються ПІСЛЯ вже існуючих (за їхнім
+                // максимальним sort_order) — щоб не плутатись із зображеннями,
+                // які лишились після видалення/зміни порядку вище.
+                $nextImageOrder = 0;
+                foreach (PortfolioCase::images($caseId) as $existingImg) {
+                    $nextImageOrder = max($nextImageOrder, (int) $existingImg['sort_order'] + 1);
                 }
 
                 if (!empty($_FILES['gallery']['name'][0])) {
@@ -76,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         try {
                             $path = Upload::image($file, 'portfolio');
                             if ($path !== null) {
-                                PortfolioCaseImage::create(['case_id' => $caseId, 'image_path' => $path, 'sort_order' => $i]);
+                                PortfolioCaseImage::create(['case_id' => $caseId, 'image_path' => $path, 'sort_order' => $nextImageOrder + $i]);
                             }
                         } catch (RuntimeException $e) {
                             // пропускаем неудачный файл галереи, не прерывая сохранение кейса
@@ -123,11 +146,18 @@ admin_header($case ? 'Редагування кейса' : 'Новий кейс'
 
   <label>Галерея (можна вибрати декілька файлів)</label>
   <?php if (!empty($existingImages)): ?>
-    <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px;">
+    <div style="display:flex; gap:14px; flex-wrap:wrap; margin-bottom:14px;">
       <?php foreach ($existingImages as $img): ?>
-        <img src="<?= h($img['image_path']) ?>" style="width:70px; height:70px; object-fit:cover; border-radius:8px;">
+        <div style="width:90px; display:flex; flex-direction:column; align-items:center; gap:6px;">
+          <img src="<?= h($img['image_path']) ?>" style="width:70px; height:70px; object-fit:cover; border-radius:8px;">
+          <input type="number" name="image_sort_order[<?= (int) $img['id'] ?>]" value="<?= (int) $img['sort_order'] ?>" title="Порядок сортування" style="width:100%; padding:5px 6px; font-size:12px; margin-bottom:0;">
+          <label style="display:flex; align-items:center; gap:4px; font-size:12px; font-weight:400; color:#7C99A1; margin-bottom:0;">
+            <input type="checkbox" name="delete_images[]" value="<?= (int) $img['id'] ?>" style="width:auto; margin:0;"> видалити
+          </label>
+        </div>
       <?php endforeach; ?>
     </div>
+    <p style="font-size:12px; color:#7C99A1; margin:-4px 0 12px;">Число під фото — порядок у галереї (менше — вище). Зміни й позначені «видалити» застосуються після натискання «Зберегти».</p>
   <?php endif; ?>
   <input type="file" name="gallery[]" accept="image/*" multiple>
 
