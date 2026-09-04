@@ -19,7 +19,7 @@ function sitemap_date(?string $value): string
     return $ts !== false ? date('Y-m-d', $ts) : date('Y-m-d');
 }
 
-$staticPages = ['/', '/poslugy', '/tsiny', '/portfolio', '/blog', '/kontakty'];
+$staticPages = ['/', '/poslugy', '/tsiny', '/portfolio', '/blog', '/kontakty', '/karta-sajtu'];
 
 $urls = [];
 foreach ($staticPages as $path) {

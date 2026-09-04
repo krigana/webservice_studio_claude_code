@@ -25,12 +25,14 @@ class PortfolioCase extends Model
     }
 
     /**
-     * Все опубликованные кейсы (slug + updated_at) — для sitemap.xml.
+     * Все опубликованные кейсы (slug, title, updated_at) — для sitemap.xml и
+     * людської карти сайту (/karta-sajtu).
      */
     public static function sitemapEntries(): array
     {
         return static::db()->query(
-            "SELECT slug, updated_at FROM portfolio_cases WHERE status = 'published'"
+            "SELECT slug, title, updated_at FROM portfolio_cases
+             WHERE status = 'published' ORDER BY sort_order, id DESC"
         )->fetchAll();
     }
 

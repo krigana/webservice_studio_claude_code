@@ -64,6 +64,10 @@ $router->get('/sitemap.xml', function () {
     require __DIR__ . '/templates/sitemap.php';
 });
 
+$router->get('/karta-sajtu', function () {
+    require __DIR__ . '/templates/sitemap-page.php';
+});
+
 $router->post('/kontakty', function () {
     require __DIR__ . '/templates/contacts-submit.php';
 });

@@ -15,14 +15,14 @@ class Page extends Model
     }
 
     /**
-     * Для sitemap.xml — усі сторінки з адмінки (немає статусу published/hidden,
-     * бо таблиця pages не має такого поля: усе, що створено в /admin/pages/,
-     * вважається опублікованим).
+     * Для sitemap.xml і людської карти сайту (/karta-sajtu) — усі сторінки
+     * з адмінки (немає статусу published/hidden, бо таблиця pages не має
+     * такого поля: усе, що створено в /admin/pages/, вважається опублікованим).
      *
-     * @return array<int, array{slug: string, updated_at: string}>
+     * @return array<int, array{slug: string, title: string, updated_at: string}>
      */
     public static function sitemapEntries(): array
     {
-        return static::db()->query('SELECT slug, updated_at FROM pages')->fetchAll();
+        return static::db()->query('SELECT slug, title, updated_at FROM pages ORDER BY title')->fetchAll();
     }
 }

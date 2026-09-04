@@ -50,12 +50,15 @@ class BlogPost extends Model
     }
 
     /**
-     * Все опубликованные статьи (без пагинации) — для sitemap.xml.
+     * Все опубликованные статьи (без пагинации) — для sitemap.xml и людської
+     * карти сайту (/karta-sajtu).
      */
     public static function sitemapEntries(): array
     {
         return static::db()->query(
-            "SELECT slug, updated_at FROM blog_posts WHERE status = 'published' AND published_at <= NOW()"
+            "SELECT slug, title, updated_at FROM blog_posts
+             WHERE status = 'published' AND published_at <= NOW()
+             ORDER BY published_at DESC"
         )->fetchAll();
     }
 

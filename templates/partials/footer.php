@@ -61,7 +61,10 @@
 
     <div class="site-footer__bottom">
       <span>© <?= date('Y') ?> Webservice Studio. Всі права захищені.</span>
-      <a href="/polityka-konfidentsiynosti">Політика конфіденційності</a>
+      <div style="display:flex; gap:20px;">
+        <a href="/karta-sajtu">Карта сайту</a>
+        <a href="/polityka-konfidentsiynosti">Політика конфіденційності</a>
+      </div>
     </div>
   </div>
 </footer>
