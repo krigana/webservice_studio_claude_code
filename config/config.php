@@ -72,6 +72,10 @@ return [
         'bot_token' => wsstudio_env($env, 'TELEGRAM_BOT_TOKEN', ''),
         'chat_id' => wsstudio_env($env, 'TELEGRAM_CHAT_ID', ''),
     ],
+    'recaptcha' => [
+        'site_key' => wsstudio_env($env, 'RECAPTCHA_SITE_KEY', ''),
+        'secret_key' => wsstudio_env($env, 'RECAPTCHA_SECRET_KEY', ''),
+    ],
     'admin' => [
         'session_name' => wsstudio_env($env, 'ADMIN_SESSION_NAME', 'wsstudio_admin'),
     ],

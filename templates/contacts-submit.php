@@ -16,6 +16,15 @@ if (!csrf_verify()) {
     redirect('/kontakty');
 }
 
+// reCAPTCHA v2 (якщо ключі задані в .env — див. Recaptcha.php)
+if (Recaptcha::isEnabled($GLOBALS['config'])) {
+    $recaptchaToken = (string) ($_POST['g-recaptcha-response'] ?? '');
+    if (!Recaptcha::verify($GLOBALS['config'], $recaptchaToken, $_SERVER['REMOTE_ADDR'] ?? null)) {
+        flash_set('contact_error', 'Підтвердіть, будь ласка, що ви не робот, і спробуйте ще раз.');
+        redirect('/kontakty');
+    }
+}
+
 // простая защита от повторной отправки чаще, чем раз в 20 секунд
 if (!empty($_SESSION['last_lead_at']) && (time() - $_SESSION['last_lead_at']) < 20) {
     flash_set('contact_error', 'Заявку вже надіслано, зачекайте трохи перед повторною спробою.');

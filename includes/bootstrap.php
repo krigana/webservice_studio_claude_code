@@ -20,6 +20,7 @@ require __DIR__ . '/Database.php';
 require __DIR__ . '/Model.php';
 require __DIR__ . '/Auth.php';
 require __DIR__ . '/Telegram.php';
+require __DIR__ . '/Recaptcha.php';
 require __DIR__ . '/Upload.php';
 
 foreach (glob(__DIR__ . '/models/*.php') as $modelFile) {

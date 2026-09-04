@@ -21,7 +21,13 @@ $contactInstagram = Setting::get('contact_instagram', 'https://www.instagram.com
 $heroTitle = Setting::get('contacts_hero_title', 'Розкажіть про свій проєкт');
 $heroSubtitle = Setting::get('contacts_hero_subtitle', 'Заповніть форму або напишіть напряму — відповідаємо протягом дня.');
 
+$recaptchaEnabled = Recaptcha::isEnabled($GLOBALS['config']);
+$recaptchaSiteKey = $recaptchaEnabled ? Recaptcha::siteKey($GLOBALS['config']) : '';
+
 require __DIR__ . '/partials/header.php';
+if ($recaptchaEnabled) {
+    echo '<script src="https://www.google.com/recaptcha/api.js?hl=uk" async defer></script>' . "\n";
+}
 ?>
 <main>
   <div class="hero" style="padding-bottom:24px;">
@@ -71,6 +77,11 @@ require __DIR__ . '/partials/header.php';
         </div>
         <!-- honeypot-поле проти спам-ботів -->
         <input type="text" name="website" style="position:absolute; left:-9999px;" tabindex="-1" autocomplete="off">
+        <?php if ($recaptchaEnabled): ?>
+          <div class="field">
+            <div class="g-recaptcha" data-sitekey="<?= h($recaptchaSiteKey) ?>"></div>
+          </div>
+        <?php endif; ?>
         <button type="submit" class="btn-primary block">Надіслати заявку
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </button>
