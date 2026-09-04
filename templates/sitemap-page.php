@@ -35,8 +35,10 @@ $otherPages = array_filter(Page::sitemapEntries(), static fn (array $p): bool =>
 
 require __DIR__ . '/partials/header.php';
 
-$linkStyle = 'display:block; padding:9px 0; font-size:14.5px; font-weight:600; color:var(--color-ink); border-bottom:1px solid var(--color-border);';
-$sectionTitleStyle = 'font-size:12px; font-weight:700; color:var(--color-faint); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:14px;';
+$cardStyle = 'padding:32px 32px 24px;';
+$gridStyle = 'display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:4px 32px;';
+$linkStyle = 'display:block; padding:11px 2px; font-size:14.5px; font-weight:600; color:var(--color-ink); border-bottom:1px solid var(--color-border);';
+$sectionTitleStyle = 'font-size:12px; font-weight:700; color:var(--color-faint); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:18px;';
 ?>
 <main>
   <div class="hero" style="padding-bottom:24px;">
@@ -49,9 +51,9 @@ $sectionTitleStyle = 'font-size:12px; font-weight:700; color:var(--color-faint);
 
   <div class="container" style="padding:40px 40px 96px 40px; max-width:920px; display:flex; flex-direction:column; gap:24px;">
 
-    <div class="card">
+    <div class="card" style="<?= $cardStyle ?>">
       <p style="<?= $sectionTitleStyle ?>">Основні розділи</p>
-      <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:0 24px;">
+      <div style="<?= $gridStyle ?>">
         <?php foreach ($mainPages as [$url, $label]): ?>
           <a href="<?= h($url) ?>" style="<?= $linkStyle ?>"><?= h($label) ?></a>
         <?php endforeach; ?>
@@ -59,9 +61,9 @@ $sectionTitleStyle = 'font-size:12px; font-weight:700; color:var(--color-faint);
     </div>
 
     <?php if ($serviceCategories): ?>
-    <div class="card">
+    <div class="card" style="<?= $cardStyle ?>">
       <p style="<?= $sectionTitleStyle ?>">Послуги</p>
-      <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:0 24px;">
+      <div style="<?= $gridStyle ?>">
         <?php foreach ($serviceCategories as $cat): ?>
           <a href="/poslugy#<?= h($cat['slug']) ?>" style="<?= $linkStyle ?>"><?= h($cat['name']) ?></a>
         <?php endforeach; ?>
@@ -70,9 +72,9 @@ $sectionTitleStyle = 'font-size:12px; font-weight:700; color:var(--color-faint);
     <?php endif; ?>
 
     <?php if ($portfolioCases): ?>
-    <div class="card">
+    <div class="card" style="<?= $cardStyle ?>">
       <p style="<?= $sectionTitleStyle ?>">Портфоліо</p>
-      <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(240px, 1fr)); gap:0 24px;">
+      <div style="<?= $gridStyle ?>">
         <?php foreach ($portfolioCases as $case): ?>
           <a href="/portfolio/<?= h($case['slug']) ?>" style="<?= $linkStyle ?>"><?= h($case['title']) ?></a>
         <?php endforeach; ?>
@@ -81,9 +83,9 @@ $sectionTitleStyle = 'font-size:12px; font-weight:700; color:var(--color-faint);
     <?php endif; ?>
 
     <?php if ($blogPosts): ?>
-    <div class="card">
+    <div class="card" style="<?= $cardStyle ?>">
       <p style="<?= $sectionTitleStyle ?>">Блог</p>
-      <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(240px, 1fr)); gap:0 24px;">
+      <div style="<?= $gridStyle ?>">
         <?php foreach ($blogPosts as $post): ?>
           <a href="/blog/<?= h($post['slug']) ?>" style="<?= $linkStyle ?>"><?= h($post['title']) ?></a>
         <?php endforeach; ?>
@@ -92,9 +94,9 @@ $sectionTitleStyle = 'font-size:12px; font-weight:700; color:var(--color-faint);
     <?php endif; ?>
 
     <?php if ($otherPages): ?>
-    <div class="card">
+    <div class="card" style="<?= $cardStyle ?>">
       <p style="<?= $sectionTitleStyle ?>">Інші сторінки</p>
-      <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:0 24px;">
+      <div style="<?= $gridStyle ?>">
         <?php foreach ($otherPages as $page): ?>
           <a href="/<?= h($page['slug']) ?>" style="<?= $linkStyle ?>"><?= h($page['title']) ?></a>
         <?php endforeach; ?>
