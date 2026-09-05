@@ -38,9 +38,9 @@ if ($recaptchaEnabled) {
     </div>
   </div>
 
-  <div class="container" style="padding:56px 40px 96px 40px; display:flex; gap:64px; flex-wrap:wrap;">
+  <div class="container contacts-layout">
 
-    <div style="flex:1.3 1 340px; background:var(--color-surface); border-radius:24px; padding:44px;">
+    <div class="contacts-card">
       <?php if ($sent): ?>
         <div style="background:#EAF7FA; color:var(--color-ink); padding:16px 20px; border-radius:12px; margin-bottom:20px;">
           Дякуємо! Заявку отримано, ми скоро зв'яжемось з вами.
