@@ -55,7 +55,7 @@ require __DIR__ . '/partials/header.php';
   <?php endif; ?>
 
   <?php if (!empty($images)): ?>
-    <div class="container" style="padding:64px 0;">
+    <div class="container case-gallery">
       <div class="grid-3">
         <?php foreach ($images as $img): ?>
           <img src="<?= h($img['image_path']) ?>" alt="" class="thumb" style="width:100%; aspect-ratio:3/4;">

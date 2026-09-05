@@ -251,6 +251,8 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--c
 
 .thumb { border-radius: 16px; background: var(--color-tint-2); object-fit: cover; }
 
+.case-gallery { padding-top: 64px; padding-bottom: 64px; }
+
 /* --- Хедер --- */
 .site-header { width: 100%; background: #FFFFFF; border-bottom: 1px solid var(--color-border); position: sticky; top: 0; z-index: 40; }
 .site-header__row { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-top: 16px; padding-bottom: 16px; }
