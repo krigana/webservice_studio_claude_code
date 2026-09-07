@@ -256,6 +256,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--c
 .thumb { border-radius: 16px; background: var(--color-tint-2); object-fit: cover; }
 
 .case-gallery { padding-top: 64px; padding-bottom: 64px; }
+.case-project-link { padding-top: 24px; }
 
 /* --- Хедер --- */
 .site-header { width: 100%; background: #FFFFFF; border-bottom: 1px solid var(--color-border); position: sticky; top: 0; z-index: 40; padding-top: env(safe-area-inset-top, 0px); }
@@ -327,4 +328,5 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--c
   .cta-band h2 { font-size: 22px; }
   .contacts-layout { padding-left: 20px; padding-right: 20px; gap: 32px; }
   .contacts-card { flex-basis: 100%; padding: 28px; }
+  .case-project-link { padding-top: 24px; padding-bottom: 24px; }
 }
