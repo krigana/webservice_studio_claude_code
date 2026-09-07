@@ -234,7 +234,7 @@ SELECT id, 'Клоакінг', 'kloaking', 30 FROM service_categories WHERE slug
 -- заголовка/подзаголовка страницы «Контакты» и подписи телефона/Telegram —
 -- редактируются через /admin/settings/ (см. модель Setting).
 INSERT INTO settings (`key`, `value`) VALUES
-    ('contact_email',    'support@webservice.studio'),
+    ('contact_email',    'support@web-service.studio'),
     ('contact_facebook', 'https://www.facebook.com/webservicestudio/'),
     ('contact_instagram','https://www.instagram.com/webservicestudio/'),
     ('contact_telegram', 'https://t.me/webservices_studio'),

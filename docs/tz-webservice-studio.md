@@ -50,7 +50,7 @@
 - Instagram: https://www.instagram.com/webservicestudio/
 - Telegram: https://t.me/webservices_studio
 - WhatsApp: +380 95 921 22 03 (ссылка вида `https://api.whatsapp.com/send/?phone=380959212203`)
-- Email: support@webservice.studio
+- Email: support@web-service.studio
 
 ---
 

@@ -11,7 +11,7 @@ $services = Service::publishedAll();
 $preselectSlug = $_GET['service'] ?? null;
 $sent = isset($_GET['sent']);
 
-$contactEmail = Setting::get('contact_email', 'support@webservice.studio');
+$contactEmail = Setting::get('contact_email', 'support@web-service.studio');
 $contactPhoneDisplay = Setting::get('contact_phone_display', '+380 95 921 22 03');
 $contactWhatsapp = Setting::get('contact_whatsapp', 'https://api.whatsapp.com/send/?phone=380959212203');
 $contactTelegram = Setting::get('contact_telegram', 'https://t.me/webservices_studio');
