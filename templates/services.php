@@ -71,9 +71,16 @@ require __DIR__ . '/partials/header.php';
                 <?php if (!empty($service['description'])): ?>
                   <p><?= h($service['description']) ?></p>
                 <?php endif; ?>
-                <a href="/tsiny#service-<?= (int) $service['id'] ?>" class="order-link">Дізнатись ціну
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-                </a>
+                <div style="display:flex; flex-wrap:wrap; gap:4px 18px;">
+                  <a href="/tsiny#service-<?= (int) $service['id'] ?>" class="order-link">Дізнатись ціну
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                  </a>
+                  <?php if ($cat['slug'] === 'rozrobka-saitiv'): ?>
+                    <a href="/kalkulyator" class="order-link">Розрахувати вартість
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </a>
+                  <?php endif; ?>
+                </div>
               </div>
             <?php endforeach; ?>
           </div>
