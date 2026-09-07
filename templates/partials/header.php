@@ -58,7 +58,7 @@ if (!function_exists('jsonld')) {
 <html lang="uk">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title><?= h($title) ?></title>
   <meta name="description" content="<?= h($description) ?>">
   <link rel="canonical" href="<?= h($canonical) ?>">
@@ -75,6 +75,8 @@ if (!function_exists('jsonld')) {
   <link rel="icon" href="/favicon.png">
   <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
   <meta name="theme-color" content="#00A7C7">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Work+Sans:wght@400;500;600&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
   <?php
