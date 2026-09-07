@@ -15,7 +15,7 @@ $organizationSchema = [
     'name' => 'Webservice Studio',
     'url' => $siteUrl . '/',
     'logo' => $siteUrl . '/assets/icons/icon-512.png',
-    'email' => Setting::get('contact_email', 'support@web-service.studio'),
+    'email' => Setting::get('contact_email', 'support@webservice.studio'),
     'sameAs' => array_values(array_filter([
         Setting::get('contact_facebook', 'https://www.facebook.com/webservicestudio/'),
         Setting::get('contact_instagram', 'https://www.instagram.com/webservicestudio/'),

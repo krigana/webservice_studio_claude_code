@@ -32,7 +32,7 @@
       </div>
 
       <?php
-        $footerEmail = Setting::get('contact_email', 'support@web-service.studio');
+        $footerEmail = Setting::get('contact_email', 'support@webservice.studio');
         $footerPhoneDisplay = Setting::get('contact_phone_display', '+380 95 921 22 03');
         $footerWhatsapp = Setting::get('contact_whatsapp', 'https://api.whatsapp.com/send/?phone=380959212203');
         $footerFacebook = Setting::get('contact_facebook', 'https://www.facebook.com/webservicestudio/');

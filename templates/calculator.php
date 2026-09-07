@@ -7,7 +7,7 @@ $breadcrumbs = [
     ['name' => 'Калькулятор вартості', 'url' => '/kalkulyator'],
 ];
 
-$contactEmail = Setting::get('contact_email', 'support@web-service.studio');
+$contactEmail = Setting::get('contact_email', 'support@webservice.studio');
 $contactPhoneDisplay = Setting::get('contact_phone_display', '+380 95 921 22 03');
 
 // Фіксований перелік типів сайту та опцій із середньоринковими цінами
