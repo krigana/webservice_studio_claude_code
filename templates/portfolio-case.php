@@ -49,7 +49,7 @@ require __DIR__ . '/partials/header.php';
   </div>
 
   <?php if (!empty($case['project_url'])): ?>
-    <div class="container" style="padding-top:24px;">
+    <div class="container" style="padding:24px 0;">
       <a href="<?= h($case['project_url']) ?>" target="_blank" rel="noopener" class="btn-ghost">Переглянути проєкт →</a>
     </div>
   <?php endif; ?>
