@@ -119,7 +119,7 @@ require __DIR__ . '/partials/header.php';
       <div class="grid-3">
         <?php foreach ($latestCases as $case): ?>
           <a href="/portfolio/<?= h($case['slug']) ?>">
-            <img src="<?= h($case['cover_image']) ?>" alt="<?= h($case['title']) ?>" class="thumb" style="width:100%; aspect-ratio:4/3; margin-bottom:16px;">
+            <img src="<?= h($case['cover_image']) ?>" alt="<?= h($case['title']) ?>" class="thumb" style="width:100%; aspect-ratio:16/9; margin-bottom:16px;">
             <span style="font-size:12px; font-weight:700; color:var(--color-brand); text-transform:uppercase; letter-spacing:0.06em;"><?= h($case['category_name'] ?? '') ?></span>
             <h3 style="font-size:17px; font-weight:700; margin-top:6px; color:var(--color-ink);"><?= h($case['title']) ?></h3>
           </a>
