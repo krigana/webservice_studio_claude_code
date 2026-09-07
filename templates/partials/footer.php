@@ -18,6 +18,7 @@
         <a class="footer-col-link" href="/pro-studiyu">Про студію</a>
         <a class="footer-col-link" href="/poslugy">Послуги</a>
         <a class="footer-col-link" href="/tsiny">Ціни</a>
+        <a class="footer-col-link" href="/kalkulyator">Калькулятор вартості</a>
         <a class="footer-col-link" href="/portfolio">Наші роботи</a>
         <a class="footer-col-link" href="/blog">Блог</a>
       </div>

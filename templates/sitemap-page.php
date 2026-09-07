@@ -22,6 +22,7 @@ $mainPages = [
     ['/pro-studiyu', 'Про студію'],
     ['/poslugy', 'Послуги'],
     ['/tsiny', 'Ціни'],
+    ['/kalkulyator', 'Калькулятор вартості'],
     ['/portfolio', 'Портфоліо'],
     ['/blog', 'Блог'],
     ['/kontakty', 'Контакти'],

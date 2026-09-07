@@ -125,6 +125,7 @@ img { max-width: 100%; display: block; }
   font-weight: 600;
 }
 .btn-ghost:hover { border-color: var(--color-brand); color: var(--color-ink); }
+.btn-ghost.block { width: 100%; justify-content: center; }
 
 .order-link {
   font-size: 13.5px;
@@ -316,6 +317,39 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--c
 .contacts-layout { padding: 56px 40px 96px 40px; display: flex; gap: 64px; flex-wrap: wrap; }
 .contacts-card { flex: 1.3 1 340px; background: var(--color-surface); border-radius: 24px; padding: 44px; }
 
+/* --- Калькулятор вартості сайту --- */
+.calc-layout { display: flex; gap: 48px; flex-wrap: wrap; padding-top: 48px; padding-bottom: 96px; }
+.calc-main { flex: 1.6 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 36px; }
+.calc-side { flex: 1 1 280px; min-width: 0; }
+
+.calc-type-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.calc-type-card { position: relative; display: block; cursor: pointer; }
+.calc-type-card input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.calc-type-card__box { border: 1.5px solid var(--color-border); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 6px; transition: border-color .15s, background .15s; }
+.calc-type-card input:checked + .calc-type-card__box { border-color: var(--color-brand); background: var(--color-tint); }
+.calc-type-card input:focus-visible + .calc-type-card__box { outline: 2px solid var(--color-brand); outline-offset: 2px; }
+.calc-type-card__title { font-weight: 700; font-size: 15px; color: var(--color-ink); }
+.calc-type-card__price { font-family: var(--font-heading); font-weight: 800; font-size: 18px; color: var(--color-brand); }
+.calc-type-card__hint { font-size: 12.5px; color: var(--color-muted); line-height: 1.4; }
+
+.calc-pages-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 20px; border: 1.5px solid var(--color-border); border-radius: 16px; }
+.calc-pages-row input[type="number"] { width: 80px; padding: 8px 10px; border: 1px solid var(--color-border); border-radius: 8px; font-size: 15px; text-align: center; font-family: var(--font-body); }
+
+.calc-options { display: flex; flex-direction: column; border: 1.5px solid var(--color-border); border-radius: 16px; overflow: hidden; }
+.calc-option-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 15px 20px; border-bottom: 1px solid var(--color-border); cursor: pointer; }
+.calc-option-row:last-child { border-bottom: none; }
+.calc-option-row:hover { background: var(--color-surface); }
+.calc-option-row__label { display: flex; align-items: center; gap: 12px; font-size: 14.5px; color: var(--color-ink); }
+.calc-option-row__label input { width: 18px; height: 18px; accent-color: var(--color-brand); flex-shrink: 0; }
+.calc-option-row__price { font-weight: 700; color: var(--color-muted); font-size: 14px; white-space: nowrap; }
+
+.calc-total-box { position: sticky; top: 24px; background: var(--color-ink); color: #FFFFFF; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 14px; }
+.calc-total-box__label { font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.08em; color: #9FBCC4; }
+.calc-total-box__value { font-family: var(--font-heading); font-size: 34px; font-weight: 800; line-height: 1.1; }
+.calc-total-box__note { font-size: 12px; line-height: 1.55; color: #9FBCC4; }
+
+.print-quote { display: none; }
+
 @media (max-width: 640px) {
   .container { padding: 0 20px; }
   .site-header__row { padding-top: 13px; padding-bottom: 13px; }
@@ -329,4 +363,20 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--c
   .contacts-layout { padding-left: 20px; padding-right: 20px; gap: 32px; }
   .contacts-card { flex-basis: 100%; padding: 28px; }
   .case-project-link { padding-top: 24px; padding-bottom: 24px; }
+  .calc-layout { padding-top: 32px; padding-bottom: 48px; gap: 28px; }
+  .calc-type-grid { grid-template-columns: 1fr; }
+  .calc-total-box { position: static; }
+}
+
+@media print {
+  .site-header, .site-footer, .no-print, .cta-band, .hero { display: none !important; }
+  .print-quote { display: block !important; max-width: 100%; padding: 0; color: #000; }
+  .print-quote__head { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; font-size: 13px; }
+  .print-quote__date { color: #444; margin-bottom: 20px; }
+  .print-quote__table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
+  .print-quote__table td { padding: 10px 0; border-bottom: 1px solid #ccc; font-size: 14px; }
+  .print-quote__table td:last-child { text-align: right; font-weight: 700; white-space: nowrap; padding-left: 20px; }
+  .print-quote__total { font-size: 20px; font-weight: 800; text-align: right; border-top: 2px solid #000; padding-top: 14px; }
+  .print-quote__disclaimer { font-size: 11.5px; color: #666; margin-top: 32px; line-height: 1.5; }
+  body { background: #FFFFFF; }
 }

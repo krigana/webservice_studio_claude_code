@@ -40,6 +40,10 @@ $router->get('/tsiny', function () {
     require __DIR__ . '/templates/pricing.php';
 });
 
+$router->get('/kalkulyator', function () {
+    require __DIR__ . '/templates/calculator.php';
+});
+
 $router->get('/portfolio', function () {
     require __DIR__ . '/templates/portfolio.php';
 });
