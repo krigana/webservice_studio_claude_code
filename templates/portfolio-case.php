@@ -33,7 +33,7 @@ require __DIR__ . '/partials/header.php';
   </div>
 
   <div class="container" style="padding-bottom:40px; display:flex; align-items:flex-end; justify-content:space-between; gap:32px; flex-wrap:wrap;">
-    <div style="display:flex; flex-direction:column; gap:14px; max-width:720px;">
+    <div style="display:flex; flex-direction:column; gap:14px; max-width:720px; min-width:0;">
       <?php if (!empty($case['category_name'])): ?>
         <span style="font-size:12.5px; font-weight:700; color:var(--color-brand); text-transform:uppercase; letter-spacing:0.1em;"><?= h($case['category_name']) ?></span>
       <?php endif; ?>
