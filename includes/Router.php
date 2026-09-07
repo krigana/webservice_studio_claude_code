@@ -29,7 +29,10 @@ final class Router
             $path = rtrim($path, '/');
         }
 
-        $handlers = $this->routes[$method] ?? [];
+        // HEAD обробляємо тими самими маршрутами, що й GET (стандартна
+        // поведінка HTTP — тіло відповіді браузер/клієнт сам відкине).
+        $lookupMethod = $method === 'HEAD' ? 'GET' : $method;
+        $handlers = $this->routes[$lookupMethod] ?? [];
 
         foreach ($handlers as $pattern => $handler) {
             $regex = $this->compile($pattern);
