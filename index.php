@@ -27,6 +27,15 @@ require __DIR__ . '/includes/Router.php';
 
 $router = new Router();
 
+// Завантажені зображення (обкладинки блогу/портфоліо) фізично лежать
+// ПОЗА public_html — щоб пережити автодеплой (див. коментар у
+// includes/Upload.php). URL /assets/uploads/... лишається тим самим,
+// його просто більше немає як реального файлу в public_html, тому
+// запит долітає сюди через catch-all-правило в .htaccess.
+$router->get('/assets/uploads/{path}', function (array $params) {
+    Upload::serve($params['path'] ?? '');
+});
+
 // --- Публичные страницы ---
 $router->get('/', function () {
     require __DIR__ . '/templates/home.php';

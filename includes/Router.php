@@ -51,8 +51,14 @@ final class Router
 
     private function compile(string $pattern): string
     {
-        // {slug} -> (?P<slug>[^/]+)
-        $regex = preg_replace('#\{([a-zA-Z_]+)\}#', '(?P<$1>[^/]+)', $pattern);
+        // {slug} -> (?P<slug>[^/]+) — один сегмент шляху.
+        // {path} -> (?P<path>.+) — спеціальна назва плейсхолдера для
+        // маршрутів, що мають захоплювати кілька сегментів одразу
+        // (напр. /assets/uploads/{path} -> "portfolio/xxx.jpg").
+        $regex = preg_replace_callback('#\{([a-zA-Z_]+)\}#', function (array $m): string {
+            $inner = $m[1] === 'path' ? '.+' : '[^/]+';
+            return '(?P<' . $m[1] . '>' . $inner . ')';
+        }, $pattern);
         return '#^' . $regex . '$#u';
     }
 }
