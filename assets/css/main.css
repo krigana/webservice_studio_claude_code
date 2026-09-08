@@ -320,12 +320,6 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--c
 .cookie-consent__actions { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
 .cookie-consent__actions .btn-primary { padding: 12px 22px; font-size: 14px; }
 
-@media (max-width: 640px) {
-  .cookie-consent__row { flex-direction: column; align-items: stretch; gap: 14px; padding: 18px 0; }
-  .cookie-consent__actions { width: 100%; }
-  .cookie-consent__actions .btn-primary { width: 100%; }
-}
-
 @media (max-width: 900px) {
   .site-footer__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; }
 }
@@ -379,6 +373,9 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--c
 
 @media (max-width: 640px) {
   .container { padding: 0 20px; }
+  .cookie-consent__row { flex-direction: column; align-items: stretch; gap: 16px; padding-top: 24px; padding-bottom: 24px; }
+  .cookie-consent__actions { width: 100%; }
+  .cookie-consent__actions .btn-primary { width: 100%; }
   .site-header__row { padding-top: 13px; padding-bottom: 13px; }
   .section { padding: 40px 0; }
   .hero { padding: 48px 0 32px; }
