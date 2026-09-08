@@ -110,7 +110,7 @@ require __DIR__ . '/partials/header.php';
     </div>
   </div>
 
-  <div class="container calc-layout no-print" style="padding-top:8px;">
+  <div class="container calc-layout no-print" id="vajtpejdzh" style="padding-top:8px; scroll-margin-top:100px;">
     <div class="calc-main">
       <div>
         <h2 style="font-size:24px; font-weight:800; margin-bottom:8px;">Вайтпейдж — окремий розрахунок</h2>
