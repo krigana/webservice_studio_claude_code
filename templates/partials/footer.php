@@ -69,5 +69,45 @@
     </div>
   </div>
 </footer>
+
+<div class="cookie-consent" id="cookie-consent" role="dialog" aria-live="polite" aria-label="Повідомлення про використання файлів cookie" hidden>
+  <div class="container cookie-consent__row">
+    <p class="cookie-consent__text">
+      Ми використовуємо файли cookie, щоб сайт працював коректно і був зручнішим. Продовжуючи користуватися сайтом, ви погоджуєтесь з
+      <a href="/polityka-konfidentsiynosti">політикою конфіденційності</a>.
+    </p>
+    <div class="cookie-consent__actions">
+      <button type="button" class="btn-primary accent" id="cookie-consent-accept">Прийняти</button>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  var KEY = 'ws_cookie_consent';
+  var bar = document.getElementById('cookie-consent');
+  var acceptBtn = document.getElementById('cookie-consent-accept');
+  if (!bar || !acceptBtn) return;
+
+  var alreadyAccepted = false;
+  try {
+    alreadyAccepted = localStorage.getItem(KEY) === 'accepted';
+  } catch (e) {
+    // приватний режим / заблоковане сховище — просто не показуємо банер повторно щоразу
+    alreadyAccepted = true;
+  }
+
+  if (!alreadyAccepted) {
+    bar.hidden = false;
+    // невеликий таймаут, щоб transition на "is-visible" реально відпрацював
+    window.setTimeout(function () { bar.classList.add('is-visible'); }, 50);
+  }
+
+  acceptBtn.addEventListener('click', function () {
+    try { localStorage.setItem(KEY, 'accepted'); } catch (e) {}
+    bar.classList.remove('is-visible');
+    window.setTimeout(function () { bar.hidden = true; }, 300);
+  });
+})();
+</script>
 </body>
 </html>
