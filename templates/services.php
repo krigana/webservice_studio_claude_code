@@ -14,6 +14,14 @@ $categoryIcons = [
     'administruvannia' => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="6" rx="1.5"/><rect x="4" y="14" width="16" height="6" rx="1.5"/><circle cx="7.5" cy="7" r="0.6" fill="currentColor" stroke="none"/><circle cx="7.5" cy="17" r="0.6" fill="currentColor" stroke="none"/></svg>',
 ];
 
+// Якорі калькулятора для послуг напряму "Арбітраж трафіку", що мають
+// власний окремий розрахунок на /kalkulyator (див. templates/calculator.php).
+$serviceCalcAnchors = [
+    'whitepage' => 'vajtpejdzh',
+    'lendingy' => 'lendingy',
+    'kloaking' => 'kloaking',
+];
+
 $categories = ServiceCategory::published();
 $categoryServices = [];
 $allServicesForSchema = [];
@@ -75,12 +83,16 @@ require __DIR__ . '/partials/header.php';
                   <a href="/tsiny#service-<?= (int) $service['id'] ?>" class="order-link">Дізнатись ціну
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
                   </a>
-                  <?php if ($cat['slug'] === 'rozrobka-saitiv'): ?>
-                    <a href="/kalkulyator" class="order-link">Розрахувати вартість
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-                    </a>
-                  <?php elseif (($service['slug'] ?? '') === 'whitepage'): ?>
-                    <a href="/kalkulyator#vajtpejdzh" class="order-link">Розрахувати вартість
+                  <?php
+                    $calcHref = null;
+                    if ($cat['slug'] === 'rozrobka-saitiv') {
+                        $calcHref = '/kalkulyator';
+                    } elseif (isset($serviceCalcAnchors[$service['slug'] ?? ''])) {
+                        $calcHref = '/kalkulyator#' . $serviceCalcAnchors[$service['slug']];
+                    }
+                  ?>
+                  <?php if ($calcHref !== null): ?>
+                    <a href="<?= h($calcHref) ?>" class="order-link">Розрахувати вартість
                       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
                     </a>
                   <?php endif; ?>

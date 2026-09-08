@@ -7,6 +7,14 @@ $breadcrumbs = [
     ['name' => 'Ціни', 'url' => '/tsiny'],
 ];
 
+// Якорі калькулятора для послуг напряму "Арбітраж трафіку", що мають
+// власний окремий розрахунок на /kalkulyator (див. templates/calculator.php).
+$serviceCalcAnchors = [
+    'whitepage' => 'vajtpejdzh',
+    'lendingy' => 'lendingy',
+    'kloaking' => 'kloaking',
+];
+
 $services = Service::publishedAll();
 $byCategory = [];
 foreach ($services as $s) {
@@ -43,12 +51,16 @@ require __DIR__ . '/partials/header.php';
                 <p style="font-size:14px; line-height:1.55; color:<?= $accent ? '#C9DEE3' : 'var(--color-muted)' ?>;"><?= h($service['description']) ?></p>
               <?php endif; ?>
               <a href="/kontakty?service=<?= urlencode($service['slug']) ?>" class="btn-primary <?= $accent ? 'accent' : '' ?>" style="justify-content:center;">Замовити</a>
-              <?php if (($service['category_slug'] ?? '') === 'rozrobka-saitiv'): ?>
-                <a href="/kalkulyator" class="order-link" style="justify-content:center; <?= $accent ? 'color:#C9DEE3;' : '' ?>">Розрахувати вартість
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-                </a>
-              <?php elseif (($service['slug'] ?? '') === 'whitepage'): ?>
-                <a href="/kalkulyator#vajtpejdzh" class="order-link" style="justify-content:center; <?= $accent ? 'color:#C9DEE3;' : '' ?>">Розрахувати вартість
+              <?php
+                $calcHref = null;
+                if (($service['category_slug'] ?? '') === 'rozrobka-saitiv') {
+                    $calcHref = '/kalkulyator';
+                } elseif (isset($serviceCalcAnchors[$service['slug'] ?? ''])) {
+                    $calcHref = '/kalkulyator#' . $serviceCalcAnchors[$service['slug']];
+                }
+              ?>
+              <?php if ($calcHref !== null): ?>
+                <a href="<?= h($calcHref) ?>" class="order-link" style="justify-content:center; <?= $accent ? 'color:#C9DEE3;' : '' ?>">Розрахувати вартість
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
                 </a>
               <?php endif; ?>

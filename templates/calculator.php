@@ -42,6 +42,44 @@ $wpTypes = [
     ['id' => 'package', 'label' => 'Пакет ' . $wpPackageSize . ' шт (конвеєрний шаблон)', 'hint' => 'Один шаблон, адаптований під ' . $wpPackageSize . ' офферів/гео — ' . number_format($wpPackagePerUnit, 0, '.', ' ') . ' грн/шт', 'price' => $wpPackagePrice, 'qtyLabel' => 'Кількість пакетів по ' . $wpPackageSize . ' шт'],
 ];
 
+// Третій калькулятор — послуга "Лендінги" напряму "Арбітраж трафіку".
+// Базовий тип (шаблонний / індивідуальний / пакет 5 шт за одним
+// шаблоном) + додаткові роботи, які реально пропонують на ринку
+// (A/B-тест, копірайтинг, локалізація, інтеграція трекера тощо).
+$landingTemplatePrice = 3000;
+$landingCustomPrice = 6000;
+$landingPackagePerUnit = 2000;
+$landingPackageSize = 5;
+$landingPackagePrice = $landingPackagePerUnit * $landingPackageSize;
+$landingTypes = [
+    ['id' => 'template', 'label' => 'Лендинг за готовим шаблоном', 'hint' => 'Швидка адаптація готового шаблону під ваш оффер і гео — 2–4 дні', 'price' => $landingTemplatePrice, 'qtyLabel' => 'Кількість лендингів'],
+    ['id' => 'custom', 'label' => 'Лендинг з індивідуальним дизайном', 'hint' => 'Унікальний дизайн під нішу — довше в роботі, але вирізняється серед конкурентів', 'price' => $landingCustomPrice, 'qtyLabel' => 'Кількість лендингів'],
+    ['id' => 'package', 'label' => 'Пакет ' . $landingPackageSize . ' шт (один шаблон)', 'hint' => 'Один шаблон, адаптований під ' . $landingPackageSize . ' офферів/гео — ' . number_format($landingPackagePerUnit, 0, '.', ' ') . ' грн/шт', 'price' => $landingPackagePrice, 'qtyLabel' => 'Кількість пакетів по ' . $landingPackageSize . ' шт'],
+];
+$landingOptions = [
+    ['id' => 'abtest', 'label' => 'A/B тестування (другий варіант сторінки)', 'price' => 1500],
+    ['id' => 'copywriting', 'label' => 'Копірайтинг тексту під нішу', 'price' => 1200],
+    ['id' => 'lang', 'label' => 'Додаткова мовна версія', 'price' => 1000],
+    ['id' => 'tracker', 'label' => 'Інтеграція трекера (Keitaro/Binom)', 'price' => 800],
+    ['id' => 'form', 'label' => 'Форма заявки зі сповіщеннями у Telegram/CRM', 'price' => 700],
+    ['id' => 'seo', 'label' => 'SEO-розмітка та мета-теги', 'price' => 600],
+];
+
+// Четвертий калькулятор — послуга "Клоакінг". Проєктна послуга (без
+// кількості) з базовим налаштуванням + додатковими роботами під ринкові
+// потреби (трекер, ротація доменів, індивідуальні правила фільтрації,
+// щомісячна підтримка).
+$cloakTypes = [
+    ['id' => 'basic', 'label' => 'Базове налаштування', 'hint' => '1 домен, фільтрація ботів і модераторів рекламних кабінетів', 'price' => 3500],
+    ['id' => 'advanced', 'label' => 'Розширене налаштування', 'hint' => 'Кілька доменів, логіка white/black сторінок, гнучкі правила фільтрації', 'price' => 6000],
+];
+$cloakOptions = [
+    ['id' => 'tracker', 'label' => 'Інтеграція трекера (Keitaro/Binom)', 'price' => 1000],
+    ['id' => 'domain', 'label' => 'Додатковий домен для ротації', 'price' => 800],
+    ['id' => 'rules', 'label' => 'Індивідуальні правила фільтрації (гео/User-Agent/реферер)', 'price' => 1200],
+    ['id' => 'support', 'label' => 'Щомісячна підтримка та моніторинг', 'price' => 1500],
+];
+
 require __DIR__ . '/partials/header.php';
 ?>
 <main>
@@ -49,7 +87,7 @@ require __DIR__ . '/partials/header.php';
     <div class="container">
       <span class="eyebrow">Калькулятор</span>
       <h1 style="max-width:640px;">Розрахуйте орієнтовну вартість сайту</h1>
-      <p class="lead">Оберіть тип сайту та потрібні опції — миттєво побачите приблизну ціну на основі середньоринкових тарифів. Поки що калькулятор охоплює лише напрямок «Розробка сайтів».</p>
+      <p class="lead">Оберіть тип сайту та потрібні опції — миттєво побачите приблизну ціну на основі середньоринкових тарифів. Нижче — окремі розрахунки для послуг напряму «Арбітраж трафіку»: вайтпейдж, лендінги та клоакінг.</p>
     </div>
   </div>
 
@@ -82,7 +120,7 @@ require __DIR__ . '/partials/header.php';
 
       <div>
         <h2 style="font-size:20px; font-weight:800; margin-bottom:16px;">3. Додаткові опції</h2>
-        <div class="calc-options">
+        <div class="calc-options" id="calc-options">
           <?php foreach ($calcOptions as $o): ?>
             <label class="calc-option-row">
               <span class="calc-option-row__label">
@@ -152,6 +190,113 @@ require __DIR__ . '/partials/header.php';
     </div>
   </div>
 
+  <div class="container calc-layout no-print" id="lendingy" style="padding-top:8px; scroll-margin-top:100px;">
+    <div class="calc-main">
+      <div>
+        <h2 style="font-size:24px; font-weight:800; margin-bottom:8px;">Лендінги — окремий розрахунок</h2>
+        <p style="font-size:14px; line-height:1.55; color:var(--color-muted); margin-bottom:20px;">Стосується послуги «Лендінги» напряму «Арбітраж трафіку» — оберіть базовий варіант і додайте потрібні роботи з ринкового переліку нижче.</p>
+        <div class="calc-type-grid">
+          <?php foreach ($landingTypes as $i => $t): ?>
+            <label class="calc-type-card">
+              <input type="radio" name="landing-type" value="<?= h($t['id']) ?>" data-price="<?= (int) $t['price'] ?>" data-label="<?= h($t['label']) ?>" data-qty-label="<?= h($t['qtyLabel']) ?>" <?= $i === 0 ? 'checked' : '' ?>>
+              <span class="calc-type-card__box">
+                <span class="calc-type-card__title"><?= h($t['label']) ?></span>
+                <span class="calc-type-card__price">від <?= number_format($t['price'], 0, '.', ' ') ?> грн</span>
+                <span class="calc-type-card__hint"><?= h($t['hint']) ?></span>
+              </span>
+            </label>
+          <?php endforeach; ?>
+        </div>
+      </div>
+
+      <div>
+        <div class="calc-pages-row">
+          <span id="landing-qty-label"><?= h($landingTypes[0]['qtyLabel']) ?></span>
+          <input type="number" id="landing-qty" min="1" max="50" step="1" value="1">
+        </div>
+        <p style="font-size:13px; color:var(--color-faint); margin-top:10px;">Для пакета кількість вказується в кількості пакетів по <?= (int) $landingPackageSize ?> шт (тобто «2» = <?= (int) ($landingPackageSize * 2) ?> лендингів).</p>
+      </div>
+
+      <div>
+        <h2 style="font-size:20px; font-weight:800; margin-bottom:16px;">Додаткові роботи</h2>
+        <div class="calc-options" id="landing-options">
+          <?php foreach ($landingOptions as $o): ?>
+            <label class="calc-option-row">
+              <span class="calc-option-row__label">
+                <input type="checkbox" data-price="<?= (int) $o['price'] ?>" data-label="<?= h($o['label']) ?>">
+                <?= h($o['label']) ?>
+              </span>
+              <span class="calc-option-row__price">+<?= number_format($o['price'], 0, '.', ' ') ?> грн</span>
+            </label>
+          <?php endforeach; ?>
+        </div>
+      </div>
+    </div>
+
+    <div class="calc-side">
+      <div class="calc-total-box">
+        <span class="calc-total-box__label">Орієнтовна вартість</span>
+        <span class="calc-total-box__value" id="landing-total-value">0 грн</span>
+        <button type="button" id="landing-print-btn" class="btn-primary accent block" style="justify-content:center;">
+          Друк / зберегти PDF
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a1 1 0 0 1-1-1v-5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-2M6 14h12v8H6v-8z"/></svg>
+        </button>
+        <a href="/kontakty" class="btn-ghost block" style="justify-content:center; background:transparent; border-color:rgba(255,255,255,0.25); color:#fff;">Обговорити проєкт з нами</a>
+        <p class="calc-total-box__note">Розрахунок орієнтовний і не є остаточною комерційною пропозицією. Точну вартість погоджуємо індивідуально після обговорення деталей проєкту.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container calc-layout no-print" id="kloaking" style="padding-top:8px; scroll-margin-top:100px;">
+    <div class="calc-main">
+      <div>
+        <h2 style="font-size:24px; font-weight:800; margin-bottom:8px;">Клоакінг — окремий розрахунок</h2>
+        <p style="font-size:14px; line-height:1.55; color:var(--color-muted); margin-bottom:20px;">Стосується послуги «Клоакінг» напряму «Арбітраж трафіку» — проєктна послуга: оберіть рівень налаштування і додайте потрібні роботи з ринкового переліку нижче.</p>
+        <div class="calc-type-grid">
+          <?php foreach ($cloakTypes as $i => $t): ?>
+            <label class="calc-type-card">
+              <input type="radio" name="cloak-type" value="<?= h($t['id']) ?>" data-price="<?= (int) $t['price'] ?>" data-label="<?= h($t['label']) ?>" <?= $i === 0 ? 'checked' : '' ?>>
+              <span class="calc-type-card__box">
+                <span class="calc-type-card__title"><?= h($t['label']) ?></span>
+                <span class="calc-type-card__price">від <?= number_format($t['price'], 0, '.', ' ') ?> грн</span>
+                <span class="calc-type-card__hint"><?= h($t['hint']) ?></span>
+              </span>
+            </label>
+          <?php endforeach; ?>
+        </div>
+      </div>
+
+      <div>
+        <h2 style="font-size:20px; font-weight:800; margin-bottom:16px;">Додаткові роботи</h2>
+        <div class="calc-options" id="cloak-options">
+          <?php foreach ($cloakOptions as $o): ?>
+            <label class="calc-option-row">
+              <span class="calc-option-row__label">
+                <input type="checkbox" data-price="<?= (int) $o['price'] ?>" data-label="<?= h($o['label']) ?>">
+                <?= h($o['label']) ?>
+              </span>
+              <span class="calc-option-row__price">+<?= number_format($o['price'], 0, '.', ' ') ?> грн</span>
+            </label>
+          <?php endforeach; ?>
+        </div>
+        <p style="font-size:13px; color:var(--color-faint); margin-top:10px;">Пункт «Щомісячна підтримка та моніторинг» — рекурентний, вказана сума за місяць.</p>
+      </div>
+    </div>
+
+    <div class="calc-side">
+      <div class="calc-total-box">
+        <span class="calc-total-box__label">Орієнтовна вартість</span>
+        <span class="calc-total-box__value" id="cloak-total-value">0 грн</span>
+        <button type="button" id="cloak-print-btn" class="btn-primary accent block" style="justify-content:center;">
+          Друк / зберегти PDF
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a1 1 0 0 1-1-1v-5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-2M6 14h12v8H6v-8z"/></svg>
+        </button>
+        <a href="/kontakty" class="btn-ghost block" style="justify-content:center; background:transparent; border-color:rgba(255,255,255,0.25); color:#fff;">Обговорити проєкт з нами</a>
+        <p class="calc-total-box__note">Розрахунок орієнтовний і не є остаточною комерційною пропозицією. Точну вартість погоджуємо індивідуально після обговорення деталей проєкту.</p>
+      </div>
+    </div>
+  </div>
+
   <!-- Друкована версія — заповнюється скриптом перед window.print() -->
   <div class="print-quote" id="printQuote">
     <div class="print-quote__head">
@@ -201,7 +346,7 @@ require __DIR__ . '/partials/header.php';
     var pagesSum = pages * PAGE_PRICE;
     var optionsSum = 0;
     var selected = [];
-    document.querySelectorAll('.calc-option-row input[type=checkbox]:checked').forEach(function (cb) {
+    document.querySelectorAll('#calc-options input[type=checkbox]:checked').forEach(function (cb) {
       var price = Number(cb.dataset.price);
       optionsSum += price;
       selected.push({ label: cb.dataset.label, price: price });
@@ -222,7 +367,7 @@ require __DIR__ . '/partials/header.php';
   document.querySelectorAll('input[name="calc-type"]').forEach(function (el) {
     el.addEventListener('change', calc);
   });
-  document.querySelectorAll('.calc-option-row input[type=checkbox]').forEach(function (el) {
+  document.querySelectorAll('#calc-options input[type=checkbox]').forEach(function (el) {
     el.addEventListener('change', calc);
   });
   var pagesInput = document.getElementById('calc-pages');
@@ -277,6 +422,90 @@ require __DIR__ . '/partials/header.php';
   }
 
   if (document.querySelector('input[name="wp-type"]')) wpCalc();
+
+  // --- Окремий калькулятор для "Лендінги" (базовий тип + додаткові роботи) ---
+  function landingCalc() {
+    var typeInput = document.querySelector('input[name="landing-type"]:checked');
+    var perUnit = typeInput ? Number(typeInput.dataset.price) : 0;
+    var typeLabel = typeInput ? typeInput.dataset.label : '';
+    var qtyLabel = typeInput ? typeInput.dataset.qtyLabel : '';
+    var qtyLabelEl = document.getElementById('landing-qty-label');
+    if (qtyLabelEl && qtyLabel) qtyLabelEl.textContent = qtyLabel;
+    var qtyInput = document.getElementById('landing-qty');
+    var qty = Math.max(1, parseInt(qtyInput.value, 10) || 1);
+    var baseSum = perUnit * qty;
+    var optionsSum = 0;
+    var selected = [];
+    document.querySelectorAll('#landing-options input[type=checkbox]:checked').forEach(function (cb) {
+      var price = Number(cb.dataset.price);
+      optionsSum += price;
+      selected.push({ label: cb.dataset.label, price: price });
+    });
+    var total = baseSum + optionsSum;
+    document.getElementById('landing-total-value').textContent = formatUAH(total);
+    return { typeLabel: typeLabel, perUnit: perUnit, qty: qty, baseSum: baseSum, selected: selected, total: total };
+  }
+
+  document.querySelectorAll('input[name="landing-type"]').forEach(function (el) {
+    el.addEventListener('change', landingCalc);
+  });
+  document.querySelectorAll('#landing-options input[type=checkbox]').forEach(function (el) {
+    el.addEventListener('change', landingCalc);
+  });
+  var landingQtyInput = document.getElementById('landing-qty');
+  if (landingQtyInput) landingQtyInput.addEventListener('input', landingCalc);
+
+  var landingPrintBtn = document.getElementById('landing-print-btn');
+  if (landingPrintBtn) {
+    landingPrintBtn.addEventListener('click', function () {
+      var data = landingCalc();
+      var rows = '<tr><td>' + data.typeLabel + ' (' + data.qty + ' × ' + formatUAH(data.perUnit) + ')</td><td>' + formatUAH(data.baseSum) + '</td></tr>';
+      data.selected.forEach(function (o) {
+        rows += '<tr><td>' + o.label + '</td><td>' + formatUAH(o.price) + '</td></tr>';
+      });
+      fillAndPrintQuote('Орієнтовний розрахунок вартості лендингу', rows, data.total);
+    });
+  }
+
+  if (document.querySelector('input[name="landing-type"]')) landingCalc();
+
+  // --- Окремий калькулятор для "Клоакінг" (тип налаштування + додаткові роботи) ---
+  function cloakCalc() {
+    var typeInput = document.querySelector('input[name="cloak-type"]:checked');
+    var base = typeInput ? Number(typeInput.dataset.price) : 0;
+    var typeLabel = typeInput ? typeInput.dataset.label : '';
+    var optionsSum = 0;
+    var selected = [];
+    document.querySelectorAll('#cloak-options input[type=checkbox]:checked').forEach(function (cb) {
+      var price = Number(cb.dataset.price);
+      optionsSum += price;
+      selected.push({ label: cb.dataset.label, price: price });
+    });
+    var total = base + optionsSum;
+    document.getElementById('cloak-total-value').textContent = formatUAH(total);
+    return { typeLabel: typeLabel, base: base, selected: selected, total: total };
+  }
+
+  document.querySelectorAll('input[name="cloak-type"]').forEach(function (el) {
+    el.addEventListener('change', cloakCalc);
+  });
+  document.querySelectorAll('#cloak-options input[type=checkbox]').forEach(function (el) {
+    el.addEventListener('change', cloakCalc);
+  });
+
+  var cloakPrintBtn = document.getElementById('cloak-print-btn');
+  if (cloakPrintBtn) {
+    cloakPrintBtn.addEventListener('click', function () {
+      var data = cloakCalc();
+      var rows = '<tr><td>' + data.typeLabel + '</td><td>' + formatUAH(data.base) + '</td></tr>';
+      data.selected.forEach(function (o) {
+        rows += '<tr><td>' + o.label + '</td><td>' + formatUAH(o.price) + '</td></tr>';
+      });
+      fillAndPrintQuote('Орієнтовний розрахунок вартості клоакінгу', rows, data.total);
+    });
+  }
+
+  if (document.querySelector('input[name="cloak-type"]')) cloakCalc();
 })();
 </script>
 <?php require __DIR__ . '/partials/footer.php'; ?>
