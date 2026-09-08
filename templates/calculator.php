@@ -30,6 +30,18 @@ $calcOptions = [
     ['id' => 'lang', 'label' => 'Додаткова мовна версія сайту', 'price' => 5000],
 ];
 
+// Другий, окремий калькулятор — для напряму "Арбітраж трафіку" (послуга
+// "Вайтпейдж"). Два варіанти: індивідуальний вайтпейдж під нішу/гео, і
+// пакет 10 шт за єдиним конвеєрним шаблоном (значно дешевше за штуку).
+$wpUnitPrice = 5000;
+$wpPackagePerUnit = 500;
+$wpPackageSize = 10;
+$wpPackagePrice = $wpPackagePerUnit * $wpPackageSize;
+$wpTypes = [
+    ['id' => 'unique', 'label' => 'Унікальний вайтпейдж', 'hint' => 'Індивідуальний дизайн під вашу нішу і гео, проходить модерацію Google/Facebook Ads', 'price' => $wpUnitPrice, 'qtyLabel' => 'Кількість унікальних вайтпейджів'],
+    ['id' => 'package', 'label' => 'Пакет ' . $wpPackageSize . ' шт (конвеєрний шаблон)', 'hint' => 'Один шаблон, адаптований під ' . $wpPackageSize . ' офферів/гео — ' . number_format($wpPackagePerUnit, 0, '.', ' ') . ' грн/шт', 'price' => $wpPackagePrice, 'qtyLabel' => 'Кількість пакетів по ' . $wpPackageSize . ' шт'],
+];
+
 require __DIR__ . '/partials/header.php';
 ?>
 <main>
@@ -98,6 +110,48 @@ require __DIR__ . '/partials/header.php';
     </div>
   </div>
 
+  <div class="container calc-layout no-print" style="padding-top:8px;">
+    <div class="calc-main">
+      <div>
+        <h2 style="font-size:24px; font-weight:800; margin-bottom:8px;">Вайтпейдж — окремий розрахунок</h2>
+        <p style="font-size:14px; line-height:1.55; color:var(--color-muted); margin-bottom:20px;">Стосується послуги «Вайтпейдж» напряму «Арбітраж трафіку» — оберіть індивідуальний варіант або пакетну пропозицію за шаблоном.</p>
+        <div class="calc-type-grid">
+          <?php foreach ($wpTypes as $i => $t): ?>
+            <label class="calc-type-card">
+              <input type="radio" name="wp-type" value="<?= h($t['id']) ?>" data-price="<?= (int) $t['price'] ?>" data-label="<?= h($t['label']) ?>" data-qty-label="<?= h($t['qtyLabel']) ?>" <?= $i === 0 ? 'checked' : '' ?>>
+              <span class="calc-type-card__box">
+                <span class="calc-type-card__title"><?= h($t['label']) ?></span>
+                <span class="calc-type-card__price">від <?= number_format($t['price'], 0, '.', ' ') ?> грн</span>
+                <span class="calc-type-card__hint"><?= h($t['hint']) ?></span>
+              </span>
+            </label>
+          <?php endforeach; ?>
+        </div>
+      </div>
+
+      <div>
+        <div class="calc-pages-row">
+          <span id="wp-qty-label"><?= h($wpTypes[0]['qtyLabel']) ?></span>
+          <input type="number" id="wp-qty" min="1" max="50" step="1" value="1">
+        </div>
+        <p style="font-size:13px; color:var(--color-faint); margin-top:10px;">Для пакета кількість вказується в кількості пакетів по <?= (int) $wpPackageSize ?> шт (тобто «2» = <?= (int) ($wpPackageSize * 2) ?> вайтпейджів).</p>
+      </div>
+    </div>
+
+    <div class="calc-side">
+      <div class="calc-total-box">
+        <span class="calc-total-box__label">Орієнтовна вартість</span>
+        <span class="calc-total-box__value" id="wp-total-value">0 грн</span>
+        <button type="button" id="wp-print-btn" class="btn-primary accent block" style="justify-content:center;">
+          Друк / зберегти PDF
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a1 1 0 0 1-1-1v-5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-2M6 14h12v8H6v-8z"/></svg>
+        </button>
+        <a href="/kontakty" class="btn-ghost block" style="justify-content:center; background:transparent; border-color:rgba(255,255,255,0.25); color:#fff;">Обговорити проєкт з нами</a>
+        <p class="calc-total-box__note">Розрахунок орієнтовний і не є остаточною комерційною пропозицією. Точну вартість погоджуємо індивідуально після обговорення деталей проєкту.</p>
+      </div>
+    </div>
+  </div>
+
   <!-- Друкована версія — заповнюється скриптом перед window.print() -->
   <div class="print-quote" id="printQuote">
     <div class="print-quote__head">
@@ -107,7 +161,7 @@ require __DIR__ . '/partials/header.php';
         <?= h($contactEmail) ?> · <?= h($contactPhoneDisplay) ?>
       </div>
     </div>
-    <h1>Орієнтовний розрахунок вартості сайту</h1>
+    <h1 id="printQuoteTitle">Орієнтовний розрахунок вартості сайту</h1>
     <p class="print-quote__date"></p>
     <table class="print-quote__table">
       <tbody id="printQuoteRows"></tbody>
@@ -157,6 +211,14 @@ require __DIR__ . '/partials/header.php';
     return { typeLabel: typeLabel, base: base, pages: pages, pagesSum: pagesSum, selected: selected, total: total };
   }
 
+  function fillAndPrintQuote(title, rows, total) {
+    document.getElementById('printQuoteTitle').textContent = title;
+    document.getElementById('printQuoteRows').innerHTML = rows;
+    document.querySelector('.print-quote__total').textContent = 'Разом: ' + formatUAH(total);
+    document.querySelector('.print-quote__date').textContent = 'Дата: ' + new Date().toLocaleDateString('uk-UA');
+    window.print();
+  }
+
   document.querySelectorAll('input[name="calc-type"]').forEach(function (el) {
     el.addEventListener('change', calc);
   });
@@ -178,14 +240,43 @@ require __DIR__ . '/partials/header.php';
       data.selected.forEach(function (o) {
         rows += '<tr><td>' + o.label + '</td><td>' + formatUAH(o.price) + '</td></tr>';
       });
-      document.getElementById('printQuoteRows').innerHTML = rows;
-      document.querySelector('.print-quote__total').textContent = 'Разом: ' + formatUAH(data.total);
-      document.querySelector('.print-quote__date').textContent = 'Дата: ' + new Date().toLocaleDateString('uk-UA');
-      window.print();
+      fillAndPrintQuote('Орієнтовний розрахунок вартості сайту', rows, data.total);
     });
   }
 
   calc();
+
+  // --- Окремий калькулятор для "Вайтпейдж" ---
+  function wpCalc() {
+    var typeInput = document.querySelector('input[name="wp-type"]:checked');
+    var perUnit = typeInput ? Number(typeInput.dataset.price) : 0;
+    var typeLabel = typeInput ? typeInput.dataset.label : '';
+    var qtyLabel = typeInput ? typeInput.dataset.qtyLabel : '';
+    var qtyLabelEl = document.getElementById('wp-qty-label');
+    if (qtyLabelEl && qtyLabel) qtyLabelEl.textContent = qtyLabel;
+    var qtyInput = document.getElementById('wp-qty');
+    var qty = Math.max(1, parseInt(qtyInput.value, 10) || 1);
+    var total = perUnit * qty;
+    document.getElementById('wp-total-value').textContent = formatUAH(total);
+    return { typeLabel: typeLabel, perUnit: perUnit, qty: qty, total: total };
+  }
+
+  document.querySelectorAll('input[name="wp-type"]').forEach(function (el) {
+    el.addEventListener('change', wpCalc);
+  });
+  var wpQtyInput = document.getElementById('wp-qty');
+  if (wpQtyInput) wpQtyInput.addEventListener('input', wpCalc);
+
+  var wpPrintBtn = document.getElementById('wp-print-btn');
+  if (wpPrintBtn) {
+    wpPrintBtn.addEventListener('click', function () {
+      var data = wpCalc();
+      var rows = '<tr><td>' + data.typeLabel + ' (' + data.qty + ' × ' + formatUAH(data.perUnit) + ')</td><td>' + formatUAH(data.total) + '</td></tr>';
+      fillAndPrintQuote('Орієнтовний розрахунок вартості вайтпейджа', rows, data.total);
+    });
+  }
+
+  if (document.querySelector('input[name="wp-type"]')) wpCalc();
 })();
 </script>
 <?php require __DIR__ . '/partials/footer.php'; ?>
