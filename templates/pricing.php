@@ -7,12 +7,14 @@ $breadcrumbs = [
     ['name' => 'Ціни', 'url' => '/tsiny'],
 ];
 
-// Якорі калькулятора для послуг напряму "Арбітраж трафіку", що мають
-// власний окремий розрахунок на /kalkulyator (див. templates/calculator.php).
+// Якорі калькулятора для послуг, що мають власний окремий розрахунок
+// на /kalkulyator (див. templates/calculator.php): три послуги напряму
+// "Арбітраж трафіку" плюс "Адміністрування доменів та сайтів".
 $serviceCalcAnchors = [
     'whitepage' => 'vajtpejdzh',
     'lendingy' => 'lendingy',
     'kloaking' => 'kloaking',
+    'administruvannia' => 'administruvannia',
 ];
 
 $services = Service::publishedAll();

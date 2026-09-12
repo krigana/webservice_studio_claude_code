@@ -14,12 +14,14 @@ $categoryIcons = [
     'administruvannia' => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="6" rx="1.5"/><rect x="4" y="14" width="16" height="6" rx="1.5"/><circle cx="7.5" cy="7" r="0.6" fill="currentColor" stroke="none"/><circle cx="7.5" cy="17" r="0.6" fill="currentColor" stroke="none"/></svg>',
 ];
 
-// Якорі калькулятора для послуг напряму "Арбітраж трафіку", що мають
-// власний окремий розрахунок на /kalkulyator (див. templates/calculator.php).
+// Якорі калькулятора для послуг, що мають власний окремий розрахунок
+// на /kalkulyator (див. templates/calculator.php): три послуги напряму
+// "Арбітраж трафіку" плюс "Адміністрування доменів та сайтів".
 $serviceCalcAnchors = [
     'whitepage' => 'vajtpejdzh',
     'lendingy' => 'lendingy',
     'kloaking' => 'kloaking',
+    'administruvannia' => 'administruvannia',
 ];
 
 $categories = ServiceCategory::published();

@@ -79,6 +79,30 @@ $cloakOptions = [
     ['id' => 'support', 'label' => 'Щомісячна підтримка та моніторинг', 'price' => 1500],
 ];
 
+// П'ятий калькулятор — послуга "Адміністрування доменів та сайтів".
+// На відміну від попередніх, тут немає єдиного "базового типу" — послуга
+// складається з окремих робіт, кожна із власною ринковою ціною, тому
+// калькулятор — це просто максимально повний перелік чекбоксів-робіт,
+// сума яких і дає орієнтовну вартість. Ціни підібрані на основі
+// середньоринкових тарифів українських студій/фрилансерів на технічну
+// підтримку, адміністрування хостингу/сервера, SSL, бекапи тощо.
+$adminWorks = [
+    ['id' => 'domain', 'label' => 'Реєстрація або продовження домену', 'price' => 300],
+    ['id' => 'dns', 'label' => 'Прив’язка домену до хостингу, налаштування DNS-записів (A/CNAME/MX/TXT)', 'price' => 500],
+    ['id' => 'ssl', 'label' => 'Встановлення та налаштування SSL-сертифіката (HTTPS)', 'price' => 400],
+    ['id' => 'migration', 'label' => 'Перенесення сайту на інший хостинг (міграція файлів і бази даних)', 'price' => 2500],
+    ['id' => 'mail', 'label' => 'Налаштування корпоративної пошти на домені (Google Workspace/Zoho тощо)', 'price' => 800],
+    ['id' => 'backup', 'label' => 'Налаштування автоматичного резервного копіювання', 'price' => 700],
+    ['id' => 'updates', 'label' => 'Оновлення CMS, плагінів і версії PHP до актуальних', 'price' => 600],
+    ['id' => 'cleanup', 'label' => 'Пошук і видалення вірусів/шкідливого коду (лікування зламаного сайту)', 'price' => 3000],
+    ['id' => 'monitoring', 'label' => 'Налаштування моніторингу доступності сайту (uptime-сповіщення)', 'price' => 400],
+    ['id' => 'speed', 'label' => 'Оптимізація швидкості завантаження (кешування, стиснення зображень)', 'price' => 1500],
+    ['id' => 'security', 'label' => 'Базове налаштування безпеки (firewall, захист від брутфорсу)', 'price' => 1200],
+    ['id' => 'vps', 'label' => 'Початкове налаштування VPS/виділеного сервера', 'price' => 3500],
+    ['id' => 'edits', 'label' => 'Дрібні правки на сайті (текст/зображення/стилі) — 1 година', 'price' => 500],
+    ['id' => 'support', 'label' => 'Щомісячний технічний супровід сайту (моніторинг, бекапи, оновлення)', 'price' => 1500],
+];
+
 require __DIR__ . '/partials/header.php';
 ?>
 <main>
@@ -86,7 +110,7 @@ require __DIR__ . '/partials/header.php';
     <div class="container">
       <span class="eyebrow">Калькулятор</span>
       <h1 style="max-width:640px;">Розрахуйте орієнтовну вартість сайту</h1>
-      <p class="lead">Оберіть тип сайту та потрібні опції — миттєво побачите приблизну ціну на основі середньоринкових тарифів. Нижче — окремі розрахунки для послуг напряму «Арбітраж трафіку»: вайтпейдж, лендінги та клоакінг.</p>
+      <p class="lead">Оберіть тип сайту та потрібні опції — миттєво побачите приблизну ціну на основі середньоринкових тарифів. Нижче — окремі розрахунки для послуг напряму «Арбітраж трафіку» (вайтпейдж, лендінги, клоакінг) і для «Адміністрування доменів та сайтів».</p>
     </div>
   </div>
 
@@ -287,6 +311,40 @@ require __DIR__ . '/partials/header.php';
         <span class="calc-total-box__label">Орієнтовна вартість</span>
         <span class="calc-total-box__value" id="cloak-total-value">0 грн</span>
         <button type="button" id="cloak-print-btn" class="btn-primary accent block" style="justify-content:center;">
+          Друк / зберегти PDF
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a1 1 0 0 1-1-1v-5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-2M6 14h12v8H6v-8z"/></svg>
+        </button>
+        <a href="/kontakty" class="btn-ghost block" style="justify-content:center; background:transparent; border-color:rgba(255,255,255,0.25); color:#fff;">Обговорити проєкт з нами</a>
+        <p class="calc-total-box__note">Розрахунок орієнтовний і не є остаточною комерційною пропозицією. Точну вартість погоджуємо індивідуально після обговорення деталей проєкту.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container calc-layout no-print" id="administruvannia" style="padding-top:8px; scroll-margin-top:100px;">
+    <div class="calc-main">
+      <div>
+        <h2 style="font-size:24px; font-weight:800; margin-bottom:8px;">Адміністрування — окремий розрахунок</h2>
+        <p style="font-size:14px; line-height:1.55; color:var(--color-muted); margin-bottom:20px;">Стосується послуги «Адміністрування доменів та сайтів» — тут немає базового пакета, просто позначте потрібні роботи зі списку, і калькулятор порахує суму.</p>
+        <div class="calc-options" id="admin-options">
+          <?php foreach ($adminWorks as $o): ?>
+            <label class="calc-option-row">
+              <span class="calc-option-row__label">
+                <input type="checkbox" data-price="<?= (int) $o['price'] ?>" data-label="<?= h($o['label']) ?>">
+                <?= h($o['label']) ?>
+              </span>
+              <span class="calc-option-row__price">+<?= number_format($o['price'], 0, '.', ' ') ?> грн</span>
+            </label>
+          <?php endforeach; ?>
+        </div>
+        <p style="font-size:13px; color:var(--color-faint); margin-top:10px;">Пункт «Щомісячний технічний супровід» — рекурентний, вказана сума за місяць. Дрібні правки — за годину; на більший обсяг погоджуємо кількість годин окремо.</p>
+      </div>
+    </div>
+
+    <div class="calc-side">
+      <div class="calc-total-box">
+        <span class="calc-total-box__label">Орієнтовна вартість</span>
+        <span class="calc-total-box__value" id="admin-total-value">0 грн</span>
+        <button type="button" id="admin-print-btn" class="btn-primary accent block" style="justify-content:center;">
           Друк / зберегти PDF
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a1 1 0 0 1-1-1v-5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-2M6 14h12v8H6v-8z"/></svg>
         </button>
@@ -505,6 +563,40 @@ require __DIR__ . '/partials/header.php';
   }
 
   if (document.querySelector('input[name="cloak-type"]')) cloakCalc();
+
+  // --- Окремий калькулятор для "Адміністрування" (лише перелік робіт, без базового типу) ---
+  function adminCalc() {
+    var sum = 0;
+    var selected = [];
+    document.querySelectorAll('#admin-options input[type=checkbox]:checked').forEach(function (cb) {
+      var price = Number(cb.dataset.price);
+      sum += price;
+      selected.push({ label: cb.dataset.label, price: price });
+    });
+    document.getElementById('admin-total-value').textContent = formatUAH(sum);
+    return { selected: selected, total: sum };
+  }
+
+  document.querySelectorAll('#admin-options input[type=checkbox]').forEach(function (el) {
+    el.addEventListener('change', adminCalc);
+  });
+
+  var adminPrintBtn = document.getElementById('admin-print-btn');
+  if (adminPrintBtn) {
+    adminPrintBtn.addEventListener('click', function () {
+      var data = adminCalc();
+      var rows = '';
+      data.selected.forEach(function (o) {
+        rows += '<tr><td>' + o.label + '</td><td>' + formatUAH(o.price) + '</td></tr>';
+      });
+      if (!data.selected.length) {
+        rows = '<tr><td>Роботи не обрано</td><td>0 грн</td></tr>';
+      }
+      fillAndPrintQuote('Орієнтовний розрахунок вартості адміністрування', rows, data.total);
+    });
+  }
+
+  adminCalc();
 })();
 </script>
 <?php require __DIR__ . '/partials/footer.php'; ?>
