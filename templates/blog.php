@@ -73,7 +73,7 @@ require __DIR__ . '/partials/header.php';
   <?php else: ?>
 
     <?php if ($featured): ?>
-    <div class="container" style="padding-top:40px;">
+    <div class="container" style="padding-top:40px; padding-bottom:<?= empty($posts) ? '64px' : '0' ?>;">
       <a href="/blog/<?= h($featured['slug']) ?>" class="card" style="display:flex; align-items:stretch; overflow:hidden; flex-wrap:wrap;">
         <div style="flex:1 1 320px; min-height:220px;">
           <?php if (!empty($featured['cover_image'])): ?>
