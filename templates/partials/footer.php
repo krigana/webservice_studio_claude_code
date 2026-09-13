@@ -38,6 +38,7 @@
         $footerFacebook = Setting::get('contact_facebook', 'https://www.facebook.com/webservicestudio/');
         $footerInstagram = Setting::get('contact_instagram', 'https://www.instagram.com/webservicestudio/');
         $footerTelegram = Setting::get('contact_telegram', 'https://t.me/webservices_studio');
+        $footerYoutube = Setting::get('contact_youtube', 'https://www.youtube.com/@web-servicestudio');
       ?>
       <div>
         <p class="footer-col-title">Контакти</p>
@@ -55,6 +56,9 @@
           </a>
           <a href="<?= h($footerWhatsapp) ?>" target="_blank" rel="noopener" aria-label="WhatsApp">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D7E7EA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.4-4.1A8 8 0 1 1 8.6 19L4 20z"/><path d="M9 10c0 3 2 5 5 5"/></svg>
+          </a>
+          <a href="<?= h($footerYoutube) ?>" target="_blank" rel="noopener" aria-label="YouTube">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D7E7EA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="12" rx="4"/><path d="M10.5 9.5l5 2.5-5 2.5z" fill="#D7E7EA" stroke="none"/></svg>
           </a>
         </div>
       </div>

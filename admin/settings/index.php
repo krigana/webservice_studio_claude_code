@@ -16,6 +16,7 @@ $fields = [
         'contact_telegram_handle' => 'Telegram (як показувати на сайті)',
         'contact_facebook' => 'Посилання Facebook',
         'contact_instagram' => 'Посилання Instagram',
+        'contact_youtube' => 'Посилання YouTube',
     ],
     'Текст сторінки «Контакти»' => [
         'contacts_hero_title' => 'Заголовок',
