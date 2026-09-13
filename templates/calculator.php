@@ -103,6 +103,30 @@ $adminWorks = [
     ['id' => 'support', 'label' => 'Щомісячний технічний супровід сайту (моніторинг, бекапи, оновлення)', 'price' => 1500],
 ];
 
+// Шостий калькулятор — послуга "Розробка додатків під Android". Базовий
+// тип (WebView / комбінований / нативний) + додаткові роботи, актуальні
+// саме для мобільних застосунків під арбітраж трафіку: спліш-скрін з
+// перевіркою інтернету, двопотокова архітектура (нативний застосунок в
+// основному потоці + окремий адаптивний WebView-потік, що відкривається
+// лише за наявності інтернету і виконання правил маршрутизації для
+// цільових користувачів), пуш-сповіщення через SDK (OneSignal/Firebase),
+// унікалізація вже готових застосунків з обфускацією коду тощо.
+$androidTypes = [
+    ['id' => 'webview', 'label' => 'WebView-застосунок', 'hint' => 'Швидка обгортка сайту в застосунок — бюджетний варіант для трафіку', 'price' => 3000],
+    ['id' => 'hybrid', 'label' => 'Комбінований (нативний + WebView)', 'hint' => 'Нативний інтерфейс поєднаний із вбудованим WebView-модулем для гнучкого контенту', 'price' => 7000],
+    ['id' => 'native', 'label' => 'Нативний застосунок', 'hint' => 'Повністю нативна розробка (Kotlin/Java) — максимальна швидкодія і можливості', 'price' => 20000],
+];
+$androidOptions = [
+    ['id' => 'splash', 'label' => 'Спліш-скрін і перевірка наявності інтернету при старті', 'price' => 800],
+    ['id' => 'dualthread', 'label' => 'Двопотокова архітектура: нативний застосунок в основному потоці + адаптивний WebView-потік за умови інтернету й правил маршрутизації', 'price' => 4000],
+    ['id' => 'push', 'label' => 'Інтеграція пуш-сповіщень (OneSignal/Firebase Cloud Messaging)', 'price' => 1500],
+    ['id' => 'unique', 'label' => 'Унікалізація готового застосунку: зміна хешу, іконки, назви, пакета + обфускація коду', 'price' => 2500],
+    ['id' => 'publish', 'label' => 'Публікація в Google Play (картка застосунку, проходження модерації)', 'price' => 1000],
+    ['id' => 'icon', 'label' => 'Розробка іконки та назви застосунку', 'price' => 500],
+    ['id' => 'lang', 'label' => 'Локалізація на додаткову мову', 'price' => 1000],
+    ['id' => 'analytics', 'label' => 'Інтеграція аналітики (Firebase/Google Analytics)', 'price' => 800],
+];
+
 require __DIR__ . '/partials/header.php';
 ?>
 <main>
@@ -110,7 +134,7 @@ require __DIR__ . '/partials/header.php';
     <div class="container">
       <span class="eyebrow">Калькулятор</span>
       <h1 style="max-width:640px;">Розрахуйте орієнтовну вартість сайту</h1>
-      <p class="lead">Оберіть тип сайту та потрібні опції — миттєво побачите приблизну ціну на основі середньоринкових тарифів. Нижче — окремі розрахунки для послуг напряму «Арбітраж трафіку» (вайтпейдж, лендінги, клоакінг) і для «Адміністрування доменів та сайтів».</p>
+      <p class="lead">Оберіть тип сайту та потрібні опції — миттєво побачите приблизну ціну на основі середньоринкових тарифів. Нижче — окремі розрахунки для послуг напряму «Арбітраж трафіку» (вайтпейдж, лендінги, клоакінг), для «Адміністрування доменів та сайтів» і для «Розробки додатків під Android».</p>
     </div>
   </div>
 
@@ -345,6 +369,56 @@ require __DIR__ . '/partials/header.php';
         <span class="calc-total-box__label">Орієнтовна вартість</span>
         <span class="calc-total-box__value" id="admin-total-value">0 грн</span>
         <button type="button" id="admin-print-btn" class="btn-primary accent block" style="justify-content:center;">
+          Друк / зберегти PDF
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a1 1 0 0 1-1-1v-5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-2M6 14h12v8H6v-8z"/></svg>
+        </button>
+        <a href="/kontakty" class="btn-ghost block" style="justify-content:center; background:transparent; border-color:rgba(255,255,255,0.25); color:#fff;">Обговорити проєкт з нами</a>
+        <p class="calc-total-box__note">Розрахунок орієнтовний і не є остаточною комерційною пропозицією. Точну вартість погоджуємо індивідуально після обговорення деталей проєкту.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container calc-layout no-print" id="android" style="padding-top:8px; scroll-margin-top:100px;">
+    <div class="calc-main">
+      <div>
+        <h2 style="font-size:24px; font-weight:800; margin-bottom:8px;">Android-застосунок — окремий розрахунок</h2>
+        <p style="font-size:14px; line-height:1.55; color:var(--color-muted); margin-bottom:20px;">Стосується послуги «Розробка додатків під Android» — оберіть тип застосунку (нативний, WebView або комбінований) і додайте потрібні роботи з ринкового переліку нижче.</p>
+        <div class="calc-type-grid">
+          <?php foreach ($androidTypes as $i => $t): ?>
+            <label class="calc-type-card">
+              <input type="radio" name="android-type" value="<?= h($t['id']) ?>" data-price="<?= (int) $t['price'] ?>" data-label="<?= h($t['label']) ?>" <?= $i === 0 ? 'checked' : '' ?>>
+              <span class="calc-type-card__box">
+                <span class="calc-type-card__title"><?= h($t['label']) ?></span>
+                <span class="calc-type-card__price">від <?= number_format($t['price'], 0, '.', ' ') ?> грн</span>
+                <span class="calc-type-card__hint"><?= h($t['hint']) ?></span>
+              </span>
+            </label>
+          <?php endforeach; ?>
+        </div>
+      </div>
+
+      <div>
+        <h2 style="font-size:20px; font-weight:800; margin-bottom:16px;">Додаткові роботи</h2>
+        <div class="calc-options" id="android-options">
+          <?php foreach ($androidOptions as $o): ?>
+            <label class="calc-option-row">
+              <span class="calc-option-row__label">
+                <input type="checkbox" data-price="<?= (int) $o['price'] ?>" data-label="<?= h($o['label']) ?>">
+                <?= h($o['label']) ?>
+              </span>
+              <span class="calc-option-row__price">+<?= number_format($o['price'], 0, '.', ' ') ?> грн</span>
+            </label>
+          <?php endforeach; ?>
+        </div>
+        <p style="font-size:13px; color:var(--color-faint); margin-top:10px;">Пункт «Унікалізація готового застосунку» — окрема послуга: застосовується до вже готового APK без нової розробки, тому може обиратись і без базового типу вище.</p>
+      </div>
+    </div>
+
+    <div class="calc-side">
+      <div class="calc-total-box">
+        <span class="calc-total-box__label">Орієнтовна вартість</span>
+        <span class="calc-total-box__value" id="android-total-value">0 грн</span>
+        <button type="button" id="android-print-btn" class="btn-primary accent block" style="justify-content:center;">
           Друк / зберегти PDF
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a1 1 0 0 1-1-1v-5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-2M6 14h12v8H6v-8z"/></svg>
         </button>
@@ -597,6 +671,44 @@ require __DIR__ . '/partials/header.php';
   }
 
   adminCalc();
+
+  // --- Окремий калькулятор для "Android-застосунок" (тип + додаткові роботи) ---
+  function androidCalc() {
+    var typeInput = document.querySelector('input[name="android-type"]:checked');
+    var base = typeInput ? Number(typeInput.dataset.price) : 0;
+    var typeLabel = typeInput ? typeInput.dataset.label : '';
+    var optionsSum = 0;
+    var selected = [];
+    document.querySelectorAll('#android-options input[type=checkbox]:checked').forEach(function (cb) {
+      var price = Number(cb.dataset.price);
+      optionsSum += price;
+      selected.push({ label: cb.dataset.label, price: price });
+    });
+    var total = base + optionsSum;
+    document.getElementById('android-total-value').textContent = formatUAH(total);
+    return { typeLabel: typeLabel, base: base, selected: selected, total: total };
+  }
+
+  document.querySelectorAll('input[name="android-type"]').forEach(function (el) {
+    el.addEventListener('change', androidCalc);
+  });
+  document.querySelectorAll('#android-options input[type=checkbox]').forEach(function (el) {
+    el.addEventListener('change', androidCalc);
+  });
+
+  var androidPrintBtn = document.getElementById('android-print-btn');
+  if (androidPrintBtn) {
+    androidPrintBtn.addEventListener('click', function () {
+      var data = androidCalc();
+      var rows = '<tr><td>' + data.typeLabel + '</td><td>' + formatUAH(data.base) + '</td></tr>';
+      data.selected.forEach(function (o) {
+        rows += '<tr><td>' + o.label + '</td><td>' + formatUAH(o.price) + '</td></tr>';
+      });
+      fillAndPrintQuote('Орієнтовний розрахунок вартості Android-застосунку', rows, data.total);
+    });
+  }
+
+  if (document.querySelector('input[name="android-type"]')) androidCalc();
 })();
 </script>
 <?php require __DIR__ . '/partials/footer.php'; ?>

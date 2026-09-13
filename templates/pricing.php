@@ -15,6 +15,7 @@ $serviceCalcAnchors = [
     'lendingy' => 'lendingy',
     'kloaking' => 'kloaking',
     'administruvannia' => 'administruvannia',
+    'android' => 'android',
 ];
 
 $services = Service::publishedAll();
