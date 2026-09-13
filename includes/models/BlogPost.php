@@ -11,7 +11,7 @@ class BlogPost extends Model
         $stmt = static::db()->prepare(
             "SELECT p.*, c.name AS category_name, c.slug AS category_slug
              FROM blog_posts p LEFT JOIN blog_categories c ON c.id = p.category_id
-             WHERE p.status = 'published' AND p.published_at <= NOW() $categorySql
+             WHERE p.status = 'published' AND p.published_at <= UTC_TIMESTAMP() $categorySql
              ORDER BY p.published_at DESC LIMIT :limit OFFSET :offset"
         );
         if ($categoryId !== null) {
@@ -27,13 +27,13 @@ class BlogPost extends Model
     {
         if ($categoryId !== null) {
             $stmt = static::db()->prepare(
-                "SELECT COUNT(*) FROM blog_posts WHERE status = 'published' AND published_at <= NOW() AND category_id = ?"
+                "SELECT COUNT(*) FROM blog_posts WHERE status = 'published' AND published_at <= UTC_TIMESTAMP() AND category_id = ?"
             );
             $stmt->execute([$categoryId]);
             return (int) $stmt->fetchColumn();
         }
         return (int) static::db()->query(
-            "SELECT COUNT(*) FROM blog_posts WHERE status = 'published' AND published_at <= NOW()"
+            "SELECT COUNT(*) FROM blog_posts WHERE status = 'published' AND published_at <= UTC_TIMESTAMP()"
         )->fetchColumn();
     }
 
@@ -42,7 +42,7 @@ class BlogPost extends Model
         $stmt = static::db()->prepare(
             "SELECT p.*, c.name AS category_name, c.slug AS category_slug
              FROM blog_posts p LEFT JOIN blog_categories c ON c.id = p.category_id
-             WHERE p.slug = ? AND p.status = 'published' AND p.published_at <= NOW() LIMIT 1"
+             WHERE p.slug = ? AND p.status = 'published' AND p.published_at <= UTC_TIMESTAMP() LIMIT 1"
         );
         $stmt->execute([$slug]);
         $row = $stmt->fetch();
@@ -57,7 +57,7 @@ class BlogPost extends Model
     {
         return static::db()->query(
             "SELECT slug, title, updated_at FROM blog_posts
-             WHERE status = 'published' AND published_at <= NOW()
+             WHERE status = 'published' AND published_at <= UTC_TIMESTAMP()
              ORDER BY published_at DESC"
         )->fetchAll();
     }
@@ -90,7 +90,7 @@ class BlogPost extends Model
         if ($categoryId !== null) {
             $stmt = static::db()->prepare(
                 "SELECT $select FROM blog_posts p $join
-                 WHERE p.id != ? AND p.category_id = ? AND p.status = 'published' AND p.published_at <= NOW()
+                 WHERE p.id != ? AND p.category_id = ? AND p.status = 'published' AND p.published_at <= UTC_TIMESTAMP()
                  ORDER BY p.published_at DESC LIMIT ?"
             );
             $stmt->bindValue(1, $postId, PDO::PARAM_INT);
@@ -110,7 +110,7 @@ class BlogPost extends Model
         $need = $limit - count($rows);
         $stmt = static::db()->prepare(
             "SELECT $select FROM blog_posts p $join
-             WHERE p.id NOT IN ($placeholders) AND p.status = 'published' AND p.published_at <= NOW()
+             WHERE p.id NOT IN ($placeholders) AND p.status = 'published' AND p.published_at <= UTC_TIMESTAMP()
              ORDER BY p.published_at DESC LIMIT " . (int) $need
         );
         $stmt->execute($excludeIds);

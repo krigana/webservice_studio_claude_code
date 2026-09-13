@@ -6,6 +6,12 @@
 
 declare(strict_types=1);
 
+// Явний часовий пояс для відображення дат на сайті (копірайт у футері,
+// формат дат в адмінці тощо). Порівняння published_at у BlogPost робиться
+// окремо через UTC (gmdate()/UTC_TIMESTAMP()), незалежно від цього — щоб
+// не залежати від того, який часовий пояс налаштований на MySQL-сервері.
+date_default_timezone_set('Europe/Kyiv');
+
 $config = require dirname(__DIR__) . '/config/config.php';
 
 if ($config['app']['debug']) {

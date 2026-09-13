@@ -41,7 +41,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $status = ($_POST['status'] ?? 'draft') === 'published' ? 'published' : 'draft';
                 $publishedAt = trim((string) ($_POST['published_at'] ?? ''));
                 if ($status === 'published' && $publishedAt === '') {
-                    $publishedAt = date('Y-m-d\TH:i');
+                    // UTC, бо BlogPost::publishedList() і суміжні методи порівнюють
+                    // published_at з UTC_TIMESTAMP() — щоб не залежати від того,
+                    // чи збігається часовий пояс PHP з часовим поясом MySQL-сервера
+                    // на хостингу (саме розбіжність тут ховала щойно опубліковані
+                    // статті аж до моменту, коли час PHP-сервера "наздоганяв" це).
+                    $publishedAt = gmdate('Y-m-d\TH:i');
                 }
 
                 $data = [
