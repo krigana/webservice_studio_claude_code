@@ -44,9 +44,11 @@ require __DIR__ . '/partials/header.php';
     </div>
   </div>
 
+  <?php if (Upload::exists($case['cover_image'])): ?>
   <div class="container">
     <img src="<?= h($case['cover_image']) ?>" alt="<?= h($case['title']) ?>" class="thumb" style="width:100%; aspect-ratio:16/8; object-fit:cover;">
   </div>
+  <?php endif; ?>
 
   <?php if (!empty($case['project_url'])): ?>
     <div class="container case-project-link">
@@ -54,10 +56,11 @@ require __DIR__ . '/partials/header.php';
     </div>
   <?php endif; ?>
 
-  <?php if (!empty($images)): ?>
+  <?php $galleryImages = array_filter($images, static fn ($img) => Upload::exists($img['image_path'])); ?>
+  <?php if (!empty($galleryImages)): ?>
     <div class="container case-gallery">
       <div class="grid-3">
-        <?php foreach ($images as $img): ?>
+        <?php foreach ($galleryImages as $img): ?>
           <img src="<?= h($img['image_path']) ?>" alt="" class="thumb" style="width:100%; aspect-ratio:3/4;">
         <?php endforeach; ?>
       </div>

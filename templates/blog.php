@@ -76,7 +76,7 @@ require __DIR__ . '/partials/header.php';
     <div class="container" style="padding-top:40px; padding-bottom:<?= empty($posts) ? '64px' : '0' ?>;">
       <a href="/blog/<?= h($featured['slug']) ?>" class="card" style="display:flex; align-items:stretch; overflow:hidden; flex-wrap:wrap;">
         <div style="flex:1 1 320px; min-height:220px;">
-          <?php if (!empty($featured['cover_image'])): ?>
+          <?php if (!empty($featured['cover_image']) && Upload::exists($featured['cover_image'])): ?>
             <img src="<?= h($featured['cover_image']) ?>" alt="<?= h($featured['title']) ?>" style="width:100%; height:100%; object-fit:cover; display:block;">
           <?php else: ?>
             <div style="width:100%; height:100%; min-height:220px; background:var(--color-tint-2);"></div>
@@ -101,7 +101,7 @@ require __DIR__ . '/partials/header.php';
       <div class="grid-3">
         <?php foreach ($posts as $post): ?>
           <a href="/blog/<?= h($post['slug']) ?>" class="card" style="overflow:hidden;">
-            <?php if (!empty($post['cover_image'])): ?>
+            <?php if (!empty($post['cover_image']) && Upload::exists($post['cover_image'])): ?>
               <img src="<?= h($post['cover_image']) ?>" alt="<?= h($post['title']) ?>" style="width:100%; height:170px; object-fit:cover;">
             <?php else: ?>
               <div style="height:170px; background:var(--color-tint-2);"></div>

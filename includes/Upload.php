@@ -105,11 +105,8 @@ final class Upload
             return;
         }
 
-        $root = self::storageRoot();
-        $full = $root . '/' . $relativePath;
-        $realRoot = realpath($root);
-        $realFull = realpath($full);
-        if ($realRoot === false || $realFull === false || !str_starts_with($realFull, $realRoot) || !is_file($realFull)) {
+        $realFull = self::resolve($relativePath);
+        if ($realFull === null) {
             http_response_code(404);
             require dirname(__DIR__) . '/templates/404.php';
             return;
@@ -121,5 +118,46 @@ final class Upload
         // і тим самим URL ніколи не змінюється.
         header('Cache-Control: public, max-age=31536000, immutable');
         readfile($realFull);
+    }
+
+    /**
+     * Реальний абсолютний шлях до файлу в постійному сховищі за відносним
+     * шляхом ("portfolio/xxxxx.jpg"), або null, якщо шлях небезпечний чи
+     * файл фізично відсутній. Спільна логіка для serve() і exists().
+     */
+    private static function resolve(string $relativePath): ?string
+    {
+        $root = self::storageRoot();
+        $full = $root . '/' . $relativePath;
+        $realRoot = realpath($root);
+        $realFull = realpath($full);
+        if ($realRoot === false || $realFull === false || !str_starts_with($realFull, $realRoot) || !is_file($realFull)) {
+            return null;
+        }
+        return $realFull;
+    }
+
+    /**
+     * Перевіряє, чи фізично існує файл, на який вказує ПУБЛІЧНИЙ URL
+     * (наприклад, значення cover_image/image_path з БД: "/assets/uploads/
+     * portfolio/xxxxx.jpg"). Використовується в шаблонах, щоб не рендерити
+     * зламану картинку, якщо файл за якихось причин загубився (застарілий
+     * запис у БД, ручне видалення тощо) — сторінка просто не показує
+     * порожній/биту іконку замість зображення.
+     *
+     * URL, що НЕ починається з "/assets/uploads/" (наприклад, статичні
+     * іконки з git), вважається завжди існуючим — перевіряти немає сенсу.
+     */
+    public static function exists(?string $publicUrl): bool
+    {
+        if ($publicUrl === null || $publicUrl === '') {
+            return false;
+        }
+        $prefix = '/assets/uploads/';
+        if (!str_starts_with($publicUrl, $prefix)) {
+            return true;
+        }
+        $relativePath = substr($publicUrl, strlen($prefix));
+        return self::resolve($relativePath) !== null;
     }
 }

@@ -119,7 +119,11 @@ require __DIR__ . '/partials/header.php';
       <div class="grid-3">
         <?php foreach ($latestCases as $case): ?>
           <a href="/portfolio/<?= h($case['slug']) ?>">
-            <img src="<?= h($case['cover_image']) ?>" alt="<?= h($case['title']) ?>" class="thumb" style="width:100%; aspect-ratio:16/9; margin-bottom:16px;">
+            <?php if (Upload::exists($case['cover_image'])): ?>
+              <img src="<?= h($case['cover_image']) ?>" alt="<?= h($case['title']) ?>" class="thumb" style="width:100%; aspect-ratio:16/9; margin-bottom:16px;">
+            <?php else: ?>
+              <div class="thumb" style="width:100%; aspect-ratio:16/9; margin-bottom:16px; background:var(--color-tint-2);"></div>
+            <?php endif; ?>
             <span style="font-size:12px; font-weight:700; color:var(--color-brand); text-transform:uppercase; letter-spacing:0.06em;"><?= h($case['category_name'] ?? '') ?></span>
             <h3 style="font-size:17px; font-weight:700; margin-top:6px; color:var(--color-ink);"><?= h($case['title']) ?></h3>
           </a>
@@ -144,7 +148,7 @@ require __DIR__ . '/partials/header.php';
       <div class="grid-3">
         <?php foreach ($latestPosts as $post): ?>
           <a href="/blog/<?= h($post['slug']) ?>" class="card" style="overflow:hidden;">
-            <?php if (!empty($post['cover_image'])): ?>
+            <?php if (!empty($post['cover_image']) && Upload::exists($post['cover_image'])): ?>
               <img src="<?= h($post['cover_image']) ?>" alt="<?= h($post['title']) ?>" style="width:100%; height:160px; object-fit:cover;">
             <?php else: ?>
               <div style="height:160px; background:var(--color-tint-2);"></div>

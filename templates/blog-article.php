@@ -66,7 +66,7 @@ require __DIR__ . '/partials/header.php';
     </div>
   </div>
 
-  <?php if (!empty($post['cover_image'])): ?>
+  <?php if (!empty($post['cover_image']) && Upload::exists($post['cover_image'])): ?>
     <div class="container" style="max-width:1000px;">
       <img src="<?= h($post['cover_image']) ?>" alt="<?= h($post['title']) ?>" class="thumb" style="width:100%; aspect-ratio:16/7; object-fit:cover;">
     </div>
@@ -91,7 +91,7 @@ require __DIR__ . '/partials/header.php';
         <div class="grid-3">
           <?php foreach ($related as $r): ?>
             <a href="/blog/<?= h($r['slug']) ?>" class="card" style="overflow:hidden;">
-              <?php if (!empty($r['cover_image'])): ?>
+              <?php if (!empty($r['cover_image']) && Upload::exists($r['cover_image'])): ?>
                 <img src="<?= h($r['cover_image']) ?>" alt="<?= h($r['title']) ?>" style="width:100%; height:150px; object-fit:cover;">
               <?php else: ?>
                 <div style="height:150px; background:var(--color-tint-2);"></div>
