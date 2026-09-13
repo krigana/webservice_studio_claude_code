@@ -38,6 +38,7 @@ function admin_header(string $title, string $active = ''): void
   .badge-published { background:#E6F7EA; color:#1E7D34; }
   .badge-hidden, .badge-draft { background:#EDEDED; color:#7C99A1; }
   .link-btn { background:none; border:none; color:#B3261E; cursor:pointer; padding:0; font:inherit; }
+  #editor img { max-width:100%; height:auto; border-radius:8px; }
 </style>
 </head>
 <body>

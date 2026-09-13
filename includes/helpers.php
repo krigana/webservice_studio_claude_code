@@ -97,6 +97,44 @@ function reading_time(string $html): int
     return max(1, (int) ceil(($words ?: 0) / 180));
 }
 
+/**
+ * HTML статті блогу (з WYSIWYG-редактора) з примусовим target="_blank"
+ * на всіх посиланнях — щоб клік по посиланню в тексті статті не уводив
+ * читача з сайту в тій самій вкладці.
+ */
+function blog_content_html(string $html): string
+{
+    if (trim($html) === '' || !str_contains($html, '<a')) {
+        return $html;
+    }
+
+    $doc = new DOMDocument();
+    libxml_use_internal_errors(true);
+    $doc->loadHTML(
+        '<?xml encoding="utf-8"?><div>' . $html . '</div>',
+        LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
+    );
+    libxml_clear_errors();
+
+    $links = $doc->getElementsByTagName('a');
+    foreach ($links as $link) {
+        $link->setAttribute('target', '_blank');
+        $link->setAttribute('rel', 'noopener noreferrer');
+    }
+
+    $wrapper = $doc->getElementsByTagName('div')->item(0);
+    if ($wrapper === null) {
+        return $html;
+    }
+
+    $result = '';
+    foreach ($wrapper->childNodes as $child) {
+        $result .= $doc->saveHTML($child);
+    }
+
+    return $result;
+}
+
 function format_price(?string $from, ?string $to, ?string $note, string $currency = 'UAH'): string
 {
     $symbol = $currency === 'UAH' ? 'грн' : $currency;

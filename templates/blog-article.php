@@ -73,7 +73,7 @@ require __DIR__ . '/partials/header.php';
   <?php endif; ?>
 
   <div class="container prose" style="padding-top:48px;">
-    <?= $post['content'] /* HTML из WYSIWYG-редактора, экранирование не нужно */ ?>
+    <?= blog_content_html($post['content']) /* HTML из WYSIWYG-редактора, экранирование не нужно; посилання відкриваються в новій вкладці */ ?>
 
     <?php if (!empty($tags)): ?>
       <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:32px;">
