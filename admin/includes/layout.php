@@ -39,6 +39,26 @@ function admin_header(string $title, string $active = ''): void
   .badge-hidden, .badge-draft { background:#EDEDED; color:#7C99A1; }
   .link-btn { background:none; border:none; color:#B3261E; cursor:pointer; padding:0; font:inherit; }
   #editor img { max-width:100%; height:auto; border-radius:8px; }
+  #editor blockquote { margin:14px 0; padding:4px 16px; border-left:4px solid #00A7C7; background:#F1FBFC; border-radius:0 8px 8px 0; color:#34474E; font-style:italic; }
+  #editor pre { background:#0B1F26; color:#E7F3F5; padding:12px 14px; border-radius:8px; overflow-x:auto; }
+  #editor code { font-family:Consolas, Menlo, monospace; background:#F1FBFC; padding:1px 5px; border-radius:4px; }
+  #editor .video-embed { position:relative; width:100%; max-width:480px; aspect-ratio:16/9; margin:10px 0; border-radius:8px; overflow:hidden; }
+  #editor .video-embed iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+  .editor-toolbar {
+    position: sticky; top: 0; z-index: 5; background: #fff;
+    display: flex; gap: 6px; margin-bottom: 8px; flex-wrap: wrap;
+    padding: 8px 0; border-bottom: 1px solid #E4EEF0;
+  }
+  #editor { max-height: 55vh; overflow-y: auto; resize: vertical; }
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(11,31,38,0.45);
+    z-index: 100; align-items: center; justify-content: center; padding: 20px;
+  }
+  .modal-overlay.is-open { display: flex; }
+  .modal-box { background: #fff; border-radius: 14px; padding: 22px; max-width: 560px; width: 100%; max-height: 80vh; overflow-y: auto; }
+  .modal-box h3 { margin: 0 0 14px; font-size: 16px; }
+  .modal-box textarea { min-height: 160px; font-family: Consolas, Menlo, monospace; font-size: 13px; }
+  .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
 </style>
 </head>
 <body>
