@@ -12,6 +12,21 @@ declare(strict_types=1);
 // не залежати від того, який часовий пояс налаштований на MySQL-сервері.
 date_default_timezone_set('Europe/Kyiv');
 
+// Hostinger кешує повні HTML-сторінки через LiteSpeed (LSCache) на своєму
+// сервері на кілька днів. Без цього заголовка будь-яка зміна через
+// адмінку — новий блог-пост, зміна цін/налаштувань, редизайн CSS, будь-що —
+// могла лишатись невидимою для відвідувачів (і навіть для нас під час
+// перевірки) аж до ручного «Purge All» у hPanel, хоча версійні URL
+// статики (?v=..., /assets/uploads/...) вже давно і правильно захищені.
+// Явний X-LiteSpeed-Cache-Control: no-cache — офіційний спосіб LiteSpeed
+// вимкнути серверне кешування конкретної відповіді для будь-якого PHP-
+// застосунку (не тільки WordPress), без потреби в панелі хостингу.
+// Не стосується /assets/uploads/{path} (Upload::serve()) — той маршрут
+// сам виставляє свій Cache-Control і від цього заголовка не залежить.
+if (!headers_sent()) {
+    header('X-LiteSpeed-Cache-Control: no-cache');
+}
+
 $config = require dirname(__DIR__) . '/config/config.php';
 
 if ($config['app']['debug']) {
