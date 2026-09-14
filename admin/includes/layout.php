@@ -39,7 +39,17 @@ function admin_header(string $title, string $active = ''): void
   .badge-hidden, .badge-draft { background:#EDEDED; color:#7C99A1; }
   .link-btn { background:none; border:none; color:#B3261E; cursor:pointer; padding:0; font:inherit; }
   #editor img { max-width:100%; height:auto; border-radius:8px; }
-  #editor blockquote { margin:14px 0; padding:4px 16px; border-left:4px solid #00A7C7; background:#F1FBFC; border-radius:0 8px 8px 0; color:#34474E; font-style:italic; }
+  #editor blockquote {
+    position: relative; margin:16px 0; padding:18px 20px 18px 46px;
+    background: linear-gradient(135deg, #F1FBFC 0%, #CDEEF3 130%);
+    border-radius:12px; box-shadow: inset 3px 0 0 0 #00A7C7;
+    color:#0B1F26; font-weight:700; font-style:normal; line-height:1.5;
+  }
+  #editor blockquote::before {
+    content:'\201C'; position:absolute; top:2px; left:12px;
+    font-family: Georgia, 'Times New Roman', serif; font-size:40px; font-weight:700;
+    color:#00A7C7; opacity:0.4; line-height:1;
+  }
   #editor pre { background:#0B1F26; color:#E7F3F5; padding:12px 14px; border-radius:8px; overflow-x:auto; }
   #editor code { font-family:Consolas, Menlo, monospace; background:#F1FBFC; padding:1px 5px; border-radius:4px; }
   #editor .video-embed { position:relative; width:100%; max-width:480px; aspect-ratio:16/9; margin:10px 0; border-radius:8px; overflow:hidden; }
