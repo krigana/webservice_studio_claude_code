@@ -81,6 +81,10 @@ $router->get('/karta-sajtu', function () {
     require __DIR__ . '/templates/sitemap-page.php';
 });
 
+$router->get('/chasti-zapytannya', function () {
+    require __DIR__ . '/templates/faq.php';
+});
+
 $router->post('/kontakty', function () {
     require __DIR__ . '/templates/contacts-submit.php';
 });

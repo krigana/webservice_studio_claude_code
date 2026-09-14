@@ -25,6 +25,7 @@ $mainPages = [
     ['/kalkulyator', 'Калькулятор вартості'],
     ['/portfolio', 'Портфоліо'],
     ['/blog', 'Блог'],
+    ['/chasti-zapytannya', 'Часті запитання'],
     ['/kontakty', 'Контакти'],
 ];
 

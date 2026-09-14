@@ -486,6 +486,53 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--c
   .calc-total-box { position: static; }
 }
 
+/* Часті запитання (/chasti-zapytannya) — <details>/<summary>-акордеон,
+   доступний без JS. */
+.faq-item {
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  margin-bottom: 14px;
+  overflow: hidden;
+}
+.faq-item summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 20px 56px 20px 24px;
+  position: relative;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 16.5px;
+  color: var(--color-ink);
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: '+';
+  position: absolute;
+  top: 50%;
+  right: 22px;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--color-tint);
+  color: var(--color-brand-dark);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+  transition: transform 0.15s ease;
+}
+.faq-item[open] summary::after { transform: translateY(-50%) rotate(45deg); }
+.faq-item__answer {
+  padding: 0 24px 22px;
+  color: var(--color-muted);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
 @media print {
   .site-header, .site-footer, .no-print, .cta-band, .hero { display: none !important; }
   .print-quote { display: block !important; max-width: 100%; padding: 0; color: #000; }

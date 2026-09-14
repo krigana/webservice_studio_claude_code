@@ -187,6 +187,20 @@ CREATE TABLE pages (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- -------------------------------------------------------------------------
+-- Часті запитання (/chasti-zapytannya) — FAQPage-мікророзмітка Schema.org
+-- для пошукових систем і AI-пошуку (Google AI Overviews/AI Mode, ChatGPT
+-- Search тощо). Редагується через /admin/faq/.
+-- -------------------------------------------------------------------------
+CREATE TABLE faqs (
+    id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    question    VARCHAR(300) NOT NULL,
+    answer      TEXT NOT NULL,
+    sort_order  INT NOT NULL DEFAULT 0,
+    created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- -------------------------------------------------------------------------
 -- Настройки сайта: контакты, соцсети, SEO по умолчанию (простой key-value)
 -- -------------------------------------------------------------------------
 CREATE TABLE settings (
