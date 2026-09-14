@@ -179,6 +179,18 @@ admin_header($post ? 'Редагування статті' : 'Нова стат�
 <script>
 const editorEl = document.getElementById('editor');
 
+// Деякі браузери при команді "формат блоку → цитата" самі домішують
+// inline-style (margin/padding/border) у щойно створений <blockquote>.
+// Такий inline-style має вищий пріоритет за будь-яке CSS-правило в
+// #editor blockquote (main.css/layout.php), тому оновлення дизайну
+// цитати не було б видно — ні тут, ні (та ж сама історія в БД) на
+// публічній сторінці статті. Прибираємо його щоразу після форматування
+// і одразу при завантаженні вже наявного в статті тексту.
+function stripBlockquoteInlineStyle() {
+  editorEl.querySelectorAll('blockquote[style]').forEach((bq) => bq.removeAttribute('style'));
+}
+stripBlockquoteInlineStyle();
+
 // Курсор/виділення в редакторі губиться, щойно фокус іде у поле модалки
 // (вставка YouTube/HTML). Тому постійно запам'ятовуємо останню позицію
 // виділення всередині #editor, щоб потім вставити код саме туди, а не в
@@ -222,6 +234,7 @@ document.querySelectorAll('[data-cmd]').forEach((btn) => {
     if (cmd === 'createLink') { val = prompt('URL посилання:'); if (!val) return; }
     editorEl.focus();
     document.execCommand(cmd, false, val);
+    if (cmd === 'formatBlock' && val === 'BLOCKQUOTE') stripBlockquoteInlineStyle();
   });
 });
 

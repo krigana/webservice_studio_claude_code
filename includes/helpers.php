@@ -98,13 +98,21 @@ function reading_time(string $html): int
 }
 
 /**
- * HTML статті блогу (з WYSIWYG-редактора) з примусовим target="_blank"
- * на всіх посиланнях — щоб клік по посиланню в тексті статті не уводив
- * читача з сайту в тій самій вкладці.
+ * HTML статті блогу (з WYSIWYG-редактора):
+ *  - примусовий target="_blank" на всіх посиланнях — щоб клік по
+ *    посиланню в тексті статті не уводив читача з сайту в тій самій
+ *    вкладці;
+ *  - прибирає атрибут style з <blockquote> — деякі браузери при
+ *    команді "формат блоку → цитата" в contenteditable-редакторі самі
+ *    домішують inline-style (margin/padding/border) в елемент. Такий
+ *    inline-style має вищий пріоритет за будь-яке CSS-правило .prose
+ *    blockquote в main.css, тому оновлення дизайну цитати в такій
+ *    статті не було б видно НАВІТЬ після успішного деплою й очищення
+ *    кешу — саме це і сталось з однією зі старих статей.
  */
 function blog_content_html(string $html): string
 {
-    if (trim($html) === '' || !str_contains($html, '<a')) {
+    if (trim($html) === '' || (!str_contains($html, '<a') && !str_contains($html, '<blockquote'))) {
         return $html;
     }
 
@@ -120,6 +128,11 @@ function blog_content_html(string $html): string
     foreach ($links as $link) {
         $link->setAttribute('target', '_blank');
         $link->setAttribute('rel', 'noopener noreferrer');
+    }
+
+    $quotes = $doc->getElementsByTagName('blockquote');
+    foreach ($quotes as $quote) {
+        $quote->removeAttribute('style');
     }
 
     $wrapper = $doc->getElementsByTagName('div')->item(0);
