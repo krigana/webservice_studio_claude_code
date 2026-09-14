@@ -18,7 +18,12 @@
 * { box-sizing: border-box; }
 
 html {
+  /* overflow-y:visible вказано явно поруч з overflow-x:hidden — інакше
+     у більшості браузерів сам факт заданого overflow на html/body ламає
+     position:sticky в дочірніх елементах (шапка сайту), навіть якщо
+     реально обмежується лише горизонтальна вісь. */
   overflow-x: hidden;
+  overflow-y: visible;
   width: 100%;
 }
 
@@ -29,6 +34,7 @@ body {
   color: var(--color-ink);
   line-height: 1.5;
   overflow-x: hidden;
+  overflow-y: visible;
   width: 100%;
 }
 
