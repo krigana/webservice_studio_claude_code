@@ -40,15 +40,16 @@ function admin_header(string $title, string $active = ''): void
   .link-btn { background:none; border:none; color:#B3261E; cursor:pointer; padding:0; font:inherit; }
   #editor img { max-width:100%; height:auto; border-radius:8px; }
   #editor blockquote {
-    position: relative; margin:16px 0; padding:18px 20px 18px 46px;
-    background: linear-gradient(135deg, #F1FBFC 0%, #CDEEF3 130%);
-    border-radius:12px; box-shadow: inset 3px 0 0 0 #00A7C7;
-    color:#0B1F26; font-weight:700; font-style:normal; line-height:1.5;
+    position: relative; margin:36px 0 20px; padding:26px 20px 20px;
+    background:#0B1F26; border-radius:14px;
+    box-shadow: 0 14px 28px -14px rgba(11,31,38,0.45);
+    color:#fff; font-weight:700; font-style:normal; line-height:1.5;
   }
   #editor blockquote::before {
-    content:'\201C'; position:absolute; top:2px; left:12px;
-    font-family: Georgia, 'Times New Roman', serif; font-size:40px; font-weight:700;
-    color:#00A7C7; opacity:0.4; line-height:1;
+    content:'\201C'; position:absolute; z-index:1; top:-18px; left:18px;
+    width:36px; height:36px; display:flex; align-items:center; justify-content:center;
+    border-radius:50%; background:#00A7C7; color:#fff;
+    font-family: Georgia, 'Times New Roman', serif; font-size:22px; font-weight:700; line-height:1;
   }
   #editor pre { background:#0B1F26; color:#E7F3F5; padding:12px 14px; border-radius:8px; overflow-x:auto; }
   #editor code { font-family:Consolas, Menlo, monospace; background:#F1FBFC; padding:1px 5px; border-radius:4px; }

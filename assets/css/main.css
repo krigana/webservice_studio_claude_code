@@ -256,45 +256,54 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--c
 .prose a { text-decoration: underline; }
 .prose blockquote {
   position: relative;
-  margin: 32px 0;
-  padding: 30px 32px 30px 76px;
-  background: linear-gradient(135deg, var(--color-tint) 0%, var(--color-tint-2) 130%);
-  border-radius: 18px;
-  box-shadow: inset 4px 0 0 0 var(--color-brand);
-  color: var(--color-ink);
+  isolation: isolate;
+  margin: 56px 0 36px;
+  padding: 40px 32px 32px;
+  background: var(--color-ink);
+  border-radius: 20px;
+  color: #FFFFFF;
   font-family: var(--font-heading);
-  font-size: 19px;
+  font-size: 20px;
   font-weight: 700;
-  line-height: 1.55;
+  line-height: 1.5;
   letter-spacing: -0.01em;
+  box-shadow: 0 24px 48px -20px rgba(11, 31, 38, 0.45);
 }
 .prose blockquote::before {
   content: '\201C';
   position: absolute;
-  top: 6px;
-  left: 22px;
+  z-index: 1;
+  top: -26px;
+  left: 28px;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--color-brand);
+  color: #FFFFFF;
   font-family: Georgia, 'Times New Roman', serif;
-  font-size: 72px;
+  font-size: 32px;
   font-weight: 700;
   line-height: 1;
-  color: var(--color-brand);
-  opacity: 0.35;
+  box-shadow: 0 10px 22px -6px rgba(0, 167, 199, 0.65);
 }
 .prose blockquote p { color: inherit; font-size: inherit; font-weight: inherit; line-height: inherit; }
 .prose blockquote p:last-child { margin-bottom: 0; }
 .prose blockquote footer,
 .prose blockquote cite {
   display: block;
-  margin-top: 14px;
+  margin-top: 16px;
   font-family: var(--font-body);
   font-size: 13.5px;
   font-weight: 600;
   font-style: normal;
-  color: var(--color-brand-dark);
+  color: #7FD4E4;
 }
 @media (max-width: 640px) {
-  .prose blockquote { padding: 26px 22px 24px 58px; font-size: 17px; border-radius: 14px; }
-  .prose blockquote::before { font-size: 52px; left: 14px; top: 2px; }
+  .prose blockquote { margin: 48px 0 28px; padding: 32px 22px 26px; font-size: 18px; border-radius: 16px; }
+  .prose blockquote::before { top: -22px; left: 20px; width: 44px; height: 44px; font-size: 27px; }
 }
 .prose pre {
   background: var(--color-ink);
