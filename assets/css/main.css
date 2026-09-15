@@ -203,13 +203,28 @@ img { max-width: 100%; display: block; }
 .breadcrumb svg { flex-shrink: 0; }
 
 /* --- Кнопки --- */
+/* Голографічна заливка — той самий прийом і та сама палітра, що й у
+   .hero-holo__word (перелив background-position) — так головні CTA
+   по всьому сайту (btn-primary і btn-primary.accent — окремої різниці
+   між ними більше нема, обидва варіанти голографічні) візуально
+   перегукуються з банером на головній. Плюс легкий "відблиск фольги",
+   що пробігає по кнопці при наведенні (::after). */
 .btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: var(--color-ink);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: linear-gradient(100deg,
+    var(--color-accent-orange), var(--color-accent-gold), var(--color-brand),
+    var(--color-accent-violet), var(--color-accent-coral), var(--color-accent-peach),
+    var(--color-accent-orange));
+  background-size: 300% 100%;
+  background-position: 0% 50%;
   color: #FFFFFF;
+  text-shadow: 0 1px 3px rgba(11,31,38,0.45);
   padding: 15px 26px;
   border-radius: 12px;
   font-weight: 600;
@@ -217,11 +232,33 @@ img { max-width: 100%; display: block; }
   border: none;
   cursor: pointer;
   font-family: var(--font-body);
+  box-shadow: 0 6px 16px rgba(231,111,61,0.22);
+  transition: background-position 0.7s ease, transform 0.15s ease, box-shadow 0.25s ease;
 }
-.btn-primary:hover { background: #16303a; color: #FFFFFF; }
-.btn-primary.accent { background: var(--color-brand); }
-.btn-primary.accent:hover { background: var(--color-brand-dark); }
+.btn-primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,0.6) 50%, transparent 65%);
+  transform: translateX(-140%);
+  transition: transform 0.7s ease;
+  pointer-events: none;
+}
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  background-position: 100% 50%;
+  color: #FFFFFF;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(150,147,230,0.32);
+}
+.btn-primary:hover::after,
+.btn-primary:focus-visible::after { transform: translateX(140%); }
+.btn-primary svg { position: relative; z-index: 1; flex-shrink: 0; }
 .btn-primary.block { width: 100%; }
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary { transition: box-shadow 0.25s ease; }
+  .btn-primary::after { display: none; }
+}
 
 .btn-ghost {
   display: inline-flex;
