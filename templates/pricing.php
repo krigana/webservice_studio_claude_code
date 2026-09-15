@@ -24,6 +24,37 @@ foreach ($services as $s) {
     $byCategory[$s['category_name']][] = $s;
 }
 
+// Offer-розмітка для послуг з проставленою ціною "від" — щоб AI-пошук
+// (Google AI Overviews/AI Mode, ChatGPT Search) міг напряму відповісти
+// на запити на кшталт "скільки коштує лендинг у Webservice Studio", не
+// вигадуючи цифру. Послуги без ціни (price_from === null, "ціна за
+// запитом") у розмітку не потрапляють — краще відсутність offers, ніж
+// хибна ціна.
+$pricedServices = array_values(array_filter($services, static fn (array $s): bool => $s['price_from'] !== null && $s['price_from'] !== ''));
+if (!empty($pricedServices)) {
+    $extraSchema = [
+        '@context' => 'https://schema.org',
+        '@type' => 'ItemList',
+        'itemListElement' => array_map(static function (array $s, int $i): array {
+            $item = [
+                '@type' => 'Service',
+                'name' => $s['title'],
+                'provider' => ['@type' => 'Organization', 'name' => 'Webservice Studio'],
+                'offers' => [
+                    '@type' => 'Offer',
+                    'price' => (string) (float) $s['price_from'],
+                    'priceCurrency' => $s['currency'] ?: 'UAH',
+                    'url' => 'https://web-service.studio/tsiny#service-' . $s['id'],
+                ],
+            ];
+            if (!empty($s['description'])) {
+                $item['description'] = $s['description'];
+            }
+            return ['@type' => 'ListItem', 'position' => $i + 1, 'item' => $item];
+        }, $pricedServices, array_keys($pricedServices)),
+    ];
+}
+
 require __DIR__ . '/partials/header.php';
 ?>
 <main>

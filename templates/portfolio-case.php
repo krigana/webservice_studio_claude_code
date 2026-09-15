@@ -56,12 +56,12 @@ require __DIR__ . '/partials/header.php';
     </div>
   <?php endif; ?>
 
-  <?php $galleryImages = array_filter($images, static fn ($img) => Upload::exists($img['image_path'])); ?>
+  <?php $galleryImages = array_values(array_filter($images, static fn ($img) => Upload::exists($img['image_path']))); ?>
   <?php if (!empty($galleryImages)): ?>
     <div class="container case-gallery">
       <div class="grid-3">
-        <?php foreach ($galleryImages as $img): ?>
-          <img src="<?= h($img['image_path']) ?>" alt="" class="thumb" style="width:100%; aspect-ratio:3/4;">
+        <?php foreach ($galleryImages as $i => $img): ?>
+          <img src="<?= h($img['image_path']) ?>" alt="<?= h($case['title'] . ' — фото ' . ($i + 1)) ?>" class="thumb" style="width:100%; aspect-ratio:3/4;">
         <?php endforeach; ?>
       </div>
     </div>
