@@ -23,8 +23,14 @@ try {
   <div class="container">
     <div class="ad-banner__box">
       <span class="ad-banner__label">Реклама</span>
+      <?php
+        // max_height — окрема міграція 0010; ?? null на випадок, якщо вона
+        // ще не виконана на проді (колонки в БД тоді просто немає в рядку).
+        $adBannerMaxHeight = $adBanner['max_height'] ?? null;
+        $adBannerImgStyle = $adBannerMaxHeight ? 'max-height:' . (int) $adBannerMaxHeight . 'px;' : '';
+      ?>
       <a href="<?= h($adBanner['target_url']) ?>" class="ad-banner__link" target="_blank" rel="sponsored noopener" aria-label="<?= h($adBanner['alt_text'] ?: $adBanner['title']) ?>">
-        <img src="<?= h($adBanner['image_path']) ?>" alt="<?= h($adBanner['alt_text'] ?: '') ?>" class="ad-banner__img" loading="lazy">
+        <img src="<?= h($adBanner['image_path']) ?>" alt="<?= h($adBanner['alt_text'] ?: '') ?>" class="ad-banner__img" style="<?= h($adBannerImgStyle) ?>" loading="lazy">
       </a>
     </div>
   </div>

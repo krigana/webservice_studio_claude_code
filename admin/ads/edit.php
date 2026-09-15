@@ -19,9 +19,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $title = trim((string) ($_POST['title'] ?? ''));
         $targetUrl = trim((string) ($_POST['target_url'] ?? ''));
 
-        if ($title === '') {
+        $maxHeightRaw = trim((string) ($_POST['max_height'] ?? ''));
+        $maxHeight = null;
+        if ($maxHeightRaw !== '') {
+            if (!ctype_digit($maxHeightRaw) || (int) $maxHeightRaw < 20 || (int) $maxHeightRaw > 800) {
+                $error = 'Висота банера — число від 20 до 800 (px), або залиште поле порожнім для типової висоти.';
+            } else {
+                $maxHeight = (int) $maxHeightRaw;
+            }
+        }
+
+        if ($error === null && $title === '') {
             $error = 'Вкажіть внутрішню назву банера (для орієнтації в адмінці).';
-        } elseif ($targetUrl === '' || filter_var($targetUrl, FILTER_VALIDATE_URL) === false) {
+        } elseif ($error === null && ($targetUrl === '' || filter_var($targetUrl, FILTER_VALIDATE_URL) === false)) {
             $error = 'Вкажіть коректне партнерське посилання (з http:// або https://).';
         }
 
@@ -47,6 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'image_path' => $imagePath,
                 'target_url' => $targetUrl,
                 'alt_text' => trim((string) ($_POST['alt_text'] ?? '')) ?: null,
+                'max_height' => $maxHeight,
                 'sort_order' => (int) ($_POST['sort_order'] ?? 0),
                 'status' => ($_POST['status'] ?? 'published') === 'hidden' ? 'hidden' : 'published',
             ];
@@ -83,6 +94,10 @@ admin_header($banner ? 'Редагування банера' : 'Новий ба�
 
   <label>Alt-текст зображення (опис для скрін-рідерів і SEO)</label>
   <input type="text" name="alt_text" value="<?= h($banner['alt_text'] ?? '') ?>" placeholder="Напр.: Hostinger — хостинг зі знижкою за партнерським посиланням">
+
+  <label>Висота показу банера на сайті, px (необов'язково)</label>
+  <input type="number" name="max_height" min="20" max="800" value="<?= h((string) ($banner['max_height'] ?? '')) ?>" placeholder="Напр.: 160">
+  <p style="font-size:12px; color:#7C99A1; margin:-8px 0 14px;">Порожньо — типова висота (180px на десктопі, 110px на мобільній). Задане значення застосовується однаково на всіх екранах, ширина завжди 100% блоку.</p>
 
   <label>Порядок сортування в списку адмінки (на показ на сайті не впливає)</label>
   <input type="number" name="sort_order" value="<?= (int) ($banner['sort_order'] ?? 0) ?>">

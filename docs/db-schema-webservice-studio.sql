@@ -211,6 +211,7 @@ CREATE TABLE ad_banners (
     image_path  VARCHAR(255) NOT NULL,
     target_url  VARCHAR(500) NOT NULL COMMENT 'партнерське/реферальне посилання',
     alt_text    VARCHAR(255) NULL,
+    max_height  SMALLINT UNSIGNED NULL COMMENT 'бажана висота показу банера в px; NULL — типова висота з CSS',
     sort_order  INT NOT NULL DEFAULT 0,
     status      ENUM('published','hidden') NOT NULL DEFAULT 'published',
     created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

@@ -12,13 +12,14 @@ admin_header('Рекламні банери', 'ads');
 </div>
 <div class="card" style="overflow-x:auto;">
 <table>
-<thead><tr><th>Прев'ю</th><th>Назва</th><th>Посилання</th><th>Статус</th><th></th></tr></thead>
+<thead><tr><th>Прев'ю</th><th>Назва</th><th>Посилання</th><th>Висота</th><th>Статус</th><th></th></tr></thead>
 <tbody>
 <?php foreach ($banners as $banner): ?>
 <tr>
 <td><img src="<?= h($banner['image_path']) ?>" style="width:90px; height:44px; object-fit:cover; border-radius:6px; display:block;"></td>
 <td><?= h($banner['title']) ?></td>
 <td style="max-width:280px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><?= h($banner['target_url']) ?></td>
+<td><?= !empty($banner['max_height']) ? (int) $banner['max_height'] . ' px' : '<span style="color:#7C99A1;">типова</span>' ?></td>
 <td><span class="badge badge-<?= h($banner['status']) ?>"><?= $banner['status'] === 'published' ? 'Активний' : 'Приховано' ?></span></td>
 <td style="white-space:nowrap;">
 <a href="/admin/ads/edit.php?id=<?= (int) $banner['id'] ?>">Редагувати</a>
@@ -30,7 +31,7 @@ admin_header('Рекламні банери', 'ads');
 </td>
 </tr>
 <?php endforeach; ?>
-<?php if (empty($banners)): ?><tr><td colspan="5" style="color:#7C99A1;">Банерів поки немає — активних показів на сайті не буде.</td></tr><?php endif; ?>
+<?php if (empty($banners)): ?><tr><td colspan="6" style="color:#7C99A1;">Банерів поки немає — активних показів на сайті не буде.</td></tr><?php endif; ?>
 </tbody>
 </table>
 </div>
