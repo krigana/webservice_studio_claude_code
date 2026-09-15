@@ -14,6 +14,16 @@ $categoryIcons = [
     'administruvannia' => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="6" rx="1.5"/><rect x="4" y="14" width="16" height="6" rx="1.5"/><circle cx="7.5" cy="7" r="0.6" fill="currentColor" stroke="none"/><circle cx="7.5" cy="17" r="0.6" fill="currentColor" stroke="none"/></svg>',
 ];
 
+// Акцентні кольори піктограм — той самий розподіл, що й на головній
+// сторінці (templates/home.php: $categoryMeta), щоб категорія скрізь
+// асоціювалась з одним кольором.
+$categoryAccents = [
+    'rozrobka-saitiv' => 'orange',
+    'android-dodatky' => 'peach',
+    'arbitrazh-trafiku' => 'coral',
+    'administruvannia' => 'gold',
+];
+
 // Якорі калькулятора для послуг, що мають власний окремий розрахунок
 // на /kalkulyator (див. templates/calculator.php): три послуги напряму
 // "Арбітраж трафіку" плюс "Адміністрування доменів та сайтів".
@@ -69,7 +79,7 @@ require __DIR__ . '/partials/header.php';
     <div class="<?= $i % 2 === 1 ? 'section' : '' ?>" style="<?= $i % 2 === 1 ? 'background:var(--color-surface);' : '' ?>">
       <div class="container" style="padding-top:40px; padding-bottom:40px;">
         <div style="display:flex; align-items:center; gap:14px; margin-bottom:32px;">
-          <span class="icon-badge <?= $i % 2 === 1 ? 'bordered' : '' ?>"><?= $categoryIcons[$cat['slug']] ?? '' ?></span>
+          <span class="icon-badge <?= $i % 2 === 1 ? 'bordered' : '' ?> <?= !empty($categoryAccents[$cat['slug']]) ? 'icon-badge--' . h($categoryAccents[$cat['slug']]) : '' ?>"><?= $categoryIcons[$cat['slug']] ?? '' ?></span>
           <h2 id="<?= h($cat['slug']) ?>" style="font-size:26px; font-weight:800; scroll-margin-top:100px;"><?= h($cat['name']) ?></h2>
         </div>
         <?php if (empty($services)): ?>

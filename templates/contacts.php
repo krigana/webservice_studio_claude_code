@@ -91,21 +91,21 @@ if ($recaptchaEnabled) {
 
     <div style="flex:1 1 260px; display:flex; flex-direction:column; gap:32px;">
       <div style="display:flex; align-items:center; gap:14px;">
-        <span class="icon-badge"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3 7l9 6 9-6"/></svg></span>
+        <span class="icon-badge icon-badge--violet"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3 7l9 6 9-6"/></svg></span>
         <div>
           <p style="font-size:12px; font-weight:700; color:var(--color-faint); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:4px;">Email</p>
           <a href="mailto:<?= h($contactEmail) ?>" style="font-size:16px; font-weight:600; color:var(--color-ink);"><?= h($contactEmail) ?></a>
         </div>
       </div>
       <div style="display:flex; align-items:center; gap:14px;">
-        <span class="icon-badge"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20l1.4-4.1A8 8 0 1 1 8.6 19L4 20z"/><path d="M9 10c0 3 2 5 5 5"/></svg></span>
+        <span class="icon-badge icon-badge--coral"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20l1.4-4.1A8 8 0 1 1 8.6 19L4 20z"/><path d="M9 10c0 3 2 5 5 5"/></svg></span>
         <div>
           <p style="font-size:12px; font-weight:700; color:var(--color-faint); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:4px;">WhatsApp / Телефон</p>
           <a href="<?= h($contactWhatsapp) ?>" target="_blank" rel="noopener" style="font-size:16px; font-weight:600; color:var(--color-ink);"><?= h($contactPhoneDisplay) ?></a>
         </div>
       </div>
       <div style="display:flex; align-items:center; gap:14px;">
-        <span class="icon-badge"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 4L3 11l6 2.5M21 4l-3 16-8-6.5M21 4L9 13.5v5.5l3-3.5"/></svg></span>
+        <span class="icon-badge icon-badge--gold"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 4L3 11l6 2.5M21 4l-3 16-8-6.5M21 4L9 13.5v5.5l3-3.5"/></svg></span>
         <div>
           <p style="font-size:12px; font-weight:700; color:var(--color-faint); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:4px;">Telegram</p>
           <a href="<?= h($contactTelegram) ?>" target="_blank" rel="noopener" style="font-size:16px; font-weight:600; color:var(--color-ink);"><?= h($contactTelegramHandle) ?></a>

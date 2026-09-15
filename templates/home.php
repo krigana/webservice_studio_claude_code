@@ -14,18 +14,22 @@ $categoryMeta = [
     'rozrobka-saitiv' => [
         'icon' => '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9s1.3-6.4 3.8-9z"/></svg>',
         'desc' => 'Лендинги, корпоративні сайти й інтернет-магазини під ключ.',
+        'accent' => 'orange',
     ],
     'android-dodatky' => [
         'icon' => '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="3" width="12" height="18" rx="2.5"/><path d="M11 18h2"/></svg>',
         'desc' => 'Мобільні застосунки під бізнес-задачі та продукти.',
+        'accent' => 'peach',
     ],
     'arbitrazh-trafiku' => [
         'icon' => '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 3v6c0 5-3 8-7 9-4-1-7-4-7-9V6l7-3z"/></svg>',
         'desc' => 'Вайтпейдж, лендинги та клоакінг для арбітражних кампаній.',
+        'accent' => 'coral',
     ],
     'administruvannia' => [
         'icon' => '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="6" rx="1.5"/><rect x="4" y="14" width="16" height="6" rx="1.5"/><circle cx="7.5" cy="7" r="0.6" fill="currentColor" stroke="none"/><circle cx="7.5" cy="17" r="0.6" fill="currentColor" stroke="none"/></svg>',
         'desc' => 'Домени, сервери та технічна підтримка сайтів.',
+        'accent' => 'gold',
     ],
 ];
 
@@ -53,9 +57,12 @@ require __DIR__ . '/partials/header.php';
         </div>
       </div>
       <div style="flex:1 1 0; display:flex; align-items:center; justify-content:center;" class="hero-visual">
-        <div style="width:100%; aspect-ratio:4/3; border-radius:24px; background:var(--color-brand); position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center;">
-          <div style="position:absolute; inset:0; background:radial-gradient(circle at 78% 18%, rgba(255,255,255,0.22), transparent 55%);"></div>
-          <img src="/assets/icons/logo-mark.png" alt="" style="width:34%; height:auto; opacity:0.9;">
+        <div class="hero-holo" role="img" aria-label="Webservice Studio">
+          <span class="hero-holo__mark"></span>
+          <span class="hero-holo__word">
+            <span class="hero-holo__main">Webservice</span>
+            <span class="hero-holo__sub">Studio</span>
+          </span>
         </div>
       </div>
     </div>
@@ -76,7 +83,7 @@ require __DIR__ . '/partials/header.php';
       <div class="grid-4">
         <?php foreach ($categories as $cat): $meta = $categoryMeta[$cat['slug']] ?? null; ?>
           <a href="/poslugy#<?= h($cat['slug']) ?>" class="service-card">
-            <span class="icon-badge"><?= $meta['icon'] ?? '' ?></span>
+            <span class="icon-badge <?= !empty($meta['accent']) ? 'icon-badge--' . h($meta['accent']) : '' ?>"><?= $meta['icon'] ?? '' ?></span>
             <h3><?= h($cat['name']) ?></h3>
             <p><?= h($meta['desc'] ?? '') ?></p>
           </a>

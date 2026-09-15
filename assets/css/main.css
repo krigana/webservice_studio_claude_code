@@ -10,6 +10,16 @@
   --color-tint: #F1FBFC;
   --color-tint-2: #CDEEF3;
   --color-surface: #F7FBFC;
+
+  /* Акцентні кольори — для піктограм розділів/категорій та інших
+     декоративних плям (не для тексту чи фону основного контенту:
+     контраст з білим у частини з них замалий для тексту). */
+  --color-accent-orange: #E76F3D;
+  --color-accent-peach: #FEAB6B;
+  --color-accent-coral: #FF8A8A;
+  --color-accent-gold: #FFC166;
+  --color-accent-violet: #9693E6;
+
   --font-heading: 'Manrope', system-ui, sans-serif;
   --font-body: 'Work Sans', system-ui, sans-serif;
   --font-logo: 'Oswald', system-ui, sans-serif;
@@ -88,6 +98,87 @@ img { max-width: 100%; display: block; }
 }
 .hero h1 { font-size: 42px; font-weight: 800; max-width: 720px; }
 .hero p.lead { font-size: 16.5px; line-height: 1.6; color: var(--color-muted); max-width: 640px; margin-top: 18px; }
+
+/* --- Голографічний логотип у банері головної сторінки --- */
+.hero-holo {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  border-radius: 24px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  background: linear-gradient(155deg, var(--color-ink) 0%, #123842 55%, var(--color-ink) 100%);
+}
+.hero-holo::before {
+  /* Обертова "фольга" на фоні — розмита конічна веселка з акцентних
+     кольорів, у режимі screen дає ефект переливу поверх темного фону. */
+  content: "";
+  position: absolute;
+  inset: -60%;
+  background: conic-gradient(from 0deg,
+    var(--color-brand), var(--color-accent-violet), var(--color-accent-coral),
+    var(--color-accent-gold), var(--color-accent-peach), var(--color-accent-orange),
+    var(--color-brand));
+  filter: blur(46px) saturate(1.35);
+  opacity: 0.55;
+  mix-blend-mode: screen;
+  animation: holo-spin 16s linear infinite;
+}
+.hero-holo__mark {
+  position: relative;
+  z-index: 1;
+  width: 32%;
+  aspect-ratio: 1;
+  background: var(--color-brand); /* фолбек, якщо mask-image непідтримувана */
+  background: conic-gradient(from 45deg,
+    var(--color-accent-orange), var(--color-accent-gold), var(--color-accent-peach),
+    var(--color-accent-violet), var(--color-accent-coral), var(--color-accent-orange));
+  background-size: 220% 220%;
+  -webkit-mask-image: url('/assets/icons/logo-mark.png');
+  mask-image: url('/assets/icons/logo-mark.png');
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  filter: drop-shadow(0 10px 26px rgba(0,0,0,0.35));
+  animation: holo-shift 7s ease-in-out infinite;
+}
+.hero-holo__word {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+  font-family: var(--font-logo);
+  text-transform: uppercase;
+  text-align: center;
+}
+.hero-holo__word span {
+  color: var(--color-accent-gold); /* фолбек */
+  background: linear-gradient(115deg,
+    var(--color-accent-orange), var(--color-accent-gold), var(--color-accent-violet),
+    var(--color-accent-coral), var(--color-accent-peach), var(--color-brand), var(--color-accent-orange));
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: holo-shift-text 7s ease-in-out infinite;
+}
+.hero-holo__word .hero-holo__main { font-size: clamp(26px, 3.4vw, 38px); font-weight: 600; letter-spacing: 0.02em; }
+.hero-holo__word .hero-holo__sub { font-size: clamp(13px, 1.6vw, 17px); font-weight: 500; letter-spacing: 0.32em; margin-top: 4px; opacity: 0.92; }
+@keyframes holo-spin { to { transform: rotate(360deg); } }
+@keyframes holo-shift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+@keyframes holo-shift-text { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+@media (prefers-reduced-motion: reduce) {
+  .hero-holo::before, .hero-holo__mark, .hero-holo__word span { animation: none; }
+}
 
 .section-head {
   display: flex;
@@ -204,6 +295,20 @@ a.card:hover { border-color: var(--color-brand); }
 }
 .icon-badge.lg { width: 40px; height: 40px; border-radius: 11px; }
 .icon-badge.bordered { background: #FFFFFF; border: 1px solid var(--color-border); }
+
+/* Акцентні варіанти піктограм розділів — тонований фон + колір іконки
+   з палітри --color-accent-*. Комбінується з .bordered (тоді фон
+   лишається білим, кольоровою стає лише іконка). */
+.icon-badge--orange { background: color-mix(in srgb, var(--color-accent-orange) 16%, #FFFFFF); color: var(--color-accent-orange); }
+.icon-badge--peach { background: color-mix(in srgb, var(--color-accent-peach) 20%, #FFFFFF); color: var(--color-accent-peach); }
+.icon-badge--coral { background: color-mix(in srgb, var(--color-accent-coral) 18%, #FFFFFF); color: var(--color-accent-coral); }
+.icon-badge--gold { background: color-mix(in srgb, var(--color-accent-gold) 20%, #FFFFFF); color: var(--color-accent-gold); }
+.icon-badge--violet { background: color-mix(in srgb, var(--color-accent-violet) 16%, #FFFFFF); color: var(--color-accent-violet); }
+.icon-badge.bordered.icon-badge--orange,
+.icon-badge.bordered.icon-badge--peach,
+.icon-badge.bordered.icon-badge--coral,
+.icon-badge.bordered.icon-badge--gold,
+.icon-badge.bordered.icon-badge--violet { background: #FFFFFF; }
 
 /* --- Чіпи (фільтри) --- */
 .chip {
