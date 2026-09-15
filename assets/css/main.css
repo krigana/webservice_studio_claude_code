@@ -62,7 +62,13 @@ img { max-width: 100%; display: block; }
   padding: 0 40px;
 }
 
-.section { padding: 64px 0; }
+/* padding-top/bottom окремо, а не шорткат "padding: 64px 0" — шорткат
+   заодно обнуляє padding-left/right, тому коли обидва класи стоять на
+   ОДНОМУ елементі (<div class="container section">), він перебивав
+   горизонтальні відступи .container (той самий specificity, .section
+   іде пізніше у файлі) — бокові відступи зникали (баг помічено на
+   /blog і потенційно на інших сторінках з цією комбінацією класів). */
+.section { padding-top: 64px; padding-bottom: 64px; }
 
 /* --- Типографіка --- */
 .eyebrow {
@@ -479,7 +485,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--c
   .cookie-consent__actions { width: 100%; }
   .cookie-consent__actions .btn-primary { width: 100%; }
   .site-header__row { padding-top: 13px; padding-bottom: 13px; }
-  .section { padding: 40px 0; }
+  .section { padding-top: 40px; padding-bottom: 40px; }
   .hero { padding: 48px 0 32px; }
   .hero h1 { font-size: 30px; }
   .section-head h2 { font-size: 26px; }
