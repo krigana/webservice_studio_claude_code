@@ -157,3 +157,4 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js'));
 }
 </script>
+<?php require __DIR__ . '/ad-banner.php'; ?>

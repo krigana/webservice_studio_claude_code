@@ -99,6 +99,36 @@ img { max-width: 100%; display: block; }
 .hero h1 { font-size: 42px; font-weight: 800; max-width: 720px; }
 .hero p.lead { font-size: 16.5px; line-height: 1.6; color: var(--color-muted); max-width: 640px; margin-top: 18px; }
 
+/* --- Рекламний банер (партнерські посилання) під шапкою --- */
+.ad-banner { padding: 14px 0 0; }
+.ad-banner__box {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+.ad-banner__label {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: rgba(11,31,38,0.6);
+  color: #FFFFFF;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+.ad-banner__link { display: block; }
+.ad-banner__img { width: 100%; height: auto; max-height: 180px; object-fit: cover; display: block; }
+@media (max-width: 640px) {
+  .ad-banner { padding-top: 10px; }
+  .ad-banner__img { max-height: 110px; }
+}
+
 /* --- Голографічний логотип у банері головної сторінки --- */
 .hero-holo {
   position: relative;
