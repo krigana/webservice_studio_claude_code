@@ -22,6 +22,9 @@ $fields = [
         'contacts_hero_title' => 'Заголовок',
         'contacts_hero_subtitle' => 'Підзаголовок',
     ],
+    'Аналітика' => [
+        'ga_measurement_id' => 'Google Analytics Measurement ID (G-XXXXXXXXXX)',
+    ],
 ];
 
 $error = null;

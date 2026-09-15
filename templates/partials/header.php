@@ -86,6 +86,16 @@ if (!function_exists('jsonld')) {
   $mainCssVer = is_file($mainCssPath) ? filemtime($mainCssPath) : time();
   ?>
   <link rel="stylesheet" href="/assets/css/main.css?v=<?= (int) $mainCssVer ?>">
+  <?php $gaId = Setting::get('ga_measurement_id'); ?>
+  <?php if ($gaId !== ''): ?>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=<?= h($gaId) ?>"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '<?= h($gaId) ?>');
+  </script>
+  <?php endif; ?>
   <script type="application/ld+json"><?= jsonld($organizationSchema) ?></script>
   <?php if ($breadcrumbSchema !== null): ?>
   <script type="application/ld+json"><?= jsonld($breadcrumbSchema) ?></script>
