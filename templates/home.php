@@ -40,6 +40,12 @@ $whyUs = [
     ['n' => '04', 'title' => 'Підтримка після запуску', 'desc' => 'Домени, хостинг і сайт залишаються під наглядом і після здачі.'],
 ];
 
+// На головній сторінці рекламний банер показується не одразу під шапкою
+// (як на всіх інших сторінках — header.php підключає ad-banner.php сам),
+// а нижче, під блоком hero — користувач попросив саме таке розміщення
+// тут. $skipAdBanner читається в header.php.
+$skipAdBanner = true;
+
 require __DIR__ . '/partials/header.php';
 ?>
 <main>
@@ -67,6 +73,8 @@ require __DIR__ . '/partials/header.php';
       </div>
     </div>
   </div>
+
+  <?php require __DIR__ . '/partials/ad-banner.php'; ?>
 
   <?php if (!empty($categories)): ?>
   <div class="section">

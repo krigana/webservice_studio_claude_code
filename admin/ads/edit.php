@@ -47,6 +47,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
+        // Мобільна картинка — опційна, підміняє основну на маленьких
+        // екранах (templates/partials/ad-banner.php, <picture>/<source>).
+        // Чекбокс "видалити" — щоб можна було прибрати раніше завантажену
+        // мобільну картинку й повернутись до показу основної скрізь.
+        $imagePathMobile = !empty($_POST['delete_image_mobile']) ? null : ($banner['image_path_mobile'] ?? null);
+        if ($error === null) {
+            try {
+                $uploadedMobile = Upload::image($_FILES['image_mobile'] ?? [], 'ads');
+                if ($uploadedMobile !== null) {
+                    $imagePathMobile = $uploadedMobile;
+                }
+            } catch (RuntimeException $e) {
+                $error = $e->getMessage();
+            }
+        }
+
         if ($error === null && $imagePath === null) {
             $error = 'Завантажте зображення банера.';
         }
@@ -55,6 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = [
                 'title' => $title,
                 'image_path' => $imagePath,
+                'image_path_mobile' => $imagePathMobile,
                 'target_url' => $targetUrl,
                 'alt_text' => trim((string) ($_POST['alt_text'] ?? '')) ?: null,
                 'max_height' => $maxHeight,
@@ -87,10 +104,20 @@ admin_header($banner ? 'Редагування банера' : 'Новий ба�
   <label>Партнерське/реферальне посилання</label>
   <input type="url" name="target_url" value="<?= h($banner['target_url'] ?? '') ?>" placeholder="https://..." required>
 
-  <label>Зображення<?= $banner ? '' : ' (обов\'язково)' ?></label>
+  <label>Зображення (десктоп і за замовчуванням)<?= $banner ? '' : ' (обов\'язково)' ?></label>
   <?php if (!empty($banner['image_path'])): ?><img src="<?= h($banner['image_path']) ?>" style="max-width:280px; max-height:110px; object-fit:cover; border-radius:10px; display:block; margin-bottom:10px;"><?php endif; ?>
   <input type="file" name="image" accept="image/*" <?= $banner ? '' : 'required' ?>>
-  <p style="font-size:12px; color:#7C99A1; margin:-8px 0 14px;">Рекомендоване співвідношення сторін — широке (напр. 1200×250 px), банер розтягується на всю ширину блоку під шапкою.</p>
+  <p style="font-size:12px; color:#7C99A1; margin:-8px 0 14px;">Рекомендоване співвідношення сторін — широке (напр. 1200×250 px), банер розтягується на всю ширину блоку під шапкою. Показується скрізь, якщо мобільну картинку нижче не завантажено.</p>
+
+  <label>Зображення для мобільних екранів (необов'язково)</label>
+  <?php if (!empty($banner['image_path_mobile'])): ?>
+    <img src="<?= h($banner['image_path_mobile']) ?>" style="max-width:200px; max-height:110px; object-fit:cover; border-radius:10px; display:block; margin-bottom:10px;">
+    <label style="display:flex; align-items:center; gap:6px; font-weight:400; font-size:13px; color:#7C99A1; margin-bottom:10px;">
+      <input type="checkbox" name="delete_image_mobile" value="1" style="width:auto; margin:0;"> видалити мобільну картинку (повернутись до показу основної на всіх екранах)
+    </label>
+  <?php endif; ?>
+  <input type="file" name="image_mobile" accept="image/*">
+  <p style="font-size:12px; color:#7C99A1; margin:-8px 0 14px;">Якщо завантажити — саме ця картинка підміняє основну на екранах до 640px завширшки (телефони). Якщо не завантажувати — на мобільній теж показується основне зображення вище.</p>
 
   <label>Alt-текст зображення (опис для скрін-рідерів і SEO)</label>
   <input type="text" name="alt_text" value="<?= h($banner['alt_text'] ?? '') ?>" placeholder="Напр.: Hostinger — хостинг зі знижкою за партнерським посиланням">

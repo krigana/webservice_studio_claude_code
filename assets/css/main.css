@@ -123,6 +123,7 @@ img { max-width: 100%; display: block; }
   border-radius: 6px;
 }
 .ad-banner__link { display: block; }
+.ad-banner__link picture { display: block; }
 .ad-banner__img { width: 100%; height: auto; max-height: 180px; object-fit: cover; display: block; }
 @media (max-width: 640px) {
   .ad-banner { padding-top: 10px; }

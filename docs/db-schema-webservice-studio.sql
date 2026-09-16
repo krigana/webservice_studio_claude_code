@@ -209,6 +209,7 @@ CREATE TABLE ad_banners (
     id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     title       VARCHAR(190) NOT NULL COMMENT 'внутрішня назва для адмінки, на сайті не показується',
     image_path  VARCHAR(255) NOT NULL,
+    image_path_mobile VARCHAR(255) NULL COMMENT 'опційна картинка для мобільних екранів; NULL — показується основна image_path',
     target_url  VARCHAR(500) NOT NULL COMMENT 'партнерське/реферальне посилання',
     alt_text    VARCHAR(255) NULL,
     max_height  SMALLINT UNSIGNED NULL COMMENT 'бажана висота показу банера в px; NULL — типова висота з CSS',
