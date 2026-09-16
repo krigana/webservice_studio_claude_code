@@ -29,6 +29,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
+        $maxHeightMobileRaw = trim((string) ($_POST['max_height_mobile'] ?? ''));
+        $maxHeightMobile = null;
+        if ($error === null && $maxHeightMobileRaw !== '') {
+            if (!ctype_digit($maxHeightMobileRaw) || (int) $maxHeightMobileRaw < 20 || (int) $maxHeightMobileRaw > 800) {
+                $error = 'Висота мобільної картинки — число від 20 до 800 (px), або залиште поле порожнім.';
+            } else {
+                $maxHeightMobile = (int) $maxHeightMobileRaw;
+            }
+        }
+
         if ($error === null && $title === '') {
             $error = 'Вкажіть внутрішню назву банера (для орієнтації в адмінці).';
         } elseif ($error === null && ($targetUrl === '' || filter_var($targetUrl, FILTER_VALIDATE_URL) === false)) {
@@ -75,6 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'target_url' => $targetUrl,
                 'alt_text' => trim((string) ($_POST['alt_text'] ?? '')) ?: null,
                 'max_height' => $maxHeight,
+                'max_height_mobile' => $maxHeightMobile,
                 'sort_order' => (int) ($_POST['sort_order'] ?? 0),
                 'status' => ($_POST['status'] ?? 'published') === 'hidden' ? 'hidden' : 'published',
             ];
@@ -119,12 +130,16 @@ admin_header($banner ? 'Редагування банера' : 'Новий ба�
   <input type="file" name="image_mobile" accept="image/*">
   <p style="font-size:12px; color:#7C99A1; margin:-8px 0 14px;">Якщо завантажити — саме ця картинка підміняє основну на екранах до 640px завширшки (телефони). Якщо не завантажувати — на мобільній теж показується основне зображення вище.</p>
 
+  <label>Висота мобільної картинки, px (необов'язково)</label>
+  <input type="number" name="max_height_mobile" min="20" max="800" value="<?= h((string) ($banner['max_height_mobile'] ?? '')) ?>" placeholder="Напр.: 90">
+  <p style="font-size:12px; color:#7C99A1; margin:-8px 0 14px;">Окрема висота саме для мобільного показу (екрани до 640px) — незалежно від висоти нижче. Порожньо — застосовується загальна висота банера (поле нижче) або типова (110px).</p>
+
   <label>Alt-текст зображення (опис для скрін-рідерів і SEO)</label>
   <input type="text" name="alt_text" value="<?= h($banner['alt_text'] ?? '') ?>" placeholder="Напр.: Hostinger — хостинг зі знижкою за партнерським посиланням">
 
   <label>Висота показу банера на сайті, px (необов'язково)</label>
   <input type="number" name="max_height" min="20" max="800" value="<?= h((string) ($banner['max_height'] ?? '')) ?>" placeholder="Напр.: 160">
-  <p style="font-size:12px; color:#7C99A1; margin:-8px 0 14px;">Порожньо — типова висота (180px на десктопі, 110px на мобільній). Задане значення застосовується однаково на всіх екранах, ширина завжди 100% блоку.</p>
+  <p style="font-size:12px; color:#7C99A1; margin:-8px 0 14px;">Порожньо — типова висота (180px на десктопі, 110px на мобільній). Це загальна/десктопна висота: застосовується на всіх екранах, ЯКЩО для мобільної не задано окреме значення вище. Ширина завжди 100% блоку.</p>
 
   <label>Порядок сортування в списку адмінки (на показ на сайті не впливає)</label>
   <input type="number" name="sort_order" value="<?= (int) ($banner['sort_order'] ?? 0) ?>">

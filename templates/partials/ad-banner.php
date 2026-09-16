@@ -26,10 +26,22 @@ try {
     <div class="ad-banner__box">
       <span class="ad-banner__label">Реклама</span>
       <?php
-        // max_height — окрема міграція 0010; ?? null на випадок, якщо вона
-        // ще не виконана на проді (колонки в БД тоді просто немає в рядку).
+        // max_height / max_height_mobile — окремі міграції 0010 і 0012;
+        // ?? null на випадок, якщо котрась ще не виконана на проді
+        // (колонки в БД тоді просто немає в рядку). Значення передаються
+        // як CSS-змінні (див. .ad-banner__img у main.css) — так самий
+        // <img> отримує різну max-height на десктопі й мобільній, хоча
+        // inline style один і той самий на всіх breakpoint'ах.
         $adBannerMaxHeight = $adBanner['max_height'] ?? null;
-        $adBannerImgStyle = $adBannerMaxHeight ? 'max-height:' . (int) $adBannerMaxHeight . 'px;' : '';
+        $adBannerMaxHeightMobile = $adBanner['max_height_mobile'] ?? null;
+        $adBannerImgStyleParts = [];
+        if ($adBannerMaxHeight) {
+            $adBannerImgStyleParts[] = '--ad-banner-h:' . (int) $adBannerMaxHeight . 'px';
+        }
+        if ($adBannerMaxHeightMobile) {
+            $adBannerImgStyleParts[] = '--ad-banner-h-mobile:' . (int) $adBannerMaxHeightMobile . 'px';
+        }
+        $adBannerImgStyle = implode('; ', $adBannerImgStyleParts);
       ?>
       <?php
         // image_path_mobile — окрема міграція 0011; ?? null на випадок,

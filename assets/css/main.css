@@ -124,10 +124,18 @@ img { max-width: 100%; display: block; }
 }
 .ad-banner__link { display: block; }
 .ad-banner__link picture { display: block; }
-.ad-banner__img { width: 100%; height: auto; max-height: 180px; object-fit: cover; display: block; }
+/* max-height через CSS-змінні (--ad-banner-h / --ad-banner-h-mobile) —
+   значення задаються inline-стилем із адмінки (окремо для десктопної й
+   мобільної картинки), фолбек тут — типова висота, якщо в адмінці не
+   задано. Так самий <img> може мати різну висоту на різних екранах, хоча
+   inline style — один і той самий на всіх breakpoint'ах. */
+.ad-banner__img { width: 100%; height: auto; max-height: var(--ad-banner-h, 180px); object-fit: cover; display: block; }
 @media (max-width: 640px) {
   .ad-banner { padding-top: 10px; }
-  .ad-banner__img { max-height: 110px; }
+  /* якщо --ad-banner-h-mobile не задано — падає до --ad-banner-h (щоб
+     раніше задана "загальна" висота продовжувала діяти й на мобільній,
+     як і раніше), а якщо і його нема — до типових 110px. */
+  .ad-banner__img { max-height: var(--ad-banner-h-mobile, var(--ad-banner-h, 110px)); }
 }
 
 /* --- Голографічний логотип у банері головної сторінки --- */

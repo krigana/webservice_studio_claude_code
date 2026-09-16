@@ -19,7 +19,10 @@ admin_header('Рекламні банери', 'ads');
 <td><img src="<?= h($banner['image_path']) ?>" style="width:90px; height:44px; object-fit:cover; border-radius:6px; display:block;"></td>
 <td><?= h($banner['title']) ?></td>
 <td style="max-width:280px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><?= h($banner['target_url']) ?></td>
-<td><?= !empty($banner['max_height']) ? (int) $banner['max_height'] . ' px' : '<span style="color:#7C99A1;">типова</span>' ?></td>
+<td>
+<?= !empty($banner['max_height']) ? (int) $banner['max_height'] . ' px' : '<span style="color:#7C99A1;">типова</span>' ?>
+<?php if (!empty($banner['max_height_mobile'])): ?><br><span style="font-size:12px; color:#7C99A1;">моб.: <?= (int) $banner['max_height_mobile'] ?> px</span><?php endif; ?>
+</td>
 <td><span class="badge badge-<?= h($banner['status']) ?>"><?= $banner['status'] === 'published' ? 'Активний' : 'Приховано' ?></span></td>
 <td style="white-space:nowrap;">
 <a href="/admin/ads/edit.php?id=<?= (int) $banner['id'] ?>">Редагувати</a>
